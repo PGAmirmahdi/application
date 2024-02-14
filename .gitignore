@@ -15,3 +15,5 @@ yarn-error.log
 /.vscode
 composer.json
 composer.lock
+error_log
+public/error_log
