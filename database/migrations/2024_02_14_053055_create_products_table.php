@@ -19,7 +19,9 @@ class CreateProductsTable extends Migration
             $table->integer('code');
             $table->unsignedBigInteger('price');
             $table->longText('description');
-            $table->json('properties')->nullable();
+            $table->text('properties')->nullable();
+            $table->string('main_image');
+            $table->text('images')->nullable();
             $table->timestamps();
         });
     }
