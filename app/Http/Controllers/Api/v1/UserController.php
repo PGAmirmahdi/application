@@ -64,7 +64,7 @@ class UserController extends Controller
     public function sendCode(Request $request)
     {
         $code = random_int(10000, 99999);
-        $user = User::find($request->user_id);
+        $user = auth()->user();
 
         if ($user->code){
             if ($user->code->phone_expire < now()->toDateTimeString()){
