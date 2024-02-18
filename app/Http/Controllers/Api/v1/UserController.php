@@ -63,7 +63,7 @@ class UserController extends Controller
 
     public function sendCode(Request $request)
     {
-        $code = random_int(10000, 99999);
+        $code = (string)random_int(10000, 99999);
         $user = auth()->user();
 
         if ($user->code){
