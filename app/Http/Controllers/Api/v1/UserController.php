@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Code;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -24,8 +25,11 @@ class UserController extends Controller
             'password' => Hash::make($registerUserData['password']),
         ]);
 
+        $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+
         return response()->json([
             'message' => 'user created successfully!',
+            'access_token' => $token,
         ]);
     }
 
@@ -54,6 +58,39 @@ class UserController extends Controller
 
         return response()->json([
             "message" => "logged out"
+        ]);
+    }
+
+    public function sendCode(Request $request)
+    {
+        $code = random_int(10000, 99999);
+        $user = User::find($request->user_id);
+
+        if ($user->code){
+            if ($user->code->phone_expire < now()->toDateTimeString()){
+                $success = true;
+                $message = 'کد تایید با موفقیت ارسال شد';
+            }else{
+                $success = false;
+                $message = 'دقایقی دیگر تلاش کنید';
+            }
+        }else{
+            $success = true;
+            $message = 'کد تایید با موفقیت ارسال شد';
+        }
+
+        if ($success){
+            $user->code()->create([
+                'phone_code' => $code,
+                'phone_expire' => now()->addMinutes(2)
+            ]);
+
+            sendSMS(196667, $user->phone, [$code]);
+        }
+
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
         ]);
     }
 }
