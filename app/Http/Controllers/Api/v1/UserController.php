@@ -27,6 +27,16 @@ class UserController extends Controller
 
         $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
 
+        // send code
+        $code = (string)random_int(10000, 99999);
+        $user->code()->create([
+            'phone_code' => $code,
+            'phone_expire' => now()->addMinutes(2)
+        ]);
+        // end send code
+
+        sendSMS(196667, $user->phone, [$code]);
+
         return response()->json([
             'message' => 'user created successfully!',
             'access_token' => $token,
