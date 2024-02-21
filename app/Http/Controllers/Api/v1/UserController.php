@@ -15,21 +15,17 @@ class UserController extends Controller
             'name' => 'required',
             'family' => 'required',
             'phone' => 'required|unique:users',
-            'password' => 'required|min:8'
         ]);
 
         $user = User::create([
             'name' => $registerUserData['name'],
             'family' => $registerUserData['family'],
             'phone' => $registerUserData['phone'],
-            'password' => Hash::make($registerUserData['password']),
         ]);
-
-        $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
 
         // send code
         $code = (string)random_int(10000, 99999);
-        $user->code()->create([
+        $user->update([
             'phone_code' => $code,
             'phone_expire' => now()->addMinutes(2)
         ]);
@@ -39,27 +35,6 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'user created successfully!',
-            'access_token' => $token,
-        ]);
-    }
-
-    public function login(Request $request){
-        $loginUserData = $request->validate([
-            'phone' => 'required',
-            'password' => 'required|min:8'
-        ]);
-
-        $user = User::where('phone', $loginUserData['phone'])->first();
-
-        if(!$user || !Hash::check($loginUserData['password'], $user->password)){
-            return response()->json([
-                'message' => 'Invalid Credentials'
-            ],401);
-        }
-        $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
-
-        return response()->json([
-            'access_token' => $token,
         ]);
     }
 
@@ -74,10 +49,10 @@ class UserController extends Controller
     public function sendCode(Request $request)
     {
         $code = (string)random_int(10000, 99999);
-        $user = auth()->user();
+        $user = User::wherePhone($request->phone)->first();
 
-        if ($user->code){
-            if ($user->code->phone_expire < now()->toDateTimeString()){
+        if ($user->phone_code){
+            if ($user->phone_expire < now()->toDateTimeString()){
                 $success = true;
                 $message = 'کد تایید با موفقیت ارسال شد';
             }else{
@@ -90,9 +65,7 @@ class UserController extends Controller
         }
 
         if ($success){
-            $user->code()->updateOrCreate([
-                'user_id' => $user->id,
-            ],[
+            $user->update([
                 'phone_code' => $code,
                 'phone_expire' => now()->addMinutes(2)
             ]);
@@ -106,29 +79,29 @@ class UserController extends Controller
         ]);
     }
 
-    public function verifyCode(Request $request)
+    public function login(Request $request)
     {
-        $code = auth()->user()->code;
-        if ($code){
-            if ($code->phone_code == $request->code && $code->phone_expire > now()->toDateTimeString()){
+        $user = User::wherePhone($request->phone)->first();
+        if ($user->phone_code){
+            if ($user->phone_code == $request->code && $user->phone_expire > now()->toDateTimeString()){
                 $success = true;
-                $message = 'حساب شما با موفقیت فعال شد';
+                $message = 'با موفقیت وارد شدید';
+                $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
             }else{
                 $success = false;
                 $message = 'کد وارد شده معتبر نیست';
+                $token = null;
             }
         }else{
             $success = false;
             $message = 'کد وارد شده معتبر نیست';
-        }
-
-        if ($success){
-            auth()->user()->code()->update(['phone_verify' => 1]);
+            $token = null;
         }
 
         return response()->json([
             'success' => $success,
             'message' => $message,
+            'token' => $token,
         ]);
     }
 }

@@ -26,8 +26,7 @@ Route::prefix('v1')->group(function (){
     Route::post('register',[UserController::class,'register']);
     Route::post('login',[UserController::class,'login']);
     Route::post('logout',[UserController::class,'logout'])->middleware('auth:sanctum');
-    Route::post('send-code',[UserController::class,'sendCode'])->middleware('auth:sanctum');
-    Route::post('verify-code',[UserController::class,'verifyCode'])->middleware('auth:sanctum');
+    Route::post('send-code',[UserController::class,'sendCode']);
 });
 
 Route::fallback(function (){
