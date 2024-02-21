@@ -105,4 +105,30 @@ class UserController extends Controller
             'message' => $message,
         ]);
     }
+
+    public function verifyCode(Request $request)
+    {
+        $code = auth()->user()->code;
+        if ($code){
+            if ($code->phone_code == $request->code && $code->phone_expire > now()->toDateTimeString()){
+                $success = true;
+                $message = 'حساب شما با موفقیت فعال شد';
+            }else{
+                $success = false;
+                $message = 'کد وارد شده معتبر نیست';
+            }
+        }else{
+            $success = false;
+            $message = 'کد وارد شده معتبر نیست';
+        }
+
+        if ($success){
+            auth()->user()->code()->update(['phone_verify' => 1]);
+        }
+
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+        ]);
+    }
 }
