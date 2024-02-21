@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'family',
         'phone',
+        'national_code',
         'phone_code',
         'phone_expire',
     ];
@@ -31,17 +32,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+        'phone_code',
+        'phone_expire',
     ];
 
     public function code()

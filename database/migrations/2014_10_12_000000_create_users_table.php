@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('family');
             $table->string('phone')->unique();
+            $table->string('national_code')->nullable()->unique();
             $table->integer('phone_code')->nullable();
             $table->timestamp('phone_expire')->nullable();
             $table->timestamps();

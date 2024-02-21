@@ -23,10 +23,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function (){
     Route::get('products', [ProductController::class, 'getProducts']);
 
+    // Authorization
     Route::post('register',[UserController::class,'register']);
     Route::post('login',[UserController::class,'login']);
     Route::post('logout',[UserController::class,'logout'])->middleware('auth:sanctum');
     Route::post('send-code',[UserController::class,'sendCode']);
+
+    Route::middleware('auth:sanctum')->group(function (){
+
+        // Profile
+        Route::get('get-profile', [UserController::class, 'getProfile']);
+        Route::put('edit-profile', [UserController::class, 'editProfile']);
+    });
 });
 
 Route::fallback(function (){

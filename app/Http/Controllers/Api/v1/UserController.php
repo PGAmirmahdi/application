@@ -38,6 +38,32 @@ class UserController extends Controller
         ]);
     }
 
+    public function login(Request $request)
+    {
+        $user = User::wherePhone($request->phone)->first();
+        if ($user->phone_code){
+            if ($user->phone_code == $request->code && $user->phone_expire > now()->toDateTimeString()){
+                $success = true;
+                $message = 'با موفقیت وارد شدید';
+                $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+            }else{
+                $success = false;
+                $message = 'کد وارد شده معتبر نیست';
+                $token = null;
+            }
+        }else{
+            $success = false;
+            $message = 'کد وارد شده معتبر نیست';
+            $token = null;
+        }
+
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+            'token' => $token,
+        ]);
+    }
+
     public function logout(){
         auth()->user()->tokens()->delete();
 
@@ -79,29 +105,35 @@ class UserController extends Controller
         ]);
     }
 
-    public function login(Request $request)
+    public function getProfile()
     {
-        $user = User::wherePhone($request->phone)->first();
-        if ($user->phone_code){
-            if ($user->phone_code == $request->code && $user->phone_expire > now()->toDateTimeString()){
-                $success = true;
-                $message = 'با موفقیت وارد شدید';
-                $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
-            }else{
-                $success = false;
-                $message = 'کد وارد شده معتبر نیست';
-                $token = null;
-            }
-        }else{
-            $success = false;
-            $message = 'کد وارد شده معتبر نیست';
-            $token = null;
+        return auth()->user();
+    }
+
+    public function editProfile(Request $request)
+    {
+        $validate = validator()->make($request->all(),[
+            'name' => 'required',
+            'family' => 'required',
+            'national_code' => 'nullable|unique:users,national_code,'.auth()->id(),
+        ]);
+
+        if ($validate->fails()){
+            return response()->json([
+                'success' => false,
+                'errors' => $validate->errors()->getMessages()
+            ]);
         }
 
+        auth()->user()->update([
+            'name' => $request->name,
+            'family' => $request->family,
+            'national_code' => $request->national_code,
+        ]);
+
         return response()->json([
-            'success' => $success,
-            'message' => $message,
-            'token' => $token,
+            'success' => true,
+            'message' => 'اطلاعات شما با موفقیت ویرایش شد'
         ]);
     }
 }
