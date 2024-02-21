@@ -91,6 +91,8 @@ class UserController extends Controller
 
         if ($success){
             $user->code()->updateOrCreate([
+                'user_id' => $user->id,
+            ],[
                 'phone_code' => $code,
                 'phone_expire' => now()->addMinutes(2)
             ]);
