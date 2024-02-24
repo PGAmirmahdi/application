@@ -22,7 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function (){
+
+    // Products
     Route::get('products', [ProductController::class, 'getProducts']);
+    Route::get('search-products', [ProductController::class, 'search']);
 
     // Authorization
     Route::post('register',[UserController::class,'register']);
