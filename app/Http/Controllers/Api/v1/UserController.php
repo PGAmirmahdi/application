@@ -160,9 +160,4 @@ class UserController extends Controller
             'message' => 'اطلاعات شما با موفقیت ویرایش شد'
         ]);
     }
-
-    public function getProvinces()
-    {
-        return Province::all();
-    }
 }

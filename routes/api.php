@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\ProductController;
+use App\Http\Controllers\Api\v1\ProvinceController;
 use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,7 +37,7 @@ Route::prefix('v1')->group(function (){
         Route::put('edit-profile', [UserController::class, 'editProfile']);
 
         // Province
-        Route::get('get-provinces', [UserController::class, 'getProvinces']);
+        Route::get('get-provinces', [ProvinceController::class, 'getProvinces']);
     });
 });
 
