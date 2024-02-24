@@ -41,6 +41,18 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
+        $validate = validator()->make($request->all(),[
+            'phone' => 'required',
+            'code' => 'required',
+        ]);
+
+        if ($validate->fails()){
+            return response()->json([
+                'success' => false,
+                'errors' => $validate->errors()->getMessages()
+            ]);
+        }
+
         $user = User::wherePhone($request->phone)->first();
         if ($user->phone_code){
             if ($user->phone_code == $request->code && $user->phone_expire > now()->toDateTimeString()){
@@ -75,6 +87,17 @@ class UserController extends Controller
 
     public function sendCode(Request $request)
     {
+        $validate = validator()->make($request->all(),[
+            'phone' => 'required',
+        ]);
+
+        if ($validate->fails()){
+            return response()->json([
+                'success' => false,
+                'errors' => $validate->errors()->getMessages()
+            ]);
+        }
+
         $code = (string)random_int(10000, 99999);
         $user = User::wherePhone($request->phone)->first();
 
