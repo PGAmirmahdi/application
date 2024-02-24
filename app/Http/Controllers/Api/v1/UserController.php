@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Code;
+use App\Models\Province;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -135,5 +136,10 @@ class UserController extends Controller
             'success' => true,
             'message' => 'اطلاعات شما با موفقیت ویرایش شد'
         ]);
+    }
+
+    public function getProvinces()
+    {
+        return Province::all();
     }
 }

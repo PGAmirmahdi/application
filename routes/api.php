@@ -34,6 +34,9 @@ Route::prefix('v1')->group(function (){
         // Profile
         Route::get('get-profile', [UserController::class, 'getProfile']);
         Route::put('edit-profile', [UserController::class, 'editProfile']);
+
+        // Province
+        Route::get('get-provinces', [UserController::class, 'getProvinces']);
     });
 });
 
