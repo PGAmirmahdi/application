@@ -15,6 +15,17 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        return Product::where('title', 'like', '%' . $request->search . '%')->latest()->paginate(10);
+        $validate = validator()->make($request->all(),[
+            'title' => 'required',
+        ]);
+
+        if ($validate->fails()){
+            return response()->json([
+                'success' => false,
+                'errors' => $validate->errors()->getMessages()
+            ]);
+        }
+
+        return Product::where('title', 'like', '%' . $request->title . '%')->latest()->paginate(10);
     }
 }
