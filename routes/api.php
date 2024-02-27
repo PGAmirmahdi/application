@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\AddressController;
 use App\Http\Controllers\Api\v1\FavoriteController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\ProvinceController;
@@ -47,6 +48,12 @@ Route::prefix('v1')->group(function (){
         Route::get('get-favorites', [FavoriteController::class, 'getFavorites']);
         Route::post('toggle-favorite', [FavoriteController::class, 'toggleFavorite']);
         Route::post('check-favorite', [FavoriteController::class, 'checkFavorite']);
+
+        // Addresses
+        Route::get('get-addresses', [AddressController::class, 'getAddresses']);
+        Route::post('add-address', [AddressController::class, 'addAddress']);
+        Route::put('edit-address', [AddressController::class, 'editAddress']);
+        Route::delete('delete-address', [AddressController::class, 'deleteAddress']);
     });
 });
 

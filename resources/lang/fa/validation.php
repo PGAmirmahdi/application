@@ -214,6 +214,7 @@ return [
         'invoice_file' => 'فایل پیش فاکتور',
         'factor_file' => 'فایل فاکتور',
         'national_code' => 'کد ملی',
+        'full_address' => 'نشانی کامل',
     ],
 
 ];
