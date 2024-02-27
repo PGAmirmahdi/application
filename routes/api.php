@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\FavoriteController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\ProvinceController;
 use App\Http\Controllers\Api\v1\UserController;
@@ -41,6 +42,11 @@ Route::prefix('v1')->group(function (){
 
         // Province
         Route::get('get-provinces', [ProvinceController::class, 'getProvinces']);
+
+        // Favorites
+        Route::get('get-favorites', [FavoriteController::class, 'getFavorites']);
+        Route::post('toggle-favorite', [FavoriteController::class, 'toggleFavorite']);
+        Route::post('check-favorite', [FavoriteController::class, 'checkFavorite']);
     });
 });
 

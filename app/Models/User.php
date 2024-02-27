@@ -36,8 +36,8 @@ class User extends Authenticatable
         'phone_expire',
     ];
 
-    public function code()
+    public function favorites()
     {
-        return $this->hasOne(Code::class);
+        return $this->hasMany(Favorite::class);
     }
 }
