@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\v1\AddressController;
 use App\Http\Controllers\Api\v1\FavoriteController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\ProvinceController;
+use App\Http\Controllers\Api\v1\TicketController;
 use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -54,6 +55,12 @@ Route::prefix('v1')->group(function (){
         Route::post('add-address', [AddressController::class, 'addAddress']);
         Route::put('edit-address', [AddressController::class, 'editAddress']);
         Route::delete('delete-address', [AddressController::class, 'deleteAddress']);
+
+        // Tickets
+        Route::get('get-tickets', [TicketController::class, 'getTickets']);
+        Route::get('get-messages', [TicketController::class, 'getMessages']);
+        Route::post('create-ticket', [TicketController::class, 'createTicket']);
+        Route::post('send-message', [TicketController::class, 'sendMessage']);
     });
 });
 
