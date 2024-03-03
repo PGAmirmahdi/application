@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PanelController;
+use App\Http\Panel\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     Route::match(['get','post'],'/', [PanelController::class, 'index'])->name('panel');
+    Route::resource('users', UserController::class)->except(['show']);
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);
