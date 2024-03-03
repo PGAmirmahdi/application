@@ -20,6 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'family',
+        'role',
+        'password',
         'phone',
         'national_code',
         'phone_code',
@@ -34,6 +36,11 @@ class User extends Authenticatable
     protected $hidden = [
         'phone_code',
         'phone_expire',
+    ];
+
+    const ROLE = [
+        'admin' => 'ادمین',
+        'user' => 'کاربر',
     ];
 
     public function favorites()
