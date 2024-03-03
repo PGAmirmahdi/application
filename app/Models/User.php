@@ -45,4 +45,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Address::class);
     }
+
+    public function fullName()
+    {
+        return $this->name . ' ' . $this->family;
+    }
+
+    public function isAdmin()
+    {
+        return auth()->user()->role == 'admin';
+    }
 }
