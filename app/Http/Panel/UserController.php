@@ -81,4 +81,9 @@ class UserController extends Controller
         $user->delete();
         return back();
     }
+
+    public function getAddresses(User $user)
+    {
+        return response()->json(['data' => $user->addresses]);
+    }
 }
