@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Panel;
+namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -80,5 +77,10 @@ class UserController extends Controller
     {
         $user->delete();
         return back();
+    }
+
+    public function getAddresses(User $user)
+    {
+        return response()->json(['data' => $user->addresses]);
     }
 }

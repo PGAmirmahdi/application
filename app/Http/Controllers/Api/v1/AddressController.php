@@ -10,7 +10,7 @@ class AddressController extends Controller
 {
     public function getAddresses()
     {
-        return auth()->user()->addresses()->paginate(10);
+        return auth()->user()->addresses;
     }
 
     public function addAddress(Request $request)

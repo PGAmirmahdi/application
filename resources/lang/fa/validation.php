@@ -215,6 +215,8 @@ return [
         'factor_file' => 'فایل فاکتور',
         'national_code' => 'کد ملی',
         'full_address' => 'نشانی کامل',
+        'main_image' => 'تصویر اصلی',
+        'price' => 'قیمت',
     ],
 
 ];
