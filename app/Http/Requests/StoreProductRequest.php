@@ -25,7 +25,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'code' => 'required',
+            'code' => 'required|numeric',
             'category' => 'required',
             'price' => 'required',
             'main_image' => 'required|mimes:jpg,jpeg,png|max:3000',
