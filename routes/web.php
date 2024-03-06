@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\ProductController;
 use App\Http\Controllers\Panel\UserController;
 use App\Http\Controllers\PanelController;
@@ -34,6 +35,9 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Products
     Route::resource('products', ProductController::class)->except(['show']);
     Route::get('search/products', [ProductController::class, 'search'])->name('products.search');
+
+    // Categories
+    Route::resource('categories', CategoryController::class)->except(['show']);
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);

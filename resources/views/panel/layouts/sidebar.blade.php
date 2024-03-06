@@ -7,7 +7,7 @@
                     <i class="icon ti-dashboard"></i>
                 </a>
             </li>
-            <li class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products']) ? 'active' : '' }}" data-toggle="tooltip" title="محصولات">
+            <li class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products','categories','categories/create','categories/{category}/edit']) ? 'active' : '' }}" data-toggle="tooltip" title="محصولات">
                 <a href="#navigationProducts" title="محصولات">
                     <i class="icon ti-list"></i>
                 </a>
@@ -40,10 +40,13 @@
                 <a class="{{ active_sidebar(['users','users/create','users/{user}/edit']) ? 'active' : '' }}" href="{{ route('users.index') }}">کاربران</a>
             </li>
         </ul>
-        <ul id="navigationProducts" class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products']) ? 'navigation-active' : '' }}">
+        <ul id="navigationProducts" class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products','categories','categories/create','categories/{category}/edit']) ? 'navigation-active' : '' }}">
             <li class="navigation-divider">محصولات</li>
             <li>
                 <a class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products']) ? 'active' : '' }}" href="{{ route('products.index') }}">محصولات</a>
+            </li>
+            <li>
+                <a class="{{ active_sidebar(['categories','categories/create','categories/{category}/edit']) ? 'active' : '' }}" href="{{ route('categories.index') }}">دسته بندی ها</a>
             </li>
         </ul>
     </div>
