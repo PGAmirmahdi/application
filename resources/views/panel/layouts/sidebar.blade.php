@@ -12,7 +12,7 @@
                     <i class="icon ti-list"></i>
                 </a>
             </li>
-            <li class="{{ active_sidebar(['tickets','tickets/create','tickets/{product}/edit','search/tickets']) ? 'active' : '' }}" data-toggle="tooltip" title="پشتیبانی">
+            <li class="{{ active_sidebar(['tickets','tickets/create','tickets/{ticket}/edit','search/tickets']) ? 'active' : '' }}" data-toggle="tooltip" title="پشتیبانی">
                 <a href="#navigationTickets" title="پشتیبانی">
                     <i class="icon ti-comment-alt"></i>
                 </a>
@@ -54,10 +54,10 @@
                 <a class="{{ active_sidebar(['categories','categories/create','categories/{category}/edit']) ? 'active' : '' }}" href="{{ route('categories.index') }}">دسته بندی ها</a>
             </li>
         </ul>
-        <ul id="navigationTickets" class="{{ active_sidebar(['tickets','tickets/create','tickets/{product}/edit','search/tickets']) ? 'navigation-active' : '' }}">
+        <ul id="navigationTickets" class="{{ active_sidebar(['tickets','tickets/create','tickets/{ticket}/edit','search/tickets']) ? 'navigation-active' : '' }}">
             <li class="navigation-divider">پشتیبانی</li>
             <li>
-                <a class="{{ active_sidebar(['tickets','tickets/create','tickets/{product}/edit','search/tickets']) ? 'active' : '' }}" href="{{ route('tickets.index') }}">تیکت ها</a>
+                <a class="{{ active_sidebar(['tickets','tickets/create','tickets/{ticket}/edit','search/tickets']) ? 'active' : '' }}" href="{{ route('tickets.index') }}">تیکت ها</a>
             </li>
         </ul>
     </div>
