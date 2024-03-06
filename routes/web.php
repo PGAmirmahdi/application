@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\ProductController;
+use App\Http\Controllers\Panel\TicketController;
 use App\Http\Controllers\Panel\UserController;
 use App\Http\Controllers\PanelController;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,10 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
 
     // Categories
     Route::resource('categories', CategoryController::class)->except(['show']);
+
+    // Tickets
+    Route::resource('tickets',TicketController::class)->except(['create','store','show','delete']);
+    Route::get('change-status-ticket/{ticket}',[TicketController::class, 'changeStatus'])->name('ticket.changeStatus');
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);

@@ -64,10 +64,17 @@ class TicketController extends Controller
             'code' => $this->generateCode(),
         ]);
 
+        $file = [
+            'name' => $request->file('file')->getClientOriginalName(),
+            'size' => $request->file('file')->getSize(),
+            'type' => $request->file('file')->getClientOriginalExtension(),
+            'path' => upload_file($request->file('file'), 'Tickets'),
+        ];
+
         $ticket->messages()->create([
             'user_id' => auth()->id(),
             'text' => $request->message,
-            'file' => upload_file($request->file('file'), 'Tickets'),
+            'file' => json_encode($file),
         ]);
 
         return response()->json([
@@ -100,10 +107,17 @@ class TicketController extends Controller
             ]);
         }
 
+        $file = [
+            'name' => $request->file('file')->getClientOriginalName(),
+            'size' => $request->file('file')->getSize(),
+            'type' => $request->file('file')->getClientOriginalExtension(),
+            'path' => upload_file($request->file('file'), 'Tickets'),
+        ];
+
         $ticket->messages()->create([
             'user_id' => auth()->id(),
             'text' => $request->message,
-            'file' => upload_file($request->file('file'), 'Tickets'),
+            'file' => json_encode($file),
         ]);
 
         return response()->json([
