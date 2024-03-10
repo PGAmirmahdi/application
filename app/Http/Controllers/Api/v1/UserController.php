@@ -32,7 +32,7 @@ class UserController extends Controller
         ]);
         // end send code
 
-        sendSMS(196667, $user->phone, [$code]);
+        sendSMS(201523, $user->phone, [$code]);
 
         return response()->json([
             'message' => 'user created successfully!',
@@ -120,7 +120,7 @@ class UserController extends Controller
                 'phone_expire' => now()->addMinutes(2)
             ]);
 
-            sendSMS(196667, $user->phone, [$code]);
+            sendSMS(201523, $user->phone, [$code]);
         }
 
         return response()->json([
