@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\v1\AddressController;
 use App\Http\Controllers\Api\v1\FavoriteController;
+use App\Http\Controllers\Api\v1\PaymentController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\ProvinceController;
 use App\Http\Controllers\Api\v1\TicketController;
@@ -35,6 +36,10 @@ Route::prefix('v1')->group(function (){
     Route::post('login',[UserController::class,'login']);
     Route::post('logout',[UserController::class,'logout'])->middleware('auth:sanctum');
     Route::post('send-code',[UserController::class,'sendCode']);
+
+    // Payments
+    Route::post('pay', [PaymentController::class, 'pay']);
+    Route::post('payment-verify', [PaymentController::class, 'verify']);
 
     Route::middleware('auth:sanctum')->group(function (){
 
