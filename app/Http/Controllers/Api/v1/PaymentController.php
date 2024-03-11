@@ -52,7 +52,7 @@ class PaymentController extends Controller
         }
         // end create order
 
-        $amount = $order->items()->sum('total_price');
+        $amount = ($order->items()->sum('total_price') * 10);
 
         $data = [
             "merchant_id" => env('MERCHANT_ID'),
@@ -138,7 +138,7 @@ class PaymentController extends Controller
         $data = [
             "merchant_id" => env('MERCHANT_ID'),
             "authority" => $Authority,
-            "amount" => $payment->amount
+            "amount" => ($payment->amount * 10)
         ];
 
         $jsonData = json_encode($data);
