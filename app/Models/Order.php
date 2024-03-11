@@ -33,4 +33,9 @@ class Order extends Model
     {
         return $this->hasOne(Payment::class);
     }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
 }

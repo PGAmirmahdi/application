@@ -12,6 +12,11 @@
                     <i class="icon ti-list"></i>
                 </a>
             </li>
+            <li class="{{ active_sidebar(['orders','search/orders']) ? 'active' : '' }}" data-toggle="tooltip" title="سفارشات">
+                <a href="#navigationOrders" title="سفارشات">
+                    <i class="icon ti-shopping-cart"></i>
+                </a>
+            </li>
             <li class="{{ active_sidebar(['tickets','tickets/create','tickets/{ticket}/edit','search/tickets']) ? 'active' : '' }}" data-toggle="tooltip" title="پشتیبانی">
                 <a href="#navigationTickets" title="پشتیبانی">
                     <i class="icon ti-comment-alt"></i>
@@ -52,6 +57,12 @@
             </li>
             <li>
                 <a class="{{ active_sidebar(['categories','categories/create','categories/{category}/edit']) ? 'active' : '' }}" href="{{ route('categories.index') }}">دسته بندی ها</a>
+            </li>
+        </ul>
+        <ul id="navigationOrders" class="{{ active_sidebar(['orders','search/orders']) ? 'navigation-active' : '' }}">
+            <li class="navigation-divider">سفارشات</li>
+            <li>
+                <a class="{{ active_sidebar(['orders','search/orders']) ? 'active' : '' }}" href="{{ route('orders.index') }}">سفارشات</a>
             </li>
         </ul>
         <ul id="navigationTickets" class="{{ active_sidebar(['tickets','tickets/create','tickets/{ticket}/edit','search/tickets']) ? 'navigation-active' : '' }}">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Panel\CategoryController;
+use App\Http\Controllers\Panel\OrderController;
 use App\Http\Controllers\Panel\ProductController;
 use App\Http\Controllers\Panel\TicketController;
 use App\Http\Controllers\Panel\UserController;
@@ -43,6 +44,12 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Tickets
     Route::resource('tickets',TicketController::class)->except(['create','store','show','delete']);
     Route::get('change-status-ticket/{ticket}',[TicketController::class, 'changeStatus'])->name('ticket.changeStatus');
+
+    // Orders
+    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('search/orders', [OrderController::class, 'search'])->name('orders.search');
+    Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('order-change-status', [OrderController::class, 'changeStatus'])->name('orders.changeStatus');
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);
