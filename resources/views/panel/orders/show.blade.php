@@ -69,14 +69,22 @@
         <div class="card-body">
             <div class="item rounded shadow p-4 mt-4">
                 <div class="d-flex justify-content-center">
-                    <h5>صورتحساب کالا</h5>
+                    <h5>صورت حساب کالا</h5>
                 </div>
                 <div class="row">
-                    <div class="d-flex justify-content-between">
+                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
                         <p>نام و نام خانوادگی: {{ $order->user->fullName() }}</p>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
                         <p>شماره: {{ $order->user->phone }}</p>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
                         <p>استان: {{ $order->province->name }}</p>
-                        <p>شهر: {{ $order->city }}</p>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
+                    <p>شهر: {{ $order->city }}</p>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
                         <p>نشانی کامل: {{ $order->address }}</p>
                     </div>
                 </div>
