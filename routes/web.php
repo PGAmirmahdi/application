@@ -54,6 +54,7 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
 
     // Payments
     Route::get('payments',[PaymentController::class, 'index'])->name('payments.index');
+    Route::get('search/payments',[PaymentController::class, 'search'])->name('payments.search');
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);

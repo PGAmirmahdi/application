@@ -15,14 +15,11 @@
                     <input type="text" name="family" class="form-control" placeholder="نام خانوادگی" value="{{ request()->family ?? null }}" form="search_form">
                 </div>
                 <div class="col-xl-2 xl-lg-2 col-md-3 col-sm-12 mt-2">
-                    <input type="text" name="phone" class="form-control" placeholder="شماره تماس" value="{{ request()->phone ?? null }}" form="search_form">
-                </div>
-                <div class="col-xl-2 xl-lg-2 col-md-3 col-sm-12 mt-2">
                     <select name="status" id="status" class="js-example-basic-single select2-hidden-accessible" data-select2-id="4" tabindex="-1" aria-hidden="true" form="search_form">
                         <option value="all" {{ request()->status == 'all' ? 'selected' : '' }}>وضعیت (همه)</option>
-                        @foreach(\App\Models\Order::STATUS as $key => $value)
-                            <option value="{{ $key }}" {{ $key == request()->status ? 'selected' : ($key == old('status') ? 'selected' : '') }}>{{ $value }}</option>
-                        @endforeach
+                        <option value="pending" {{ request()->status == 'pending' ? 'selected' : '' }}>{{ \App\Models\Payment::STATUS['pending'] }}</option>
+                        <option value="success" {{ request()->status == 'success' ? 'selected' : '' }}>{{ \App\Models\Payment::STATUS['success'] }}</option>
+                        <option value="failed" {{ request()->status == 'failed' ? 'selected' : '' }}>{{ \App\Models\Payment::STATUS['failed'] }}</option>
                     </select>
                 </div>
                 <div class="col-xl-2 xl-lg-2 col-md-3 col-sm-12 mt-2">
