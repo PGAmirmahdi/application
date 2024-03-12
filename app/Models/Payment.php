@@ -11,6 +11,12 @@ class Payment extends Model
 
     protected $guarded = [];
 
+    const STATUS = [
+        'pending' => 'درانتظار پرداخت',
+        'success' => 'موفق',
+        'failed' => 'ناموفق',
+    ];
+
     public function order()
     {
         return $this->belongsTo(Order::class);

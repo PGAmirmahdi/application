@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\OrderController;
+use App\Http\Controllers\Panel\PaymentController;
 use App\Http\Controllers\Panel\ProductController;
 use App\Http\Controllers\Panel\TicketController;
 use App\Http\Controllers\Panel\UserController;
@@ -50,6 +51,9 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     Route::get('search/orders', [OrderController::class, 'search'])->name('orders.search');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('order-change-status', [OrderController::class, 'changeStatus'])->name('orders.changeStatus');
+
+    // Payments
+    Route::get('payments',[PaymentController::class, 'index'])->name('payments.index');
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);
