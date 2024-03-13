@@ -10,7 +10,7 @@ class TicketController extends Controller
 {
     public function getTickets()
     {
-        return Ticket::latest()->paginate(10);
+        return auth()->user()->tickets()->latest()->paginate(10);
     }
 
     public function getMessages(Request $request)

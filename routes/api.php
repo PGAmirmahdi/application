@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\v1\AddressController;
+use App\Http\Controllers\Api\v1\BugController;
+use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\FavoriteController;
 use App\Http\Controllers\Api\v1\PaymentController;
 use App\Http\Controllers\Api\v1\ProductController;
@@ -40,6 +42,13 @@ Route::prefix('v1')->group(function (){
     // Payments
     Route::post('pay', [PaymentController::class, 'pay']);
     Route::post('payment-verify', [PaymentController::class, 'verify']);
+
+    // Comments
+    Route::get('get-comments', [CommentController::class, 'getComments']);
+    Route::post('create-comment', [CommentController::class, 'createComment'])->middleware('auth:sanctum');
+
+    // Bugs
+    Route::post('bug-report', [BugController::class, 'bugReport']);
 
     Route::middleware('auth:sanctum')->group(function (){
 

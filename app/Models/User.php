@@ -53,6 +53,16 @@ class User extends Authenticatable
         return $this->hasMany(Address::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class,'sender_id');
+    }
+
     public function fullName()
     {
         return $this->name . ' ' . $this->family;
