@@ -160,4 +160,9 @@ class UserController extends Controller
             'message' => 'اطلاعات شما با موفقیت ویرایش شد'
         ]);
     }
+
+    public function getNotifications()
+    {
+        return auth()->user()->notifications()->latest()->paginate(10);
+    }
 }

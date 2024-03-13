@@ -10,6 +10,9 @@ class ProductController extends Controller
 {
     public function getProducts()
     {
+        // log the user
+        activity_log('visit', __METHOD__);
+
         return Product::latest()->paginate(10);
     }
 

@@ -81,3 +81,16 @@ if (!function_exists('sendSMS')) {
         return $result;
     }
 }
+
+if (!function_exists('activity_log')) {
+    function activity_log($activity_name, $method, $data = null)
+    {
+        \App\Models\Log::create([
+            'activity_name' => $activity_name,
+            'method' => $method,
+            'data' => $data,
+            'ip' => request()->ip(),
+            'user_id' => auth()->id(),
+        ]);
+    }
+}

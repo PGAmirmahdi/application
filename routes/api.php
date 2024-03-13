@@ -79,6 +79,9 @@ Route::prefix('v1')->group(function (){
 
         // Orders
         Route::get('get-orders', [OrderController::class, 'getOrders']);
+
+        // Notifications
+        Route::get('get-notifications', [UserController::class, 'getNotifications']);
     });
 });
 
