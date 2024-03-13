@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\v1\AddressController;
 use App\Http\Controllers\Api\v1\BugController;
 use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\FavoriteController;
+use App\Http\Controllers\Api\v1\OrderController;
 use App\Http\Controllers\Api\v1\PaymentController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\ProvinceController;
@@ -75,6 +76,9 @@ Route::prefix('v1')->group(function (){
         Route::get('get-messages', [TicketController::class, 'getMessages']);
         Route::post('create-ticket', [TicketController::class, 'createTicket']);
         Route::post('send-message', [TicketController::class, 'sendMessage']);
+
+        // Orders
+        Route::get('get-orders', [OrderController::class, 'getOrders']);
     });
 });
 

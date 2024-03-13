@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class,'sender_id');
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function fullName()
     {
         return $this->name . ' ' . $this->family;
