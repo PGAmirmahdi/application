@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Log;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,9 @@ class ProductController extends Controller
     public function getProducts()
     {
         // log the user
-        activity_log('visit', __METHOD__);
+        if (!Log::where(['activity_name' => 'visit', 'ip' => \request()->ip()])->exists()){
+            activity_log('visit', __METHOD__);
+        }
 
         return Product::latest()->paginate(10);
     }
