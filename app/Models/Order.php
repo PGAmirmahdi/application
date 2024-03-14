@@ -20,11 +20,11 @@ class Order extends Model
     ];
 
     const STATUS_COLOR = [
-        'pending' => '#ffb822',
-        'processing' => '#0abb87',
-        'exit' => '#0abb87',
-        'sending' => '#0abb87',
-        'delivered' => '#0abb87',
+        'pending' => 'ffb822',
+        'processing' => '0abb87',
+        'exit' => '0abb87',
+        'sending' => '0abb87',
+        'delivered' => '0abb87',
     ];
 
     public function items()

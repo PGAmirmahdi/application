@@ -18,6 +18,8 @@ class OrderResource extends JsonResource
             'status' => $this->status,
             'status_text' => Order::STATUS[$this->status],
             'status_color' => Order::STATUS_COLOR[$this->status],
+            'total_price' => $this->items()->sum('total_price'),
+            'total_price_text' => number_format($this->items()->sum('total_price')).' تومان',
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
