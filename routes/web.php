@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Panel\CategoryController;
+use App\Http\Controllers\Panel\CommentController;
 use App\Http\Controllers\Panel\OrderController;
 use App\Http\Controllers\Panel\PaymentController;
 use App\Http\Controllers\Panel\ProductController;
@@ -55,6 +56,10 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Payments
     Route::get('payments',[PaymentController::class, 'index'])->name('payments.index');
     Route::get('search/payments',[PaymentController::class, 'search'])->name('payments.search');
+
+    // Comments
+    Route::get('comments', [CommentController::class, 'index'])->name('comments.index');
+    Route::post('comment-change-status', [CommentController::class, 'changeStatus'])->name('comments.changeStatus');
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);
