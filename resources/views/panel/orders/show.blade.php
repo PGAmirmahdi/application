@@ -19,19 +19,51 @@
 @endsection
 
 @section('content')
+    {{--  cancel Modal  --}}
+    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelModalLabel">لغو سفارش</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="بستن">
+                        <i class="ti-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <form action="{{ route('orders.cancel') }}" method="post" id="cancel_form">
+                        @csrf
+                        <input type="hidden" name="order_id" value="{{ $order->id }}">
+
+                        <h5>از لغو این سفارش مطمئن هستید؟</h5>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                    <button type="submit" class="btn btn-primary" form="cancel_form">تایید</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--  end cancel Modal  --}}
     <div class="card">
         <div class="card-body">
             <div class="card-title d-flex justify-content-between align-items-center">
                 <h6>مشاهده سفارش "{{ $order->user->fullName() }}"</h6>
+                @if($order->status == 'canceled')
+                    <button type="button" class="btn btn-danger disabled" disabled>لغو شده</button>
+                @else
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelModal">لغو سفارش</button>
+                @endif
             </div>
-            <div class="orders">
+            @if($order->status != 'canceled')
+                <div class="orders">
                 <div class="item rounded shadow p-4 mt-4">
                     <div class="d-flex justify-content-between">
                         <h5>وضعیت سفارش</h5>
                         <div class="form-group">
                             <select class="form-control change_status" data-order_id="{{ $order->id }}">
                                 @foreach(\App\Models\Order::STATUS as $key => $status)
-                                    @if($key != 'pending')
+                                    @if($key != 'pending' && $key != 'canceled')
                                         <option value="{{ $key }}" {{ $key == $order->status ? 'selected' : '' }}>{{ $status }}</option>
                                     @endif
                                 @endforeach
@@ -65,6 +97,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
         <div class="card-body">
             <div class="item rounded shadow p-4 mt-4">

@@ -52,6 +52,7 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     Route::get('search/orders', [OrderController::class, 'search'])->name('orders.search');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('order-change-status', [OrderController::class, 'changeStatus'])->name('orders.changeStatus');
+    Route::post('order-cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 
     // Payments
     Route::get('payments',[PaymentController::class, 'index'])->name('payments.index');

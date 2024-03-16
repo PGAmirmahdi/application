@@ -42,4 +42,12 @@ class OrderController extends Controller
 
         return back();
     }
+
+    public function cancel(Request $request)
+    {
+        Order::find($request->order_id)->update(['status' => 'canceled']);
+
+        alert()->success('سفارش با موفقیت لغو شد','لغو سفارش');
+        return back();
+    }
 }

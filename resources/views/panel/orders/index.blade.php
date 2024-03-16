@@ -57,6 +57,10 @@
                                 <td>
                                     <span class="badge badge-warning">{{ \App\Models\Order::STATUS[$order->status] }}</span>
                                 </td>
+                            @elseif($order->status == 'canceled')
+                                <td>
+                                    <span class="badge badge-danger">{{ \App\Models\Order::STATUS[$order->status] }}</span>
+                                </td>
                             @else
                                 <td>
                                     <span class="badge badge-success">{{ \App\Models\Order::STATUS[$order->status] }}</span>

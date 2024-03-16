@@ -17,6 +17,7 @@ class Order extends Model
         'exit' => 'خروج از انبار',
         'sending' => 'درحال ارسال',
         'delivered' => 'تحویل به مشتری',
+        'canceled' => 'لغو شده',
     ];
 
     const STATUS_COLOR = [
@@ -25,6 +26,7 @@ class Order extends Model
         'exit' => '0abb87',
         'sending' => '0abb87',
         'delivered' => '0abb87',
+        'canceled' => 'e04b4b',
     ];
 
     public function items()

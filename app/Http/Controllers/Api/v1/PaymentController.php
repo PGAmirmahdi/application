@@ -131,7 +131,7 @@ class PaymentController extends Controller
         if (!$payment){
             return response()->json([
                 'error' => true,
-                'message' => 'تراکنشی یا این شناسه موجود نیست'
+                'message' => 'تراکنشی با این شناسه موجود نیست'
             ]);
         }
 
@@ -160,6 +160,7 @@ class PaymentController extends Controller
 
         if ($err) {
             $payment->update(['status' => 'failed']);
+            $payment->order()->update(['status' => 'canceled']);
 
             return response()->json([
                 'error' => true,
@@ -188,6 +189,7 @@ class PaymentController extends Controller
                 }
             } else {
                 $payment->update(['status' => 'failed']);
+                $payment->order()->update(['status' => 'canceled']);
 
                 return response()->json([
                     'error' => true,
