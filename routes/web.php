@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\CommentController;
+use App\Http\Controllers\Panel\DeliveryDayController;
 use App\Http\Controllers\Panel\OrderController;
 use App\Http\Controllers\Panel\PaymentController;
 use App\Http\Controllers\Panel\ProductController;
@@ -61,6 +62,10 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Comments
     Route::get('comments', [CommentController::class, 'index'])->name('comments.index');
     Route::post('comment-change-status', [CommentController::class, 'changeStatus'])->name('comments.changeStatus');
+
+    // Delivery Days
+    Route::get('delivery-days', [DeliveryDayController::class, 'index'])->name('delivery-days.index');
+    Route::post('select-day', [DeliveryDayController::class, 'toggleDay'])->name('select-day');
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);

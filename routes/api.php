@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\v1\AddressController;
 use App\Http\Controllers\Api\v1\BugController;
 use App\Http\Controllers\Api\v1\CommentController;
+use App\Http\Controllers\Api\v1\DeliveryDayController;
 use App\Http\Controllers\Api\v1\FavoriteController;
 use App\Http\Controllers\Api\v1\OrderController;
 use App\Http\Controllers\Api\v1\PaymentController;
@@ -83,6 +84,9 @@ Route::prefix('v1')->group(function (){
         // Notifications
         Route::get('get-notifications', [UserController::class, 'getNotifications']);
     });
+
+    // Delivery Days
+    Route::get('get-delivery-days', [DeliveryDayController::class, 'getDeliveryDays']);
 });
 
 Route::fallback(function (){
