@@ -88,6 +88,7 @@ Route::prefix('v1')->group(function (){
     // Delivery Days
     Route::get('get-delivery-days', [DeliveryDayController::class, 'getDeliveryDays']);
     Route::get('delivery-day/is-selected', [DeliveryDayController::class, 'isSelected']);
+    Route::post('select-day', [DeliveryDayController::class, 'toggleDay']);
 });
 
 Route::fallback(function (){

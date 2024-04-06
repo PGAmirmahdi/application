@@ -29,4 +29,29 @@ class DeliveryDayController extends Controller
 
         return (bool)DeliveryDay::where('date', $request->date)->first();
     }
+
+    public function toggleDay(Request $request)
+    {
+        $validate = validator()->make($request->all(),[
+            'day' => 'required|json',
+        ]);
+
+        if ($validate->fails()){
+            return response()->json([
+                'success' => false,
+                'errors' => $validate->errors()->getMessages()
+            ]);
+        }
+
+        $day = json_decode($request->day);
+
+        if (DeliveryDay::where('date', $day->date)->first()){
+            DeliveryDay::where('date', $day->date)->delete();
+        }else{
+            DeliveryDay::create([
+                'date' => $day->date,
+                'is_holiday' => $day->is_holiday,
+            ]);
+        }
+    }
 }
