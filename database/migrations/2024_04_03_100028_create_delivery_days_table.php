@@ -13,7 +13,7 @@ class CreateDeliveryDaysTable extends Migration
      */
     public function up()
     {
-        Schema::create('delivery-days', function (Blueprint $table) {
+        Schema::create('delivery_days', function (Blueprint $table) {
             $table->id();
             $table->string('date');
             $table->boolean('is_holiday');
@@ -28,6 +28,6 @@ class CreateDeliveryDaysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delivery-days');
+        Schema::dropIfExists('delivery_days');
     }
 }
