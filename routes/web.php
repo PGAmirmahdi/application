@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Panel\BugController;
 use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\CommentController;
 use App\Http\Controllers\Panel\DeliveryDayController;
@@ -66,6 +67,10 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Delivery Days
     Route::get('delivery-days', [DeliveryDayController::class, 'index'])->name('delivery-days.index');
     Route::post('select-day', [DeliveryDayController::class, 'toggleDay'])->name('select-day');
+
+    // Bugs
+    Route::get('bugs', [BugController::class, 'index'])->name('bugs.index');
+
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);
