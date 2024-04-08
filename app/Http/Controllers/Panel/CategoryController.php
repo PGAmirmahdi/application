@@ -32,8 +32,11 @@ class CategoryController extends Controller
     {
         $parent_id = \request()->parent_id;
 
+        $image = upload_file($request->file('image'),'Category');
+
         Category::create([
             'name' => $request->name,
+            'image' => $image,
             'parent_id' => $request->parent_category,
         ]);
 
@@ -58,8 +61,17 @@ class CategoryController extends Controller
 
     public function update(UpdateCategoryRequest $request, Category $category)
     {
+        if ($request->image){
+            if ($category->image){
+                unlink(public_path($category->image));
+            }
+            $image = upload_file($request->file('image'),'Category');
+        }else{
+            $image = $category->image;
+        }
         $category->update([
             'name' => $request->name,
+            'image' => $image,
             'parent_id' => $request->parent_category,
         ]);
 
