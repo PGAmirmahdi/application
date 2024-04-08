@@ -17,13 +17,20 @@
             <div class="card-title d-flex justify-content-between align-items-center">
                 <h6>ایجاد دسته بندی</h6>
             </div>
-            <form action="{{ route('categories.store', ['parent_id' => request()->parent_id]) }}" method="post">
+            <form action="{{ route('categories.store', ['parent_id' => request()->parent_id]) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-row">
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
                         <label for="name">نام دسته بندی<span class="text-danger">*</span></label>
                         <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}" placeholder="پرینتر">
                         @error('name')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
+                        <label for="image">تصویر<span class="text-danger">*</span></label>
+                        <input type="file" name="image" class="form-control" id="image">
+                        @error('image')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>

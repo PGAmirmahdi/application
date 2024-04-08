@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\v1\AddressController;
 use App\Http\Controllers\Api\v1\BugController;
+use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\DeliveryDayController;
 use App\Http\Controllers\Api\v1\FavoriteController;
@@ -48,6 +49,11 @@ Route::prefix('v1')->group(function (){
     // Comments
     Route::get('get-comments', [CommentController::class, 'getComments']);
     Route::post('create-comment', [CommentController::class, 'createComment'])->middleware('auth:sanctum');
+
+    // Categories
+    Route::get('get-categories', [CategoryController::class, 'getCategories']);
+    Route::get('get-category-children', [CategoryController::class, 'getChildren']);
+    Route::get('get-category-products', [CategoryController::class, 'getProducts']);
 
     // Bugs
     Route::post('bug-report', [BugController::class, 'bugReport']);

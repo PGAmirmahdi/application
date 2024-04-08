@@ -25,6 +25,7 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:categories,name,'.$this->id,
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:5000',
         ];
     }
 }

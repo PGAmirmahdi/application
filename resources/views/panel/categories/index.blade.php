@@ -15,6 +15,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
+                        <th>تصویر</th>
                         <th>دسته بندی</th>
                         <th>تعداد زیردسته</th>
                         <th>تاریخ ایجاد</th>
@@ -27,6 +28,7 @@
                     @foreach($categories as $key => $category)
                         <tr>
                             <td>{{ ++$key }}</td>
+                            <td><a href="{{ $category->image }}" target="_blank"><img src="{{ $category->image }}" style="width: 40px"></a></td>
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->children()->count() }}</td>
                             <td>{{ verta($category->created_at)->format('H:i - Y/m/d') }}</td>
