@@ -21,6 +21,7 @@ class CreateAddressesTable extends Migration
             $table->string('city');
             $table->text('full_address');
             $table->string('postal_code');
+            $table->text('location')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -42,6 +42,7 @@ class AddressController extends Controller
                 'city' => $request->city,
                 'postal_code' => $request->postal_code,
                 'full_address' => $request->full_address,
+                'location' => $request->location,
             ]);
 
             $success = true;
@@ -80,6 +81,7 @@ class AddressController extends Controller
                 'city' => $request->city,
                 'postal_code' => $request->postal_code,
                 'full_address' => $request->full_address,
+                'location' => $request->location,
             ]);
 
             $success = true;
