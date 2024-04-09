@@ -27,7 +27,9 @@ class DeliveryDayController extends Controller
             ]);
         }
 
-        return (bool)DeliveryDay::where('date', $request->date)->first();
+        return response()->json([
+            'data' => (bool)DeliveryDay::where('date', $request->date)->first()
+        ]);
     }
 
     public function toggleDay(Request $request)
