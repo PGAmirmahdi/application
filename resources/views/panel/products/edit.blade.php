@@ -50,6 +50,13 @@
                         @enderror
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
+                        <label for="order_limit">حداکثر سفارش<span class="text-danger">*</span></label>
+                        <input type="text" name="order_limit" class="form-control" id="order_limit" value="{{ $product->limit }}">
+                        @error('order_limit')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
                         <label for="main_image">تصویر اصلی <span class="text-muted">(تک انتخابی)</span></label>
                         <input type="file" name="main_image" class="form-control" id="main_image" value="{{ $product->main_image }}">
                         @error('main_image')

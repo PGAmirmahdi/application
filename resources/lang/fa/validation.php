@@ -217,6 +217,7 @@ return [
         'full_address' => 'نشانی کامل',
         'main_image' => 'تصویر اصلی',
         'price' => 'قیمت',
+        'order_limit' => 'حداکثر سفارش',
     ],
 
 ];

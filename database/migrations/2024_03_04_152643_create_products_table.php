@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('sku')->nullable();
             $table->integer('code');
             $table->unsignedBigInteger('price');
+            $table->unsignedInteger('limit');
             $table->longText('description');
             $table->text('properties')->nullable();
             $table->unsignedBigInteger('category_id');

@@ -28,6 +28,7 @@ class StoreProductRequest extends FormRequest
             'code' => 'required|numeric',
             'category' => 'required',
             'price' => 'required',
+            'order_limit' => 'required|numeric',
             'main_image' => 'required|mimes:jpg,jpeg,png|max:3000',
             'images.*' => 'nullable|mimes:jpg,jpeg,png|max:3000',
             'description' => 'required',

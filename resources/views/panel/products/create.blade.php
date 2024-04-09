@@ -42,6 +42,13 @@
                         @enderror
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
+                        <label for="order_limit">حداکثر سفارش<span class="text-danger">*</span></label>
+                        <input type="text" name="order_limit" class="form-control" id="order_limit" value="{{ old('order_limit') }}">
+                        @error('order_limit')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
                         <label for="price">قیمت (تومان)<span class="text-danger">*</span></label>
                         <input type="text" name="price" class="form-control" id="price" value="{{ old('price') }}">
                         @error('price')
