@@ -86,6 +86,7 @@ Route::prefix('v1')->group(function (){
 
         // Orders
         Route::get('get-orders', [OrderController::class, 'getOrders']);
+        Route::get('get-order', [OrderController::class, 'getOrder']);
 
         // Notifications
         Route::get('get-notifications', [UserController::class, 'getNotifications']);
