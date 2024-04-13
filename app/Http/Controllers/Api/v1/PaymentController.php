@@ -177,10 +177,15 @@ class PaymentController extends Controller
 
                     $payment->order()->update(['status' => 'processing']);
 
+                    // send to mpsystem
+                    $this->sendInvoice($payment);
+                    // end send to mpsyste
+
                     return response()->json([
                         'error' => false,
                         'message' => 'Transation success. RefID:' . $result['data']['ref_id'],
                     ]);
+
                 } elseif ($result['data']['code'] == 101) {
                     return response()->json([
                         'error' => false,
@@ -198,5 +203,46 @@ class PaymentController extends Controller
                 ]);
             }
         }
+    }
+
+    private function sendInvoice($payment)
+    {
+        $items = [];
+
+        foreach ($payment->order->items as $item){
+            $items[] = [
+                'acc_code' => $item->product->code,
+                'total' => $item->product->total_price,
+                'quantity' => $item->product->count,
+            ];
+        }
+
+        $jsonData = [
+            'first_name' => $payment->order->user->name,
+            'last_name' => $payment->order->user->family,
+            'national_number' => $payment->order->user->national_code,
+            'province' => $payment->order->province,
+            'city' => $payment->order->city,
+            'address_1' => $payment->order->address,
+            'postal_code' => '000',
+            'phone' => $payment->order->user->phone,
+            'national_code' => $payment->order->user->national_code,
+            'items' => $items,
+            'created_in' => 'app'
+        ];
+
+        $jsonData = json_encode($jsonData);
+        $ch = curl_init('https://193.105.234.70/api/invoice-create');
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($jsonData)
+        ]);
+
+        $result = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
     }
 }
