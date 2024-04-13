@@ -20,4 +20,9 @@ class Address extends Model
     {
         return $this->belongsTo(Province::class);
     }
+
+//    public function getLocationAttribute($value)
+//    {
+//        return $value ? json_decode($value) : null;
+//    }
 }

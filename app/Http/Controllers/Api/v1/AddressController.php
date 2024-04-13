@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AddressResource;
 use App\Models\Address;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class AddressController extends Controller
 {
     public function getAddresses()
     {
-        return auth()->user()->addresses;
+        return AddressResource::collection(auth()->user()->addresses);
     }
 
     public function addAddress(Request $request)

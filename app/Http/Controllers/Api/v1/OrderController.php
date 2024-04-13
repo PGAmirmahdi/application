@@ -27,7 +27,7 @@ class OrderController extends Controller
             $payment = Payment::where('authority', $request->authority)->first();
 
             if (!$payment){
-                return response()->json([
+                 return response()->json([
                     'success' => false,
                     'errors' => ['سفارشی با این شناسه موجود نیست']
                 ]);
