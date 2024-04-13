@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderItemResource;
 use App\Http\Resources\OrderResource;
 use App\Models\Payment;
 use Illuminate\Http\Request;
@@ -32,7 +33,13 @@ class OrderController extends Controller
                     'errors' => ['سفارشی با این شناسه موجود نیست']
                 ]);
             }
-            return OrderResource::make($payment->order);
+
+            $data = [
+                'order' => OrderResource::make($payment->order),
+                'order_items' => OrderItemResource::collection($payment->order->items),
+            ];
+
+            return response()->json($data);
         }
 
         if ($request->order_id){
