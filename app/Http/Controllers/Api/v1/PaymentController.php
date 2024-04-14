@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
@@ -138,7 +139,7 @@ class PaymentController extends Controller
         $data = [
             "merchant_id" => env('MERCHANT_ID'),
             "authority" => $Authority,
-            "amount" => ($payment->amount * 10)
+            "amount" => $payment->amount
         ];
 
         $jsonData = json_encode($data);
@@ -212,8 +213,8 @@ class PaymentController extends Controller
         foreach ($payment->order->items as $item){
             $items[] = [
                 'acc_code' => $item->product->code,
-                'total' => $item->product->total_price,
-                'quantity' => $item->product->count,
+                'total' => $item->total_price,
+                'quantity' => $item->count,
             ];
         }
 
@@ -221,7 +222,7 @@ class PaymentController extends Controller
             'first_name' => $payment->order->user->name,
             'last_name' => $payment->order->user->family,
             'national_number' => $payment->order->user->national_code,
-            'province' => $payment->order->province,
+            'province' => $payment->order->province->name,
             'city' => $payment->order->city,
             'address_1' => $payment->order->address,
             'postal_code' => '000',
@@ -236,6 +237,7 @@ class PaymentController extends Controller
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
             'Content-Length: ' . strlen($jsonData)

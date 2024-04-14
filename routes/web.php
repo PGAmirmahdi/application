@@ -31,6 +31,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('test', function (){
+ 
+});
+
 Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     Route::match(['get','post'],'/', [PanelController::class, 'index'])->name('panel');
 
