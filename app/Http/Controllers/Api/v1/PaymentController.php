@@ -39,6 +39,8 @@ class PaymentController extends Controller
             'province_id' => $address->province_id,
             'city' => $address->city,
             'address' => $address->full_address,
+            'postal_code' => $address->postal_code,
+            'location' => $address->location,
         ]);
 
         foreach ($items as $item) {
@@ -225,7 +227,7 @@ class PaymentController extends Controller
             'province' => $payment->order->province->name,
             'city' => $payment->order->city,
             'address_1' => $payment->order->address,
-            'postal_code' => '000',
+            'postal_code' => $payment->order->postal_code,
             'phone' => $payment->order->user->phone,
             'national_code' => $payment->order->user->national_code,
             'items' => $items,

@@ -19,6 +19,8 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('province_id');
             $table->string('city');
             $table->text('address');
+            $table->string('postal_code');
+            $table->text('location')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
 

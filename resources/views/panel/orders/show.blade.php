@@ -105,20 +105,34 @@
                     <h5>صورت حساب کالا</h5>
                 </div>
                 <div class="row">
-                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
                         <p>نام و نام خانوادگی: {{ $order->user->fullName() }}</p>
                     </div>
-                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
                         <p>شماره: {{ $order->user->phone }}</p>
                     </div>
-                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
                         <p>استان: {{ $order->province->name }}</p>
                     </div>
-                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
                     <p>شهر: {{ $order->city }}</p>
                     </div>
-                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
-                        <p>نشانی کامل: {{ $order->address }}</p>
+                </div>
+                <div class="row mt-0">
+                    <div class="col-xl-6 col-lg-6 col-md-3 col-sm-12">
+                        @if($order->location)
+                            @php
+                                $location = json_decode($order->location);
+                                $lat = $location->lat;
+                                $lng = $location->lng;
+                            @endphp
+                            <a href="https://map.ir/lat/{{$lat}}/lng/{{$lng}}/z/20" class="btn btn-link" target="_blank"><p>نشانی کامل: {{ $order->address }}</p></a>
+                        @else
+                            <p>نشانی کامل: {{ $order->address }}</p>
+                        @endif
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-3 col-sm-12">
+                        <p>کد پستی: {{ $order->postal_code }}</p>
                     </div>
                 </div>
                 <div class="row justify-content-center">
