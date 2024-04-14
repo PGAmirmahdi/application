@@ -218,6 +218,7 @@ return [
         'main_image' => 'تصویر اصلی',
         'price' => 'قیمت',
         'order_limit' => 'حداکثر سفارش',
+        'images' => 'تصاویر',
     ],
 
 ];

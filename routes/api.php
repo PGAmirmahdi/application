@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\AddressController;
+use App\Http\Controllers\Api\v1\BannerController;
 use App\Http\Controllers\Api\v1\BugController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\CommentController;
@@ -57,6 +58,9 @@ Route::prefix('v1')->group(function (){
 
     // Bugs
     Route::post('bug-report', [BugController::class, 'bugReport']);
+
+    // Banners
+    Route::get('get-banners', [BannerController::class, 'getBanners']);
 
     Route::middleware('auth:sanctum')->group(function (){
 

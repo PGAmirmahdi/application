@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Panel\BannerController;
 use App\Http\Controllers\Panel\BugController;
 use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\CommentController;
@@ -32,7 +33,7 @@ Route::get('/', function () {
 });
 
 Route::get('test', function (){
- 
+
 });
 
 Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
@@ -75,6 +76,9 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Bugs
     Route::get('bugs', [BugController::class, 'index'])->name('bugs.index');
 
+    // Banners
+    Route::get('banners', [BannerController::class, 'index'])->name('banners.index');
+    Route::post('banner/upload', [BannerController::class, 'upload'])->name('banners.upload');
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);
