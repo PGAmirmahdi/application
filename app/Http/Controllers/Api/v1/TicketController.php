@@ -67,17 +67,19 @@ class TicketController extends Controller
             'code' => $this->generateCode(),
         ]);
 
-        $file = [
-            'name' => $request->file('file')->getClientOriginalName(),
-            'size' => $request->file('file')->getSize(),
-            'type' => $request->file('file')->getClientOriginalExtension(),
-            'path' => upload_file($request->file('file'), 'Tickets'),
-        ];
+        if ($request->file('file')){
+            $file = [
+                'name' => $request->file('file')->getClientOriginalName(),
+                'size' => $request->file('file')->getSize(),
+                'type' => $request->file('file')->getClientOriginalExtension(),
+                'path' => upload_file($request->file('file'), 'Tickets'),
+            ];
+        }
 
         $ticket->messages()->create([
             'user_id' => auth()->id(),
             'text' => $request->message,
-            'file' => json_encode($file),
+            'file' => isset($file) ? json_encode($file) : null,
         ]);
 
         // send notification
