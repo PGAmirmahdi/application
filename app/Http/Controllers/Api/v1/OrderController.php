@@ -52,7 +52,12 @@ class OrderController extends Controller
                 ]);
             }
 
-            return OrderResource::make($order);
+            $data = [
+                'order' => OrderResource::make($order),
+                'order_items' => OrderItemResource::collection($order->items),
+            ];
+
+            return response()->json($data);
         }
     }
 }

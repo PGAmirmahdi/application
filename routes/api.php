@@ -36,6 +36,7 @@ Route::prefix('v1')->group(function (){
     // Products
     Route::get('products', [ProductController::class, 'getProducts']);
     Route::get('search-products', [ProductController::class, 'search']);
+    Route::get('filter-products', [ProductController::class, 'filter']);
 
     // Authorization
     Route::post('register',[UserController::class,'register']);
