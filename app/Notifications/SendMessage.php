@@ -54,18 +54,18 @@ class SendMessage extends Notification
             'url' => $this->url,
         ];
 
-//        if ($notifiable->fcm_token){
-//            $this->send_firebase_notification($this->message, $this->url, $notifiable->fcm_token);
-//        }
+        if ($notifiable->fcm_token){
+            $this->send_firebase_notification($this->message, $notifiable->fcm_token);
+        }
 
         return $data;
     }
 
-    private function send_firebase_notification($message, $url, $token)
+    private function send_firebase_notification($message, $token)
     {
         $firebaseToken = [$token];
 
-        $SERVER_API_KEY = 'AAAAAqqjtGY:APA91bGqBtuYddBnAnliS0HOL1PBuf8cbWgdkNWMpOJCMFuWPVq2nCZoLTZIcxDQMJf8OwAsWRYYan5BpXC6qFdoIpyWW91OCUOu-eDOggSmBv-Oi5ebT2FWdSRid7OV1iP02_9rGftS';
+        $SERVER_API_KEY = 'AAAAdzc4f3c:APA91bHQqL5xz6ja0J0PPau5uGWiVzGmRBKk0g3MRcqIN-HFew0aX25iRz_NYc-kUTdNoTcceVqYXCfCb5pbdWbf5aILWgaHaxygrXL_hUgTqwIv3VZu7nY1rwtD5f0BMijeKiZr0F6p';
 
         $data = [
             "registration_ids" => $firebaseToken,
@@ -93,6 +93,7 @@ class SendMessage extends Notification
 
         curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
         curl_setopt($ch, CURLOPT_POST, true);
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);

@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('national_code')->nullable()->unique();
             $table->integer('phone_code')->nullable();
             $table->timestamp('phone_expire')->nullable();
+            $table->text('fcm_token')->nullable();
             $table->timestamps();
         });
     }
