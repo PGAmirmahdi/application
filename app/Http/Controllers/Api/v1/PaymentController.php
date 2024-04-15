@@ -7,8 +7,11 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\User;
+use App\Notifications\SendMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class PaymentController extends Controller
 {
@@ -183,6 +186,17 @@ class PaymentController extends Controller
                     // send to mpsystem
                     $this->sendInvoice($payment);
                     // end send to mpsyste
+
+                    // send notification
+                    $message1 = 'سفارش شما با موفقیت پرداخت و ثبت گردید';
+                    $message2 = 'یک سفارش موفقیت پرداخت و ثبت گردید';
+                    $url = route('orders.index');
+                    $customer = $payment->order->user;
+                    $admins = User::where('role','admin')->get();
+
+                    Notification::send($customer, new SendMessage($message1, $url));
+                    Notification::send($admins, new SendMessage($message2, $url));
+                    // end send notification
 
                     return response()->json([
                         'error' => false,

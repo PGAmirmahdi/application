@@ -41,16 +41,6 @@ class TicketController extends Controller
 
     public function update(Request $request, Ticket $ticket)
     {
-        // prevent from send sequence notification
-//        $first_message = $ticket->messages()->orderBy('created_at', 'desc')->first();
-//        if ($first_message != null && $first_message->user_id != auth()->id()){
-//            $message = 'پاسخی برای تیکت "'.$ticket->title.'" ثبت شده است';
-//            $url = route('tickets.edit', $ticket->id);
-//            $receiver = auth()->id() == $ticket->sender_id ? $ticket->receiver : $ticket->sender;
-//            Notification::send($receiver, new SendMessage($message, $url));
-//        }
-        // end prevent from send sequence notification
-
         if ($request->file){
             $file_info = [
                 'name' => $request->file('file')->getClientOriginalName(),
@@ -69,6 +59,14 @@ class TicketController extends Controller
             'file' => isset($file) ? json_encode($file_info) : null,
         ]);
 
+        // send notification
+        $message = "تیکت شما با عنوان '{$ticket->title}' پاسخ داده شد";
+        $url = route('tickets.index');
+        $user = $ticket->sender;
+
+        Notification::send($user, new SendMessage($message, $url));
+        // end send notification
+
         return back();
     }
 
@@ -84,14 +82,6 @@ class TicketController extends Controller
         }else{
             $ticket->update(['status' => 'closed']);
         }
-
-        // send notif
-//            $status = Ticket::STATUS[$ticket->status];
-//            $message = "وضعیت تیکت '$ticket->title' به '$status' تغییر یافت";
-//            $url = route('tickets.index');
-//            $receiver = auth()->id() == $ticket->sender_id ? $ticket->receiver : $ticket->sender;
-//            Notification::send($receiver, new SendMessage($message, $url));
-        // end send notif
 
         alert()->success('وضعیت تیکت با موفقیت تغییر یافت','تغییر وضعیت');
         return back();

@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ticket;
+use App\Models\User;
+use App\Notifications\SendMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class TicketController extends Controller
 {
@@ -76,6 +79,17 @@ class TicketController extends Controller
             'text' => $request->message,
             'file' => json_encode($file),
         ]);
+
+        // send notification
+        $message1 = 'تیکت شما با موفقیت ثبت شد';
+        $message2 = 'یک تیکت با موفقیت ثبت گردید';
+        $url = route('tickets.index');
+        $user = $ticket->sender;
+        $admins = User::where('role','admin')->get();
+
+        Notification::send($user, new SendMessage($message1, $url));
+        Notification::send($admins, new SendMessage($message2, $url));
+        // end send notification
 
         return response()->json([
             'success' => true,
