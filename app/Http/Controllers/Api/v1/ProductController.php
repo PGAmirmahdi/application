@@ -51,11 +51,21 @@ class ProductController extends Controller
             ]);
         }
 
+        $category_id = $request->category_id;
+
         switch ($request->sortBy)
         {
             case 'cheapest':
+                if ($category_id){
+                    return Product::where('category_id', $category_id)->orderBy('price')->paginate(10);
+                }
+
                 return Product::orderBy('price')->paginate(10);
             case 'expensive':
+                if ($category_id){
+                    return Product::where('category_id', $category_id)->orderByDesc('price')->paginate(10);
+                }
+
                 return Product::orderByDesc('price')->paginate(10);
             case 'bestselling':
                 $orders_id = Payment::where('status','success')->pluck('order_id');
@@ -63,6 +73,16 @@ class ProductController extends Controller
                 $orders = OrderItem::whereIn('order_id', $orders_id)
                     ->select('product_id', DB::raw('COUNT(*) as count'))
                     ->groupBy('product_id');
+
+                if ($category_id){
+                    $products = Product::where('category_id', $category_id)->joinSub($orders, 'orders', function ($join) {
+                        $join->on('products.id', '=', 'orders.product_id');
+                    })
+                        ->orderByDesc('count')
+                        ->paginate(10);
+
+                    return $products;
+                }
 
                 $products = Product::joinSub($orders, 'orders', function ($join) {
                     $join->on('products.id', '=', 'orders.product_id');
