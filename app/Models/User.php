@@ -26,6 +26,7 @@ class User extends Authenticatable
         'national_code',
         'phone_code',
         'phone_expire',
+        'fcm_token'
     ];
 
     /**

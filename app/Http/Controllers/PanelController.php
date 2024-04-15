@@ -47,7 +47,22 @@ class PanelController extends Controller
 
     public function saveFCMToken(Request $request)
     {
+        $validate = validator()->make($request->all(),[
+            'token' => 'required',
+        ]);
+
+        if ($validate->fails()){
+            return response()->json([
+                'success' => false,
+                'errors' => $validate->errors()->getMessages()
+            ]);
+        }
+
         auth()->user()->update(['fcm_token' => $request->token]);
-        return response()->json(['token saved successfully.']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'token saved successfully.',
+        ]);
     }
 }

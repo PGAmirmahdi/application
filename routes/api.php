@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\ProvinceController;
 use App\Http\Controllers\Api\v1\TicketController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\PanelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -95,6 +96,9 @@ Route::prefix('v1')->group(function (){
 
         // Notifications
         Route::get('get-notifications', [UserController::class, 'getNotifications']);
+
+        // FCM Token
+        Route::post('save-token', [PanelController::class, 'saveFCMToken']);
     });
 
     // Delivery Days
