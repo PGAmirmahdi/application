@@ -108,17 +108,22 @@ class UserController extends Controller
         $code = (string)random_int(10000, 99999);
         $user = User::wherePhone($request->phone)->first();
 
-        if ($user->phone_code){
-            if ($user->phone_expire < now()->toDateTimeString()){
+        if (!$user){
+            $success = false;
+            $message = 'کاربری با این شماره موبایل وجود ندارد';
+        }else{
+            if ($user->phone_code){
+                if ($user->phone_expire < now()->toDateTimeString()){
+                    $success = true;
+                    $message = 'کد تایید با موفقیت ارسال شد';
+                }else{
+                    $success = false;
+                    $message = 'دقایقی دیگر تلاش کنید';
+                }
+            }else{
                 $success = true;
                 $message = 'کد تایید با موفقیت ارسال شد';
-            }else{
-                $success = false;
-                $message = 'دقایقی دیگر تلاش کنید';
             }
-        }else{
-            $success = true;
-            $message = 'کد تایید با موفقیت ارسال شد';
         }
 
         if ($success){
