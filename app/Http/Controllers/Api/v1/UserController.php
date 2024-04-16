@@ -54,20 +54,27 @@ class UserController extends Controller
         }
 
         $user = User::wherePhone($request->phone)->first();
-        if ($user->phone_code){
-            if ($user->phone_code == $request->code && $user->phone_expire > now()->toDateTimeString()){
-                $success = true;
-                $message = 'با موفقیت وارد شدید';
-                $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+
+        if (!$user){
+            $success = false;
+            $message = 'کاربری با این شماره موبایل وجود ندارد';
+            $token = null;
+        }else{
+            if ($user->phone_code){
+                if ($user->phone_code == $request->code && $user->phone_expire > now()->toDateTimeString()){
+                    $success = true;
+                    $message = 'با موفقیت وارد شدید';
+                    $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+                }else{
+                    $success = false;
+                    $message = 'کد وارد شده معتبر نیست';
+                    $token = null;
+                }
             }else{
                 $success = false;
                 $message = 'کد وارد شده معتبر نیست';
                 $token = null;
             }
-        }else{
-            $success = false;
-            $message = 'کد وارد شده معتبر نیست';
-            $token = null;
         }
 
         return response()->json([
