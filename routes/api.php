@@ -96,6 +96,7 @@ Route::prefix('v1')->group(function (){
 
         // Notifications
         Route::get('get-notifications', [UserController::class, 'getNotifications']);
+        Route::put('read-notification', [UserController::class, 'readNotification']);
 
         // FCM Token
         Route::post('save-token', [PanelController::class, 'saveFCMToken']);
