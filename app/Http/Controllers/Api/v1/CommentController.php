@@ -31,7 +31,9 @@ class CommentController extends Controller
             ]);
         }
 
-        return $product->comments()->latest()->paginate(10);
+        return $product->comments()->where('status', 'accepted')->with(['user' => function($query) {
+            $query->select('id','name', 'family');
+        }])->latest()->paginate(10);
     }
 
     public function createComment(Request $request)
