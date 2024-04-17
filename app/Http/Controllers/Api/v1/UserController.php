@@ -177,4 +177,31 @@ class UserController extends Controller
     {
         return auth()->user()->notifications()->latest()->paginate(10);
     }
+
+    public function readNotification(Request $request)
+    {
+        if ($request->id == null){
+            auth()->user()->unreadNotifications->markAsRead();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'همه اعلانات خوانده شدند',
+            ]);
+        }
+
+        $notif = auth()->user()->unreadNotifications()->whereId($request->id)->first();
+        if (!$notif){
+            return response()->json([
+                'success' => false,
+                'errors' => ['اعلان خوانده نشده ای با این شناسه وجو ندارد'],
+            ]);
+        }
+
+        $notif->markAsRead();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'اعلان مورد نظر خوانده شد',
+        ]);
+    }
 }
