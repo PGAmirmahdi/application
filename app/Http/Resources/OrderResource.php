@@ -16,6 +16,7 @@ class OrderResource extends JsonResource
             'city' => $this->city,
             'address' => $this->address,
             'status' => $this->status,
+            'tracking_code' => $this->payment->tracking_code,
             'status_text' => Order::STATUS[$this->status],
             'status_color' => Order::STATUS_COLOR[$this->status],
             'total_price' => $this->items()->sum('total_price'),
