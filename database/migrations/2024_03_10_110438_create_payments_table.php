@@ -19,6 +19,7 @@ class CreatePaymentsTable extends Migration
             $table->string('authority')->unique();
             $table->unsignedBigInteger('amount');
             $table->enum('status', ['pending', 'success', 'failed'])->default('pending');
+            $table->unsignedBigInteger('tracking_code')->unique();
             $table->unsignedBigInteger('ref_id')->nullable()->unique();
             $table->longText('verify_response')->nullable();
             $table->timestamps();

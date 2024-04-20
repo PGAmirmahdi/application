@@ -97,7 +97,8 @@ class PaymentController extends Controller
                     Payment::create([
                         'order_id' => $order->id,
                         'authority' => $result['data']['authority'],
-                        'amount' => $data['amount']
+                        'amount' => $data['amount'],
+                        'tracking_code' => random_int(100000, 999999),
                     ]);
                     // end create payment
 
