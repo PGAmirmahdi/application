@@ -79,7 +79,9 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         if ($request->main_image){
-            unlink(public_path($product->main_image));
+            if ($product->main_image){
+                unlink(public_path($product->main_image));
+            }
 
             $main_image = upload_file($request->main_image, 'Products');
         }else{
