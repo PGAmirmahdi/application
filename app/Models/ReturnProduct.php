@@ -11,6 +11,11 @@ class ReturnProduct extends Model
 
     protected $guarded = [];
 
+    const STATUS = [
+        'pending' => 'درحال بررسی',
+        'returned' => 'مرجوع شده'
+    ];
+
     public function order()
     {
         return $this->belongsTo(Order::class);

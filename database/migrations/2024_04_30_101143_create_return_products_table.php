@@ -18,6 +18,7 @@ class CreateReturnProductsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('order_id');
             $table->boolean('all')->comment('مرجوع همه');
+            $table->enum('status', ['pending', 'returned'])->default('pending');
             $table->text('products')->nullable();
             $table->timestamps();
 

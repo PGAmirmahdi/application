@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Product;
+use App\Models\ReturnProduct;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ReturnResource extends JsonResource
@@ -38,6 +39,8 @@ class ReturnResource extends JsonResource
             'user_id' => $this->user_id,
             'order_id' => $this->order_id,
             'all' => $this->all,
+            'status' => $this->status,
+            'status_text' => ReturnProduct::STATUS[$this->status],
             'products' => $products ?? null,
         ];
     }
