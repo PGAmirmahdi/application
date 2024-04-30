@@ -104,6 +104,7 @@ Route::prefix('v1')->group(function (){
 
         // Return
         Route::get('get-returns', [ReturnController::class, 'getReturns']);
+        Route::get('get-order-items', [ReturnController::class, 'getOrderItems']);
         Route::post('create-return', [ReturnController::class, 'createReturn']);
     });
 
