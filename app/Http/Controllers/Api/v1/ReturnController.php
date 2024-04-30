@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ReturnResource;
 use App\Models\Order;
 use App\Models\ReturnProduct;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ class ReturnController extends Controller
 {
     public function getReturns()
     {
-        return auth()->user()->returns()->latest()->get();
+        return ReturnResource::collection(auth()->user()->returns()->latest()->get());
     }
 
     public function createReturn(Request $request)
