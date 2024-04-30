@@ -8,6 +8,7 @@ use App\Http\Controllers\Panel\DeliveryDayController;
 use App\Http\Controllers\Panel\OrderController;
 use App\Http\Controllers\Panel\PaymentController;
 use App\Http\Controllers\Panel\ProductController;
+use App\Http\Controllers\Panel\ReturnController;
 use App\Http\Controllers\Panel\TicketController;
 use App\Http\Controllers\Panel\UserController;
 use App\Http\Controllers\PanelController;
@@ -82,6 +83,11 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Banners
     Route::get('banners', [BannerController::class, 'index'])->name('banners.index');
     Route::post('banner/upload', [BannerController::class, 'upload'])->name('banners.upload');
+
+    // Returns
+    Route::get('returns', [ReturnController::class, 'index'])->name('returns.index');
+    Route::get('returns/{return}', [ReturnController::class, 'show'])->name('returns.show');
+    Route::post('return/change-status/{return}', [ReturnController::class, 'changeStatus'])->name('returns.change-status');
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);

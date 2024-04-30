@@ -12,7 +12,7 @@
                     <i class="icon ti-list"></i>
                 </a>
             </li>
-            <li class="{{ active_sidebar(['orders','orders/{order}','search/orders','payments','payments/{payment}','search/payments','delivery-days']) ? 'active' : '' }}" data-toggle="tooltip" title="سفارشات">
+            <li class="{{ active_sidebar(['orders','orders/{order}','search/orders','payments','payments/{payment}','search/payments','delivery-days','returns','returns/{return}']) ? 'active' : '' }}" data-toggle="tooltip" title="سفارشات">
                 <a href="#navigationOrders" title="سفارشات">
                     <i class="icon ti-shopping-cart"></i>
                 </a>
@@ -67,10 +67,13 @@
                 <a class="{{ active_sidebar(['categories','categories/create','categories/{category}/edit']) ? 'active' : '' }}" href="{{ route('categories.index') }}">دسته بندی ها</a>
             </li>
         </ul>
-        <ul id="navigationOrders" class="{{ active_sidebar(['orders','orders/{order}','search/orders','payments','payments/{payment}','search/payments','delivery-days']) ? 'navigation-active' : '' }}">
+        <ul id="navigationOrders" class="{{ active_sidebar(['orders','orders/{order}','search/orders','payments','payments/{payment}','search/payments','delivery-days','returns','returns/{return}']) ? 'navigation-active' : '' }}">
             <li class="navigation-divider">سفارشات</li>
             <li>
                 <a class="{{ active_sidebar(['orders','orders/{order}','search/orders']) ? 'active' : '' }}" href="{{ route('orders.index') }}">سفارشات</a>
+            </li>
+            <li>
+                <a class="{{ active_sidebar(['returns','returns/{return}']) ? 'active' : '' }}" href="{{ route('returns.index') }}">مرجوعی ها</a>
             </li>
             <li>
                 <a class="{{ active_sidebar(['payments','payments/{payment}','search/payments']) ? 'active' : '' }}" href="{{ route('payments.index') }}">تراکنش ها</a>
