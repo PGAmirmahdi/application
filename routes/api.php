@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\v1\OrderController;
 use App\Http\Controllers\Api\v1\PaymentController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\ProvinceController;
+use App\Http\Controllers\Api\v1\ReturnController;
 use App\Http\Controllers\Api\v1\TicketController;
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\PanelController;
@@ -100,6 +101,10 @@ Route::prefix('v1')->group(function (){
 
         // FCM Token
         Route::post('save-token', [PanelController::class, 'saveFCMToken']);
+
+        // Return
+        Route::get('get-returns', [ReturnController::class, 'getReturns']);
+        Route::post('create-return', [ReturnController::class, 'createReturn']);
     });
 
     // Delivery Days
