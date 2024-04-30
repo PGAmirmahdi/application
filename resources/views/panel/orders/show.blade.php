@@ -149,6 +149,7 @@
                             </thead>
                             <tbody>
                             @foreach($order->items as $key => $item)
+{{--                                @dd($item)--}}
                                 <tr>
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $item->product->title }}</td>
