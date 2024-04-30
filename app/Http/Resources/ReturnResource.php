@@ -42,6 +42,8 @@ class ReturnResource extends JsonResource
             'status' => $this->status,
             'status_text' => ReturnProduct::STATUS[$this->status],
             'products' => $products ?? null,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
