@@ -69,6 +69,11 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function returns()
+    {
+        return $this->hasMany(ReturnProduct::class);
+    }
+
     public function fullName()
     {
         return $this->name . ' ' . $this->family;
