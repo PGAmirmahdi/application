@@ -42,6 +42,7 @@ class ReturnController extends Controller
             $product = Product::find($item->product_id);
 
             $products[] = [
+                'id' => $product->id,
                 'title' => $product->title,
                 'main_image' => $product->main_image,
                 'count' => $item->count,
