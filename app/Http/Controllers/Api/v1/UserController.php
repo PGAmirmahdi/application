@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Code;
+use App\Models\GiftCharge;
 use App\Models\Province;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,6 +34,8 @@ class UserController extends Controller
         // end send code
 
         sendSMS(201523, $user->phone, [$code]);
+
+        $this->activateCharge();
 
         return response()->json([
             'message' => 'user created successfully!',
@@ -203,5 +206,62 @@ class UserController extends Controller
             'success' => true,
             'message' => 'اعلان مورد نظر خوانده شد',
         ]);
+    }
+
+    private function activateCharge()
+    {
+        $operators = [
+            'MTN',
+            'MCI',
+            'RTL',
+            'SHT',
+        ];
+
+        $order_id = rand(100, 999).time();
+        foreach ($operators as $operator){
+            // send request
+            $url = 'https://inax.ir/webservice.php';
+            $data = [
+                'method' => 'topup',
+                'username' => env('INAX_USER'),
+                'password' => env('INAX_PASS'),
+                'operator' => $operator,
+                'amount' => '5000',
+                'mobile' => auth()->user()->phone,
+                'order_id' => $order_id,
+                'charge_type' => 'normal',
+                'company' => 'Mandegar Pars',
+                'pay_type' => 'credit',
+            ];
+            $data_string = json_encode($data);
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+
+            // Next line makes the request absolute insecure
+            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER,
+                array('Content-Type: application/json',
+                    'Content-Length: ' . strlen($data_string))
+            );
+            $result = json_decode(curl_exec($ch));
+            curl_close($ch);
+            // end send request
+
+            GiftCharge::create([
+                'user_id' => auth()->id(),
+                'phone' => auth()->user()->phone,
+                'order_id' => $order_id,
+                'status' => $result->code == 1 ? 1 : 0,
+                'req_data' => json_encode($data),
+                'res_data' => json_encode($result),
+            ]);
+
+            if ($result->code == 1){
+                break;
+            }
+        }
     }
 }
