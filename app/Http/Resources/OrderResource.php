@@ -17,6 +17,7 @@ class OrderResource extends JsonResource
             'address' => $this->address,
             'status' => $this->status,
             'tracking_code' => $this->payment->tracking_code,
+            'authority' => $this->payment ? 'https://www.zarinpal.com/pg/StartPay/'.$this->payment->authority : null,
             'status_text' => Order::STATUS[$this->status],
             'status_color' => Order::STATUS_COLOR[$this->status],
             'total_price' => $this->items()->sum('total_price'),
