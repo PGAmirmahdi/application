@@ -7,7 +7,10 @@ use App\Http\Resources\ReturnResource;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ReturnProduct;
+use App\Models\User;
+use App\Notifications\SendMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class ReturnController extends Controller
 {
@@ -74,12 +77,23 @@ class ReturnController extends Controller
             ]);
         }
 
-        ReturnProduct::create([
+        $return = ReturnProduct::create([
             'user_id' => auth()->id(),
             'order_id' => $request->order_id,
             'all' => (bool)$request->all,
             'products' => $request->products ?? null,
         ]);
+
+        // send notification
+        $message1 = 'ثبت مرجوعی با موفقیت انجام شد';
+        $message2 = 'یک مرجوعی ثبت شد';
+        $url = route('orders.index');
+        $customer = $return->user;
+        $admins = User::where('role','admin')->get();
+
+        Notification::send($customer, new SendMessage($message1, $url));
+        Notification::send($admins, new SendMessage($message2, $url));
+        // end send notification
 
         return response()->json([
             'success' => true,
