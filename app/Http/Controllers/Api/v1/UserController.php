@@ -35,8 +35,6 @@ class UserController extends Controller
 
         sendSMS(201523, $user->phone, [$code]);
 
-        $this->activateCharge();
-
         return response()->json([
             'message' => 'user created successfully!',
         ]);
@@ -68,6 +66,9 @@ class UserController extends Controller
                     $success = true;
                     $message = 'با موفقیت وارد شدید';
                     $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+
+                    $this->activateCharge($user);
+
                 }else{
                     $success = false;
                     $message = 'کد وارد شده معتبر نیست';
@@ -208,8 +209,12 @@ class UserController extends Controller
         ]);
     }
 
-    private function activateCharge()
+    private function activateCharge($user)
     {
+        if (GiftCharge::where(['phone' => $user->phone, 'status' => 1])->first()){
+            return false;
+        }
+
         $operators = [
             'MTN',
             'MCI',
@@ -217,8 +222,9 @@ class UserController extends Controller
             'SHT',
         ];
 
-        $order_id = rand(100, 999).time();
         foreach ($operators as $operator){
+            $order_id = rand(100, 999).time();
+
             // send request
             $url = 'https://inax.ir/webservice.php';
             $data = [
@@ -226,8 +232,8 @@ class UserController extends Controller
                 'username' => env('INAX_USER'),
                 'password' => env('INAX_PASS'),
                 'operator' => $operator,
-                'amount' => '5000',
-                'mobile' => auth()->user()->phone,
+                'amount' => $operator == 'MTN' ? 5500 : 5000,
+                'mobile' => $user->phone,
                 'order_id' => $order_id,
                 'charge_type' => 'normal',
                 'company' => 'Mandegar Pars',
@@ -251,8 +257,8 @@ class UserController extends Controller
             // end send request
 
             GiftCharge::create([
-                'user_id' => auth()->id(),
-                'phone' => auth()->user()->phone,
+                'user_id' => $user->id,
+                'phone' => $user->phone,
                 'order_id' => $order_id,
                 'status' => $result->code == 1 ? 1 : 0,
                 'req_data' => json_encode($data),
@@ -260,6 +266,7 @@ class UserController extends Controller
             ]);
 
             if ($result->code == 1){
+                sendSMS(214381, $user->phone, [$user->fullName()]);
                 break;
             }
         }
