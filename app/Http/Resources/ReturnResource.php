@@ -13,8 +13,10 @@ class ReturnResource extends JsonResource
         $products = [];
         if ($this->products){
             $return_products = json_decode($this->products, true);
+
             foreach ($return_products as $item){
                 $products[] = Product::whereId($item['product_id'])->get()->map(function ($product) use($item){
+
                     return [
                         'title' => $product->title,
                         'main_image' => $product->main_image,
@@ -22,6 +24,7 @@ class ReturnResource extends JsonResource
                     ];
                 });
             }
+
         } else {
             foreach ($this->order->items as $item){
                 $product = Product::find($item->product_id);

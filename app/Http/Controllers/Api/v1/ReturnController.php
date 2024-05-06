@@ -77,11 +77,14 @@ class ReturnController extends Controller
             ]);
         }
 
+
+        $order = Order::find($request->order_id);
+
         $return = ReturnProduct::create([
             'user_id' => auth()->id(),
             'order_id' => $request->order_id,
             'all' => (bool)$request->all,
-            'products' => $request->products ?? null,
+            'products' => (bool)$request->all ? ($order->items()->get(['product_id','count'])->toJson()) : $request->products,
         ]);
 
         // send notification
