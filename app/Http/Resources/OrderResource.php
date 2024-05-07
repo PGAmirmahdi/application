@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Order;
+use App\Models\Payment;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
@@ -20,6 +21,9 @@ class OrderResource extends JsonResource
             'authority' => $this->payment ? 'https://www.zarinpal.com/pg/StartPay/'.$this->payment->authority : null,
             'status_text' => Order::STATUS[$this->status],
             'status_color' => Order::STATUS_COLOR[$this->status],
+            'pay_status' => $this->payment->status,
+            'pay_status_text' => Payment::STATUS[$this->payment->status],
+            'pay_status_color' => Payment::STATUS_COLOR[$this->payment->status],
             'total_price' => $this->items()->sum('total_price'),
             'total_price_text' => number_format($this->items()->sum('total_price')).' تومان',
             'created_at' => $this->created_at,

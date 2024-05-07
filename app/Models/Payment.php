@@ -17,6 +17,12 @@ class Payment extends Model
         'failed' => 'ناموفق',
     ];
 
+    const STATUS_COLOR = [
+        'pending' => 'ffb822',
+        'success' => '0abb87',
+        'failed' => 'e04b4b',
+    ];
+
     public function order()
     {
         return $this->belongsTo(Order::class);
