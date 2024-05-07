@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\ProvinceController;
 use App\Http\Controllers\Api\v1\ReturnController;
 use App\Http\Controllers\Api\v1\TicketController;
+use App\Http\Controllers\Api\v1\UpdateController;
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\PanelController;
 use Illuminate\Http\Request;
@@ -58,6 +59,9 @@ Route::prefix('v1')->group(function (){
     Route::get('get-categories', [CategoryController::class, 'getCategories']);
     Route::get('get-category-children', [CategoryController::class, 'getChildren']);
     Route::get('get-category-products', [CategoryController::class, 'getProducts']);
+
+    // Updates
+    Route::get('get-update', [UpdateController::class, 'getUpdate']);
 
     // Bugs
     Route::post('bug-report', [BugController::class, 'bugReport']);
