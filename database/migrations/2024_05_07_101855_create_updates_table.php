@@ -15,7 +15,7 @@ class CreateUpdatesTable extends Migration
     {
         Schema::create('updates', function (Blueprint $table) {
             $table->id();
-            $table->string('version');
+            $table->string('version')->unique();
             $table->string('title');
             $table->longText('description');
             $table->boolean('required');

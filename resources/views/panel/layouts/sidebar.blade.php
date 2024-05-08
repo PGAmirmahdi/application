@@ -22,7 +22,7 @@
                     <i class="icon ti-comment-alt"></i>
                 </a>
             </li>
-            <li class="{{ active_sidebar(['banners']) ? 'active' : '' }}" data-toggle="tooltip" title="موارد بیشتر">
+            <li class="{{ active_sidebar(['banners','updates','updates/create','updates/{update}/edit']) ? 'active' : '' }}" data-toggle="tooltip" title="موارد بیشتر">
                 <a href="#navigationMore" title="موارد بیشتر">
                     <i class="icon ti-more"></i>
                 </a>
@@ -91,10 +91,13 @@
                 <a class="{{ active_sidebar(['bugs']) ? 'active' : '' }}" href="{{ route('bugs.index') }}">گزارشات خرابی</a>
             </li>
         </ul>
-        <ul id="navigationMore" class="{{ active_sidebar(['banners']) ? 'navigation-active' : '' }}">
+        <ul id="navigationMore" class="{{ active_sidebar(['banners','updates','updates/create','updates/{update}/edit']) ? 'navigation-active' : '' }}">
             <li class="navigation-divider">موارد بیشتر</li>
             <li>
                 <a class="{{ active_sidebar(['banners']) ? 'active' : '' }}" href="{{ route('banners.index') }}">بنر صفحه اصلی</a>
+            </li>
+            <li>
+                <a class="{{ active_sidebar(['updates','updates/create','updates/{update}/edit']) ? 'active' : '' }}" href="{{ route('updates.index') }}">بروزرسانی ها</a>
             </li>
         </ul>
     </div>

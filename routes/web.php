@@ -10,6 +10,7 @@ use App\Http\Controllers\Panel\PaymentController;
 use App\Http\Controllers\Panel\ProductController;
 use App\Http\Controllers\Panel\ReturnController;
 use App\Http\Controllers\Panel\TicketController;
+use App\Http\Controllers\Panel\UpdateController;
 use App\Http\Controllers\Panel\UserController;
 use App\Http\Controllers\PanelController;
 use App\Models\User;
@@ -88,6 +89,9 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     Route::get('returns', [ReturnController::class, 'index'])->name('returns.index');
     Route::get('returns/{return}', [ReturnController::class, 'show'])->name('returns.show');
     Route::post('return/change-status/{return}', [ReturnController::class, 'changeStatus'])->name('returns.change-status');
+
+    // Updates
+    Route::resource('updates', UpdateController::class)->except(['show']);
 });
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);

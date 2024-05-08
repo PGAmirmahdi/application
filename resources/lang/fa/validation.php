@@ -219,6 +219,7 @@ return [
         'price' => 'قیمت',
         'order_limit' => 'حداکثر سفارش',
         'images' => 'تصاویر',
+        'version' => 'نسخه',
     ],
 
 ];
