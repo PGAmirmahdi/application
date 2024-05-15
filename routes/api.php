@@ -47,10 +47,6 @@ Route::prefix('v1')->group(function (){
     Route::post('logout',[UserController::class,'logout'])->middleware('auth:sanctum');
     Route::post('send-code',[UserController::class,'sendCode']);
 
-    // Payments
-    Route::post('pay', [PaymentController::class, 'pay']);
-    Route::post('payment-verify', [PaymentController::class, 'verify']);
-
     // Comments
     Route::get('get-comments', [CommentController::class, 'getComments']);
     Route::post('create-comment', [CommentController::class, 'createComment'])->middleware('auth:sanctum');
@@ -70,6 +66,9 @@ Route::prefix('v1')->group(function (){
     Route::get('get-banners', [BannerController::class, 'getBanners']);
 
     Route::middleware('auth:sanctum')->group(function (){
+        // Payments
+        Route::post('pay', [PaymentController::class, 'pay']);
+        Route::post('payment-verify', [PaymentController::class, 'verify']);
 
         // Profile
         Route::get('get-profile', [UserController::class, 'getProfile']);
