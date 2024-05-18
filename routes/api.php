@@ -65,11 +65,11 @@ Route::prefix('v1')->group(function (){
     // Banners
     Route::get('get-banners', [BannerController::class, 'getBanners']);
 
-    Route::middleware('auth:sanctum')->group(function (){
-        // Payments
-        Route::post('pay', [PaymentController::class, 'pay']);
-        Route::post('payment-verify', [PaymentController::class, 'verify']);
+    // Payments
+    Route::post('pay', [PaymentController::class, 'pay']);
+    Route::post('payment-verify', [PaymentController::class, 'verify']);
 
+    Route::middleware('auth:sanctum')->group(function (){
         // Profile
         Route::get('get-profile', [UserController::class, 'getProfile']);
         Route::put('edit-profile', [UserController::class, 'editProfile']);
