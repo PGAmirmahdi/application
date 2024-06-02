@@ -18,6 +18,10 @@
                         <div class="text-justify" style="line-height: 1.7rem; color: #606060" id="comment_text"></div>
                     </div>
                     <div class="form-group">
+                        <label for="comment_favorite" style="font-size: 1rem;">امتیاز</label>
+                        <div class="text-justify" style="line-height: 1.7rem; color: #606060" id="comment_favorite"></div>
+                    </div>
+                    <div class="form-group">
                         <label for="comment_status">وضعیت</label>
                         <select name="comment_status" class="form-control" id="comment_status">
                             <option value="pending">در حال بررسی</option>
@@ -47,6 +51,7 @@
                         <th>شماره تماس</th>
                         <th>عنوان نظر</th>
                         <th>متن نظر</th>
+                        <th>امتیاز</th>
                         <th>وضعیت</th>
                         <th>تاریخ ثبت</th>
                         <th>مشاهده</th>
@@ -60,6 +65,7 @@
                             <td>{{ $comment->user->phone }}</td>
                             <td>{{ $comment->title }}</td>
                             <td>{{ \Illuminate\Support\Str::limit($comment->text, 60) }}</td>
+                            <td>{{$comment->favorite}}</td>
                             <td>
                                 @if($comment->status == 'accepted')
                                     <span class="badge badge-success">{{ \App\Models\Comment::STATUS[$comment->status] }}</span>
