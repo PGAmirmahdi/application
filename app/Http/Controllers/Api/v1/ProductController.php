@@ -61,6 +61,12 @@ class ProductController extends Controller
                 }
 
                 return Product::orderBy('price')->paginate(10);
+            case 'favorite':
+                if ($category_id){
+                    return Product::where('category_id', $category_id)->orderBy('favorite')->paginate(10);
+                }
+
+                return Product::orderBy('price')->paginate(10);
             case 'expensive':
                 if ($category_id){
                     return Product::where('category_id', $category_id)->orderByDesc('price')->paginate(10);
@@ -94,7 +100,7 @@ class ProductController extends Controller
             default:
                 return response()->json([
                     'success' => false,
-                    'errors' => ['یکی از 3 مقدار cheapest, expensive و یا bestselling الزامی است']
+                    'errors' => ['یکی از 4 مقدار cheapest, expensive, favorite و یا bestselling الزامی است']
                 ]);
         }
     }
