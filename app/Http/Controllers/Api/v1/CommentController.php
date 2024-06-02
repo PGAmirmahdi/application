@@ -65,6 +65,7 @@ class CommentController extends Controller
             'product_id' => $request->product_id,
             'title' => $request->title,
             'text' => $request->text,
+            'favorite' => $request->favorite,
         ]);
 
         return response()->json([

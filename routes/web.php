@@ -56,7 +56,7 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     Route::resource('categories', CategoryController::class)->except(['show']);
 
     // Tickets
-    Route::resource('tickets',TicketController::class)->except(['create','store','show','delete']);
+    Route::resource('tickets',TicketController::class)->except(['delete']);
     Route::get('change-status-ticket/{ticket}',[TicketController::class, 'changeStatus'])->name('ticket.changeStatus');
 
     // Orders

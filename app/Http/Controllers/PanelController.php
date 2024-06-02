@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class PanelController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         return view('panel.index');
     }

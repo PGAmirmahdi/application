@@ -19,6 +19,7 @@ class CreateCommentsTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->string('title');
             $table->longText('text');
+            $table->integer('favorite')->default('0')->comment('میزان رضایت');
             $table->enum('status', ['pending','accepted','rejected'])->default('pending');
             $table->timestamps();
 

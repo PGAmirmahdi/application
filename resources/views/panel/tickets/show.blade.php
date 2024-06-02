@@ -64,7 +64,7 @@
                         @enderror
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit">ثبت فرم</button>
+                <button class="btn btn-primary" type="button" disabled>ثبت فرم</button>
             </form>
         </div>
     </div>

@@ -5,6 +5,10 @@
         <div class="card-body">
             <div class="card-title d-flex justify-content-between align-items-center">
                 <h6>تیکت ها</h6>
+                    <a href="{{ route('tickets.create') }}" class="btn btn-primary">
+                        <i class="fa fa-plus mr-2"></i>
+                        ثبت تیکت
+                    </a>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered dataTable dtr-inline text-center">
@@ -35,7 +39,7 @@
                             </td>
                             <td>{{ verta($ticket->created_at)->format('H:i - Y/m/d') }}</td>
                             <td>
-                                <a class="btn btn-info btn-floating" href="{{ route('tickets.edit', $ticket->id) }}">
+                                <a class="btn btn-info btn-floating" href="{{ route('tickets.show', $ticket->id) }}">
                                     <i class="fa fa-eye"></i>
                                 </a>
                             </td>

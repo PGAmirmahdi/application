@@ -19,9 +19,9 @@ class TicketController extends Controller
         return view('panel.tickets.index', compact('tickets'));
     }
 
-    public function create()
+    public function create(Ticket $ticket)
     {
-        //
+        return view('panel.tickets.create', compact('ticket'));
     }
 
     public function store(Request $request)
