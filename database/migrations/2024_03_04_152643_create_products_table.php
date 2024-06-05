@@ -25,6 +25,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('main_image');
             $table->text('images')->nullable();
+            $table->float('favorites')->nullable()->default(3)->comment('امتیاز');
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories');

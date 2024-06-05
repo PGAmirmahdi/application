@@ -61,12 +61,12 @@ class ProductController extends Controller
                 }
 
                 return Product::orderBy('price')->paginate(10);
-            case 'favorite':
+            case 'favorites':
                 if ($category_id){
-                    return Product::where('category_id', $category_id)->orderBy('favorite')->paginate(10);
+                    return Product::where('category_id', $category_id)->orderByDesc('favorites')->paginate(10);
                 }
 
-                return Product::orderBy('price')->paginate(10);
+                return Product::orderByDesc('favorites')->paginate(10);
             case 'expensive':
                 if ($category_id){
                     return Product::where('category_id', $category_id)->orderByDesc('price')->paginate(10);
