@@ -52,7 +52,6 @@ class CommentController extends Controller
         }
 
         $product = Product::find($request->product_id);
-
         if (!$product) {
             return response()->json([
                 'success' => false,
@@ -67,8 +66,14 @@ class CommentController extends Controller
             'text' => $request->text,
             'favorite' => $request->favorite,
         ]);
-
-        return response()->json([
+        $totalfavorite = Product::query()->where('id', '=', $request->product_id)->sum('favorite');
+        $countfavorite= Product::query()->where('id', '=', $request->product_id)->count('favorite');
+        if ($countfavorite > 0) {
+            $averagefavorite = $totalfavorite / $countfavorite;
+        } else {
+            $averagefavorite = 0;
+        }
+        return response(compact('averagefavorite'))->json([
             'success' => true,
             'message' => 'نظر شما با موفقیت ثبت شد'
         ]);
