@@ -100,7 +100,7 @@ class ProductController extends Controller
             default:
                 return response()->json([
                     'success' => false,
-                    'errors' => ['یکی از 4 مقدار cheapest, expensive, favorite و یا bestselling الزامی است']
+                    'errors' => ['یکی از 4 مقدار cheapest, expensive, favorites و یا bestselling الزامی است']
                 ]);
         }
     }
