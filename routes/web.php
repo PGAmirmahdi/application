@@ -84,7 +84,7 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Banners
     Route::get('banners', [BannerController::class, 'index'])->name('banners.index');
     Route::post('banner/upload', [BannerController::class, 'upload'])->name('banners.upload');
-    Route::post('banner_mid/upload', [BannerController::class, 'upload_mid'])->name('banners_mid.upload');
+    Route::post('banner_mid/upload_mid', [BannerController::class, 'upload_mid'])->name('banners_mid.upload_mid');
     // Returns
     Route::get('returns', [ReturnController::class, 'index'])->name('returns.index');
     Route::get('returns/{return}', [ReturnController::class, 'show'])->name('returns.show');

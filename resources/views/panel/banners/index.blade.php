@@ -40,7 +40,7 @@
                 @endforeach
             </div>
             <div class="row mt-5">
-                <form action="{{ route('banners_mid.upload') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('banners_mid.upload_mid') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="images_mid">انتخاب تصاویر بنر میانی</label>

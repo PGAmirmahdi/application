@@ -12,4 +12,8 @@ class BannerController extends Controller
     {
         return Banner::all();
     }
+    public function getBanners_mid()
+    {
+        return Banner::all();
+    }
 }

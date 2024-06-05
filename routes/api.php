@@ -64,7 +64,7 @@ Route::prefix('v1')->group(function (){
 
     // Banners
     Route::get('get-banners', [BannerController::class, 'getBanners']);
-
+    Route::get('get-banners_mid', [BannerController::class, 'getBanners_mid']);
     // Payments
     Route::post('pay', [PaymentController::class, 'pay']);
     Route::post('payment-verify', [PaymentController::class, 'verify']);
