@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BackToAppController;
 use App\Http\Controllers\Panel\BannerController;
 use App\Http\Controllers\Panel\BugController;
 use App\Http\Controllers\Panel\CategoryController;
@@ -93,6 +94,11 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Updates
     Route::resource('updates', UpdateController::class)->except(['show']);
 });
+// Back To the application
+Route::get('BackToApp', function () {
+    return view('panel.payments.BackToApp');
+})->name("BackToApp");
+
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);
 

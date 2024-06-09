@@ -63,7 +63,7 @@ class PaymentController extends Controller
         $data = [
             "merchant_id" => env('MERCHANT_ID'),
             "amount" => $amount,
-            "callback_url" => 'https://artintoner.com',
+            "callback_url" => 'https://app.mpsystem.ir/BackToApp',
             "description" => "خرید کالا",
         ];
 
