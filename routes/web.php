@@ -16,6 +16,7 @@ use App\Http\Controllers\Panel\UserController;
 use App\Http\Controllers\PanelController;
 use App\Models\User;
 use App\Notifications\SendMessage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
@@ -95,8 +96,9 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     Route::resource('updates', UpdateController::class)->except(['show']);
 });
 // Back To the application
-Route::get('BackToApp', function () {
-    return view('panel.payments.BackToApp');
+Route::get('BackToApp', function (Request $request) {
+    $status=$request->query('Status');
+    return view('panel.payments.BackToApp',['Status'=>$status]);
 })->name("BackToApp");
 
 

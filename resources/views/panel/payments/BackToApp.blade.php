@@ -13,7 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body onload="load()">
 <div class="No1">
     @if($status == "ok")
         <i style="color: #3aff55;font-size: 125px" class="material-icons">check_circle</i>
@@ -37,15 +37,36 @@
     }
     *{
         font-family: Estedad, Estedad;
+        overflow: hidden;
+    }
+    i{
+        transform: translateX(100px);
+        opacity: 0;
+        visibility: hidden;
+        transition: .3s;
     }
     h3{
+        transition: .3s;
+        transform: translateX(100px);
+        opacity: 0;
+        visibility: hidden;
+        transition-delay:.1s;
         font-size: 30px !important;
     }
     p{
+        transition: .3s;
         font-weight: lighter;
         font-size: 14px;
+        transform: translateX(100px);
+        opacity: 0;
+        visibility: hidden;
+        transition-delay:.2s;
     }
     button{
+        transform: translateX(100px);
+        opacity: 0;
+        visibility: hidden;
+        transition-delay:.3s;
         width: 50%;
         height: 50px;
         font-size: 22px;
@@ -59,6 +80,33 @@
         box-shadow: 0px 1px 1px 0px #a63aff;
         transition: .2s ease-in-out;
     }
+    i.load{
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(0px);
+        transition: .5s;
+    }
+    h3.load{
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(0px);
+        transition: .5s;
+        transition-delay: .1s;
+    }
+    p.load{
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(0px);
+        transition: .5s;
+        transition-delay: .3s;
+    }
+    button.load{
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(0px);
+        transition: .5s;
+        transition-delay: .5s;
+    }
     button:hover{
         transition: .2s ease-in-out;
         background-color: #7b00ff;
@@ -71,7 +119,17 @@
         justify-content: center;
         align-items: center;
         gap: 10px;
+    }@media only screen and (max-width:765px){
+        p{
+            font-size: 12px !important;
+        }
+        button{
+            width: 80%;
+            height: 40px;
+            font-size: 18px;
+        }
     }
+
 </style>
 {{--Link JS--}}
 <script src="{{asset('assets/js/BackToApp.js')}}"></script>
