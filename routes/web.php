@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\BackToAppController;
 use App\Http\Controllers\Panel\BannerController;
 use App\Http\Controllers\Panel\BugController;
 use App\Http\Controllers\Panel\CategoryController;
@@ -99,7 +98,7 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
 Route::get('BackToApp', function (Request $request) {
     $Status=$request->query('Status');
     $authority=$request->query('Authority');
-    return view('panel.payments.BackToApp',['Status'=>$Status,'Authority'=>$authority]);
+    return view('panel.payments.BackToApp',['Status'=>$Status,'authority'=>$authority]);
 })->name("BackToApp");
 
 

@@ -190,7 +190,7 @@ class PaymentController extends Controller
 
                     // send notification
                     $message1 = 'سفارش شما با موفقیت پرداخت و ثبت گردید';
-                    $message2 = 'یک سفارش موفقیت پرداخت و ثبت گردید';
+                    $message2 = 'یک سفارش با موفقیت پرداخت و ثبت گردید';
                     $url = route('orders.index');
                     $customer = $payment->order->user;
                     $admins = User::where('role','admin')->get();
