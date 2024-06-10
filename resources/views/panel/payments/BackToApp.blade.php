@@ -15,7 +15,7 @@
 </head>
 <body onload="load()">
 <div class="No1">
-    @if($Status == "ok")
+    @if($Status == "OK")
         <i style="color: #3aff55;font-size: 125px" class="material-icons">check_circle</i>
         <h3>پرداخت موفق</h3>
         <p>پرداخت شما با موفقیت ثبت شد،لطفا برای ادامه از دکمه زیر اقدام کنید</p>
