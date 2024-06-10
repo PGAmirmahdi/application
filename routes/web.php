@@ -98,7 +98,8 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
 // Back To the application
 Route::get('BackToApp', function (Request $request) {
     $status=$request->query('Status');
-    return view('panel.payments.BackToApp',['Status'=>$status]);
+    $authority=$request->query('Authority');
+    return view('panel.payments.BackToApp',['Status'=>$status,'Authority'=>$authority]);
 })->name("BackToApp");
 
 
