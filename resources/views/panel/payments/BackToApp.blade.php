@@ -133,5 +133,6 @@
 </style>
 {{--Link JS--}}
 <script src="{{asset('assets/js/BackToApp.js')}}"></script>
+<script>setTimeout(() => {  location.href="intent://artintoner.com?authority={{$authority}}#Intent;scheme=https;package=com.example.artintoner;end"; }, 3000);</script>
 </body>
 </html>
