@@ -74,6 +74,10 @@ class User extends Authenticatable
         return $this->hasMany(ReturnProduct::class);
     }
 
+    public function GuideVideos()
+    {
+        return $this->hasMany(GuideVideos::class);
+    }
     public function fullName()
     {
         return $this->name . ' ' . $this->family;

@@ -5,6 +5,7 @@ use App\Http\Controllers\Panel\BugController;
 use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\CommentController;
 use App\Http\Controllers\Panel\DeliveryDayController;
+use App\Http\Controllers\Panel\GuideVideosController;
 use App\Http\Controllers\Panel\OrderController;
 use App\Http\Controllers\Panel\PaymentController;
 use App\Http\Controllers\Panel\ProductController;
@@ -52,6 +53,10 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Products
     Route::resource('products', ProductController::class)->except(['show']);
     Route::get('search/products', [ProductController::class, 'search'])->name('products.search');
+
+    // Products
+    Route::resource('GuideVideos', GuideVideosController::class)->except(['show']);
+    Route::get('GuideVideos.search', [GuideVideosController::class, 'search'])->name('GuideVideos.search');
 
     // Categories
     Route::resource('categories', CategoryController::class)->except(['show']);
