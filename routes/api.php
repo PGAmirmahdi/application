@@ -66,6 +66,10 @@ Route::prefix('v1')->group(function (){
     // Banners
     Route::get('get-banners', [BannerController::class, 'getBanners']);
     Route::get('get-banners_mid', [BannerController::class, 'getBanners_mid']);
+
+    //    Guide Videos
+    Route::get('getGuideVideos', [GuideVideosController::class, 'getGuideVideos']);
+
     // Payments
     Route::post('pay', [PaymentController::class, 'pay']);
     Route::post('payment-verify', [PaymentController::class, 'verify']);
@@ -111,9 +115,6 @@ Route::prefix('v1')->group(function (){
         Route::get('get-order-items', [ReturnController::class, 'getOrderItems']);
         Route::post('create-return', [ReturnController::class, 'createReturn']);
     });
-    //    Guide Videos
-    Route::get('getGuideVideos', [GuideVideosController::class, 'getGuideVideos']);
-
     // Delivery Days
     Route::get('get-delivery-days', [DeliveryDayController::class, 'getDeliveryDays']);
     Route::get('delivery-day/is-selected', [DeliveryDayController::class, 'isSelected']);

@@ -11,6 +11,12 @@
 <script src="/vendors/charts/peity/jquery.peity.min.js"></script>
 <script src="/assets/js/examples/charts/peity.js"></script>
 
+
+<!-- Load jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<!-- Load jQuery Form Plugin -->
+<script src="https://malsup.github.io/jquery.form.js"></script>
+
 <!-- Datepicker -->
 <script src="/vendors/datepicker/daterangepicker.js"></script>
 

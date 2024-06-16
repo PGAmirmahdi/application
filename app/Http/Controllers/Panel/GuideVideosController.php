@@ -23,8 +23,14 @@ class GuideVideosController extends Controller
         return view('panel.GuideVideos.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreGuideVideosRequest $request)
     {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'title' => 'required|string|max:255',
+            'main_video' => 'required|file|mimes:mp4,avi,mov|max:10240',
+            'text' => 'required|string',
+        ]);
         $product = Product::find($request->product_id);
         if (!$product) {
             dd($product);
@@ -54,7 +60,7 @@ class GuideVideosController extends Controller
         ]);
 
         alert()->success('ویدئو با موفقیت آپلود شدند', 'آپلود ویدئو ها');
-        return redirect()->route('GuideVideos.index');
+        return response()->json(['success' => 'فایل با موفقیت آپلود شد']);
     }
 
     public function show($id)
@@ -68,7 +74,7 @@ class GuideVideosController extends Controller
         return view('panel.GuideVideos.edit', compact('video'));
     }
 
-    public function update(Request $request,  GuideVideos $videos,$id)
+    public function update(UpdateGuideVideosRequest $request,  GuideVideos $videos,$id)
     {
         if ($request->main_video){
             if ($videos->main_video){
@@ -88,7 +94,7 @@ class GuideVideosController extends Controller
         ];
         $item= $videos::query()->where('id', $id)->update($item2);
         alert()->success('ویدئو مورد نظر با موفقیت ویرایش شد','ویرایش ویدئو');
-        return redirect()->route('GuideVideos.index',compact('item'));
+        return response()->json(['success' => 'فایل با موفقیت آپلود شد']);
     }
 
     public function destroy(GuideVideos $videos,$id)

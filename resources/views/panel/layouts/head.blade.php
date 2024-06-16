@@ -10,6 +10,9 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="/assets/media/image/favicon.png">
 
+    {{--    Fonts   --}}
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
     <!-- Theme Color -->
     <meta name="theme-color" content="#5867dd">
 
@@ -38,14 +41,12 @@
     <script src="/assets/js/sweetalert.min.js"></script>
 
     <link rel="stylesheet" href="/vendors/select2/css/select2.min.css" type="text/css">
-
     <!-- Datepicker -->
     <link rel="stylesheet" href="/vendors/datepicker-jalali/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="/vendors/datepicker/daterangepicker.css">
 
     <!-- DataTable -->
     <link rel="stylesheet" href="/vendors/dataTable/responsive.bootstrap.min.css" type="text/css">
-
     <style>
         .dataTable th{
             cursor: pointer !important;
