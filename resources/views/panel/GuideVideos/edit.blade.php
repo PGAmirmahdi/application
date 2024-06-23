@@ -31,7 +31,7 @@
                         @enderror
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
-                        <label for="main_video">آپلود ویدئو<span class="text-muted"> (تک انتخابی)</span><span
+                        <label for="main_video">آپلود ویدئو<span class="text-muted"> (چند انتخابی)</span><span
                                 class="text-danger">*</span></label>
                         <input type="file" name="main_video" class="form-control" id="main_video"
                                value="{{ old('main_video') }}">
@@ -94,40 +94,55 @@
     {{--Jquery--}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            console.log("فایل آماده");
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            beforeSend: function () {
+                console.log("قبل از ارسال");
+                var percentVal = '0%';
+                bar.width(percentVal);
+                percent.html(percentVal);
+            },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = Math.round((evt.loaded / evt.total) * 100);
+                        var percentVal = percentComplete + '%';
+                        bar.width(percentVal);
+                        percent.html(percentVal);
+                    }
+                }, false);
+                return xhr;
+            },
+            success: function (response) {
+                console.log("آپلود موفق", response);
+                var percentVal = '100%';
+                bar.width(percentVal);
+                percent.html(percentVal);
+                alert(response.success);
 
-            var bar = $(".bar");
-            var percent = $(".percent");
-
-            $('#product-form').ajaxForm({
-                beforeSend: function () {
-                    console.log("قبل از ارسال");
-                    var percentVal = '0%';
-                    bar.width(percentVal);
-                    percent.html(percentVal);
-                },
-                uploadProgress: function (event, position, total, percentComplete) {
-                    console.log("در حال آپلود", percentComplete);
-                    var percentVal = percentComplete + '%';
-                    bar.width(percentVal);
-                    percent.html(percentVal);
-                },
-                success: function (response) {
-                    console.log("آپلود موفق", response);
-                    var percentVal = '100%';
-                    bar.width(percentVal);
-                    percent.html(percentVal);
-                    alert("فایل با موفقیت آپلود شد");
-                },
-                complete: function (xhr) {
-                    console.log("Complete", xhr.responseText);
-                },
-                error: function (xhr) {
-                    console.log("Error", xhr.responseText);
+                window.location.href = "{{ route('GuideVideos.index') }}";
+            },
+            error: function (xhr) {
+                console.log("Error", xhr);
+                if (xhr.status === 422) {
+                    var errors = xhr.responseJSON.errors;
+                    var errorMessage = "خطا در اعتبارسنجی:<br>";
+                    for (var key in errors) {
+                        if (errors.hasOwnProperty(key)) {
+                            errorMessage += "- " + errors[key][0] + "<br>";
+                        }
+                    }
+                    alert(errorMessage);
+                } else {
                     alert("مشکلی در ارسال فایل وجود دارد");
                 }
-            });
+            }
         });
+
     </script>
 @endsection

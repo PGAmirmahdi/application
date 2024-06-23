@@ -25,38 +25,35 @@ class GuideVideosController extends Controller
 
     public function store(StoreGuideVideosRequest $request)
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'title' => 'required|string|max:255',
-            'main_video' => 'required|file|mimes:mp4,avi,mov|max:10240',
-            'text' => 'required|string',
-        ]);
         $product = Product::find($request->product_id);
         if (!$product) {
-            dd($product);
-//            return response()->json([
-//                'success' => false,
-//                'errors' => 'محصولی با این شناسه وجود ندارد'
-//            ]);
+            return response()->json([
+                'success' => false,
+                'errors' => 'محصولی با این شناسه وجود ندارد'
+            ]);
         }
-        $main_video = upload_file($request->main_video, 'GuideVideo');
 
-        // videos
-//        $images = [];
-//        if ($request->videos){
-//            foreach ($request->videos as $video){
-//                $video = upload_file($video, 'GuideVideos');
-//                $videos[] = $video;
-//            }
-//        }
-        // end videos
+        // Handle the main video upload
+        $main_video_file = $request->file('main_video');
+        if ($main_video_file) {
+            $main_video = upload_file($main_video_file, 'GuideVideo');
+        } else {
+            return response()->json([
+                'success' => false,
+                'errors' => 'ویدئوی اصلی ارسال نشده است'
+            ]);
+        }
+
+        // Create GuideVideo
         GuideVideos::create([
             'title' => $request->title,
             'text' => $request->text,
             'product_id' => $request->product_id,
             'user_id' => Auth::id(),
-            'main_video'=> $main_video
-//            'category_id' => $request->category,
+            'name' => $main_video_file->getClientOriginalName(),
+            'size' => $main_video_file->getSize(),
+            'type' => $main_video_file->getClientOriginalExtension(),
+            'main_video'=> $main_video,
         ]);
 
         alert()->success('ویدئو با موفقیت آپلود شدند', 'آپلود ویدئو ها');
@@ -76,26 +73,36 @@ class GuideVideosController extends Controller
 
     public function update(UpdateGuideVideosRequest $request,  GuideVideos $videos,$id)
     {
-        if ($request->main_video){
-            if ($videos->main_video){
+        if ($request->hasFile('main_video')) {
+            if ($videos->main_video) {
                 unlink(public_path($videos->main_video));
             }
 
-            $main_video = upload_file($request->main_video, 'GuideVideo');
-        }else{
+            $main_video_file = $request->file('main_video');
+            $main_video = upload_file($main_video_file, 'GuideVideo');
+        } else {
             $main_video = $videos->main_video;
         }
-        $item2=[
+
+        $item2 = [
             'title' => $request->title,
             'text' => $request->text,
             'product_id' => $request->product_id,
             'user_id' => Auth::id(),
-            'main_video'=> $main_video
+            'main_video' => $main_video,
         ];
-        $item= $videos::query()->where('id', $id)->update($item2);
+        if ($request->hasFile('main_video')) {
+            $item2['name'] = $main_video_file->getClientOriginalName();
+            $item2['size'] = $main_video_file->getSize();
+            $item2['type'] = $main_video_file->getClientOriginalExtension();
+        }
+
+        $videos->where('id', $id)->update($item2);
+
         alert()->success('ویدئو مورد نظر با موفقیت ویرایش شد','ویرایش ویدئو');
         return response()->json(['success' => 'فایل با موفقیت آپلود شد']);
     }
+
 
     public function destroy(GuideVideos $videos,$id)
     {

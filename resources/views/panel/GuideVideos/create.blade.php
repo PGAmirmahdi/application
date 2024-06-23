@@ -36,8 +36,8 @@
                         @enderror
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="editor-demo2"> توضیحات <span class="text-danger">*</span> </label>
-                        <textarea id="editor-demo2" name="text">{!! old('text') !!}</textarea>
+                        <label for="text"> توضیحات <span class="text-danger">*</span> </label>
+                        <input type="text" id="text" name="text">{!! old('text') !!}
                         @error('text')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
@@ -74,38 +74,64 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            console.log("فایل آماده");
+            var form = $('#product-form');
+            var bar = $('.bar');
+            var percent = $('.percent');
 
-            var bar = $(".bar");
-            var percent = $(".percent");
+            form.on('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission
 
-            $('#product-form').ajaxForm({
-                beforeSend: function() {
-                    console.log("قبل از ارسال");
-                    var percentVal = '0%';
-                    bar.width(percentVal);
-                    percent.html(percentVal);
-                },
-                uploadProgress: function(event, position, total, percentComplete) {
-                    console.log("در حال آپلود", percentComplete);
-                    var percentVal = percentComplete + '%';
-                    bar.width(percentVal);
-                    percent.html(percentVal);
-                },
-                success: function(response) {
-                    console.log("آپلود موفق", response);
-                    var percentVal = '100%';
-                    bar.width(percentVal);
-                    percent.html(percentVal);
-                    alert("فایل با موفقیت آپلود شد");
-                },
-                complete: function(xhr) {
-                    console.log("Complete", xhr.responseText);
-                },
-                error: function(xhr) {
-                    console.log("Error", xhr.responseText);
-                    alert("مشکلی در ارسال فایل وجود دارد");
-                }
+                var formData = new FormData(this); // Gather form data
+
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+                        console.log("قبل از ارسال");
+                        var percentVal = '0%';
+                        bar.width(percentVal);
+                        percent.html(percentVal);
+                    },
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = Math.round((evt.loaded / evt.total) * 100);
+                                var percentVal = percentComplete + '%';
+                                bar.width(percentVal);
+                                percent.html(percentVal);
+                            }
+                        }, false);
+                        return xhr;
+                    },
+                    success: function (response) {
+                        console.log("آپلود موفق", response);
+                        var percentVal = '100%';
+                        bar.width(percentVal);
+                        percent.html(percentVal);
+                        alert(response.success);
+
+                        window.location.href = "{{ route('GuideVideos.index') }}";
+                    },
+                    error: function (xhr) {
+                        console.log("Error", xhr);
+                        if (xhr.status === 422) {
+                            var errors = xhr.responseJSON.errors;
+                            var errorMessage = "خطا در اعتبارسنجی:<br>";
+                            for (var key in errors) {
+                                if (errors.hasOwnProperty(key)) {
+                                    errorMessage += "- " + errors[key][0] + "<br>";
+                                }
+                            }
+                            alert(errorMessage);
+                        } else {
+                            alert("مشکلی در ارسال فایل وجود دارد");
+                        }
+                    }
+                });
             });
         });
     </script>

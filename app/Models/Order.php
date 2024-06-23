@@ -48,7 +48,10 @@ class Order extends Model
     {
         return $this->belongsTo(Province::class);
     }
-
+    public function coupons()
+    {
+        return $this->belongsToMany(Coupons::class);
+    }
     public function return()
     {
         return $this->hasOne(ReturnProduct::class);

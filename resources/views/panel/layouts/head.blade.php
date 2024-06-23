@@ -52,6 +52,7 @@
             cursor: pointer !important;
         }
 
+
         .zoom-in-out {
             animation: zoom-in-zoom-out 1s ease infinite;
         }

@@ -78,63 +78,76 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product)
     {
-        if ($request->main_image){
-            if ($product->main_image){
-                unlink(public_path($product->main_image));
+        DB::beginTransaction();
+
+        try {
+            // Handle main image
+            if ($request->hasFile('main_image')) {
+                if ($product->main_image && file_exists(public_path($product->main_image))) {
+                    unlink(public_path($product->main_image));
+                }
+
+                $main_image = upload_file($request->main_image, 'Products');
+            } else {
+                $main_image = $product->main_image;
             }
 
-            $main_image = upload_file($request->main_image, 'Products');
-        }else{
-            $main_image = $product->main_image;
-        }
+            // Handle images
+            $images = [];
+            if ($request->hasFile('images')) {
+                if ($product->images) {
+                    foreach (json_decode($product->images) as $image) {
+                        if (file_exists(public_path($image))) {
+                            unlink(public_path($image));
+                        }
+                    }
+                }
 
-        // images
-        $images = [];
-        if ($request->images){
-            if ($product->images){
-                foreach (json_decode($product->images) as $image){
-                    unlink(public_path($image));
+                foreach ($request->images as $image) {
+                    $uploadedImage = upload_file($image, 'Products');
+                    $images[] = $uploadedImage;
+                }
+            } else {
+                $images = json_decode($product->images) ?? [];
+            }
+
+            // Handle product properties
+            $properties = [];
+            if ($request->filled('keys') && $request->filled('values')) {
+                foreach ($request->keys as $i => $key) {
+                    $properties[] = [
+                        'key' => $key,
+                        'value' => $request->values[$i],
+                    ];
                 }
             }
 
-            foreach ($request->images as $image){
-                $image = upload_file($image, 'Products');
-                $images[] = $image;
-            }
-        }else{
-            $images = json_decode($product->images) ?? [];
+            // Update product
+            $product->update([
+                'title' => $request->title,
+                'code' => $request->code,
+                'sku' => $request->sku,
+                'price' => $request->price,
+                'limit' => $request->order_limit,
+                'description' => $request->description,
+                'main_image' => $main_image,
+                'images' => count($images) ? json_encode($images) : null,
+                'category_id' => $request->category,
+                'properties' => count($properties) ? json_encode($properties) : null,
+            ]);
+
+            DB::commit();
+
+            alert()->success('محصول مورد نظر با موفقیت ویرایش شد','ویرایش محصول');
+            return redirect()->route('products.index');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            alert()->error('خطایی در ویرایش محصول رخ داد','ویرایش محصول');
+            return redirect()->route('products.index')->with('error', 'Error updating product');
         }
-        // end images
-
-        // product properties
-        $properties = [];
-        if ($request->keys){
-            foreach ($request->keys as $i => $key){
-                $properties[] = [
-                    'key' => $key,
-                    'value' => $request->values[$i],
-                ];
-            }
-        }
-        // end product properties
-
-        // create product
-        $product->update([
-            'title' => $request->title,
-            'code' => $request->code,
-            'sku' => $request->sku,
-            'price' => $request->price,
-            'limit' => $request->order_limit,
-            'description' => $request->description,
-            'main_image' => $main_image,
-            'images' => count($images) ? json_encode($images) : null,
-            'category_id' => $request->category,
-            'properties' => count($properties) ? json_encode($properties) : null,
-        ]);
-
-        alert()->success('محصول مورد نظر با موفقیت ویرایش شد','ویرایش محصول');
-        return redirect()->route('products.index');
     }
+
 
     public function destroy(Product $product)
     {

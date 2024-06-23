@@ -24,11 +24,10 @@ class StoreGuideVideosRequest extends FormRequest
     public function rules()
     {
         return [
+            'product_id' => 'required|exists:products,id',
             'title' => 'required',
+            'main_video' => 'nullable|file|mimes:mp4,mov,avi|max:102400',
             'text' => 'required',
-            'product_id' => 'required',
-            'main_video' => 'required|file|max:102400',
-            'main_video.*' => 'required|file|max:102400',
         ];
     }
 

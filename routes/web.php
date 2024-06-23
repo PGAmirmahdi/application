@@ -4,6 +4,7 @@ use App\Http\Controllers\Panel\BannerController;
 use App\Http\Controllers\Panel\BugController;
 use App\Http\Controllers\Panel\CategoryController;
 use App\Http\Controllers\Panel\CommentController;
+use App\Http\Controllers\Panel\CouponsController;
 use App\Http\Controllers\Panel\DeliveryDayController;
 use App\Http\Controllers\Panel\GuideVideosController;
 use App\Http\Controllers\Panel\OrderController;
@@ -57,6 +58,9 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Products
     Route::resource('GuideVideos', GuideVideosController::class)->except(['show']);
     Route::get('GuideVideos.search', [GuideVideosController::class, 'search'])->name('GuideVideos.search');
+
+    // Coupons
+    Route::resource('coupons', CouponsController::class)->except('show');
 
     // Categories
     Route::resource('categories', CategoryController::class)->except(['show']);
