@@ -27,6 +27,7 @@ class UpdateCouponsRequest extends FormRequest
             'title' => 'required',
             'code' => 'required|unique:coupons,code,'.$this->coupon->id,
             'amount_pc' => 'required',
+            'limit'=>'required'
         ];
     }
 }

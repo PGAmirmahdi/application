@@ -61,8 +61,6 @@ class CouponsController extends Controller
 
     public function destroy(Coupons $coupon)
     {
-        $this->authorize('coupons-delete');
-
         $coupon->delete();
         return back();
     }

@@ -17,6 +17,7 @@
                         <th>#</th>
                         <th>عنوان</th>
                         <th>کد</th>
+                        <th>محدودیت</th>
                         <th>درصد تخفیف</th>
                         <th>تاریخ ایجاد</th>
                         <th>ویرایش</th>
@@ -29,6 +30,7 @@
                             <td>{{ ++$key }}</td>
                             <td>{{ $coupon->title }}</td>
                             <td>{{ $coupon->code }}</td>
+                            <td>{{ $coupon->limit }}</td>
                             <td>% {{ $coupon->amount_pc }}</td>
                             <td>{{ verta($coupon->created_at)->format('H:i - Y/m/d') }}</td>
                             <td>

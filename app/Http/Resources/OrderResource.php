@@ -6,7 +6,8 @@ use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrderResource extends JsonResource
+class
+OrderResource extends JsonResource
 {
     public function toArray($request)
     {
@@ -25,6 +26,7 @@ class OrderResource extends JsonResource
             'pay_status_text' => Payment::STATUS[$this->payment->status],
             'pay_status_color' => Payment::STATUS_COLOR[$this->payment->status],
             'total_price' => $this->items()->sum('total_price'),
+            'discount'=>$this->discount,
             'total_price_text' => number_format($this->items()->sum('total_price')).' تومان',
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
