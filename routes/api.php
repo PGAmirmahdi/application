@@ -70,6 +70,9 @@ Route::prefix('v1')->group(function (){
     //    Guide Videos
     Route::get('getGuideVideos', [GuideVideosController::class, 'getGuideVideos']);
 
+    //    Coupone
+    Route::get('getGuideVideos', [GuideVideosController::class, 'getGuideVideos']);
+
     // Payments
     Route::post('pay', [PaymentController::class, 'pay']);
     Route::post('payment-verify', [PaymentController::class, 'verify']);

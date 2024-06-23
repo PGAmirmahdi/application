@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateCouponsTable extends Migration
+class UpdateOrders2Table extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class UpdateCouponsTable extends Migration
      */
     public function up()
     {
-        Schema::table('coupons', function (Blueprint $table) {
-            $table->integer('limit');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->unsignedInteger('coupon_id')->comment('کد تخفیف')->after('discount');
+
+            $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('cascade');
         });
     }
 
@@ -25,8 +27,8 @@ class UpdateCouponsTable extends Migration
      */
     public function down()
     {
-        Schema::table('coupons', function (Blueprint $table) {
-            //
+        Schema::table('orders', function (Blueprint $table) {
+
         });
     }
 }
