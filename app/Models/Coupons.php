@@ -12,6 +12,6 @@ class Coupons extends Model
 
     public function Order()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsTo(Order::class);
     }
 }

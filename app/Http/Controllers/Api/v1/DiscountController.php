@@ -34,22 +34,27 @@ class DiscountController extends Controller
                 'message' => 'کد قبلا استفاده شده',
             ]);
         }
+        else{
+            $coupon = Coupons::where('code', '=', $code)
+                ->select(['limit', 'amount_pc'])
+                ->first();
 
-        $coupon = Coupons::where('code', '=', $code)
-            ->select(['limit', 'amount_pc'])
-            ->first();
+            if (!$coupon) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'کد یافت نشد',
+                ]);
+            }
 
-        if (!$coupon) {
             return response()->json([
-                'success' => false,
-                'message' => 'کد یافت نشد',
+                'success' => true,
+                'message' => 'اطلاعات داده شد',
+                'data' => $coupon,
+
+
+
             ]);
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'اطلاعات داده شد',
-            'data' => $coupon,
-        ]);
     }
 }

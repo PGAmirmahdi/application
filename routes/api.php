@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\v1\BugController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\DeliveryDayController;
+use App\Http\Controllers\Api\v1\DiscountController;
 use App\Http\Controllers\Api\v1\FavoriteController;
 use App\Http\Controllers\Api\v1\GuideVideosController;
 use App\Http\Controllers\Api\v1\OrderController;
@@ -71,7 +72,7 @@ Route::prefix('v1')->group(function (){
     Route::get('getGuideVideos', [GuideVideosController::class, 'getGuideVideos']);
 
     //    Coupone
-    Route::get('getGuideVideos', [GuideVideosController::class, 'getGuideVideos']);
+    Route::get('getCoupon', [DiscountController::class, 'getCoupon']);
 
     // Payments
     Route::post('pay', [PaymentController::class, 'pay']);
