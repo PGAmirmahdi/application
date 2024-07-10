@@ -27,8 +27,9 @@ class StoreCouponsRequest extends FormRequest
             'title' => 'required',
             'code' => 'required|unique:coupons',
             'amount_pc' => 'required',
-            'limit'=>'required',
-            'type'=>'required'
+            'limit' => 'required',
+            'type'=>'required',
+            'user_id'=>'nullable'
         ];
     }
 }
