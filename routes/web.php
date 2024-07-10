@@ -14,6 +14,7 @@ use App\Http\Controllers\Panel\ReturnController;
 use App\Http\Controllers\Panel\TicketController;
 use App\Http\Controllers\Panel\UpdateController;
 use App\Http\Controllers\Panel\UserController;
+use App\Http\Controllers\Panel\WalletController;
 use App\Http\Controllers\PanelController;
 use App\Models\User;
 use App\Notifications\SendMessage;
@@ -55,7 +56,7 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     Route::resource('products', ProductController::class)->except(['show']);
     Route::get('search/products', [ProductController::class, 'search'])->name('products.search');
 
-    // Products
+    // GuideVideos
     Route::resource('GuideVideos', GuideVideosController::class)->except(['show']);
     Route::get('GuideVideos.search', [GuideVideosController::class, 'search'])->name('GuideVideos.search');
 
@@ -102,6 +103,10 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
 
     // Updates
     Route::resource('updates', UpdateController::class)->except(['show']);
+
+    // Wallets
+    Route::resource('wallet',WalletController::class)->except(['show','edit','update']);
+    Route::get('wallet.search', [WalletController::class, 'search'])->name('wallet.search');
 });
 // Back To the application
 Route::get('BackToApp', function (Request $request) {

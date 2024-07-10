@@ -7,6 +7,7 @@ use App\Models\Code;
 use App\Models\GiftCharge;
 use App\Models\Province;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,10 +20,22 @@ class UserController extends Controller
             'phone' => 'required|unique:users',
         ]);
 
+        // Create wallet first
+        $wallet = Wallet::create([
+            'balance' => 0,
+        ]);
+
+        // Create user and associate wallet_id
         $user = User::create([
             'name' => $registerUserData['name'],
             'family' => $registerUserData['family'],
             'phone' => $registerUserData['phone'],
+            'wallet_id' => $wallet->id,
+        ]);
+
+        // Update wallet with user_id
+        $wallet->update([
+            'user_id' => $user->id,
         ]);
 
         // send code
