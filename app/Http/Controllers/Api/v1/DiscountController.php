@@ -50,9 +50,6 @@ class DiscountController extends Controller
                 'success' => true,
                 'message' => 'اطلاعات داده شد',
                 'data' => $coupon,
-
-
-
             ]);
         }
 
