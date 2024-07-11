@@ -14,7 +14,7 @@
                         <label for="user_id">نام کاربر<span class="text-danger">*</span></label>
                         <select class="form-control" name="user_id" id="user_id">
                             @foreach(User::doesntHave('wallet')->get() as $user)
-                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name . ' ' . $user->family }}</option>
                             @endforeach
                         </select>
                         @error('user_id')
