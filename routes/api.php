@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\v1\ReturnController;
 use App\Http\Controllers\Api\v1\TicketController;
 use App\Http\Controllers\Api\v1\UpdateController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\WalletController;
 use App\Http\Controllers\PanelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +71,9 @@ Route::prefix('v1')->group(function (){
 
     //    Guide Videos
     Route::get('getGuideVideos', [GuideVideosController::class, 'getGuideVideos']);
+
+    //    Wallet
+    Route::get('getWallet', [WalletController::class, 'getWallet']);
 
     //    Coupone
     Route::get('getCoupon', [DiscountController::class, 'getCoupon']);
