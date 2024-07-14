@@ -18,4 +18,8 @@ class Wallet extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function wallet()
+    {
+        return $this->hasmany(Charging::class);
+    }
 }
