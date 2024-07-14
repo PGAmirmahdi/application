@@ -105,14 +105,14 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     Route::resource('updates', UpdateController::class)->except(['show']);
 
     // Wallets
-    Route::resource('wallet',WalletController::class)->except(['show','edit','update']);
+    Route::resource('wallet',WalletController::class)->except(['show']);
     Route::get('wallet.search', [WalletController::class, 'search'])->name('wallet.search');
 });
 // Back To the application
 Route::get('BackToApp', function (Request $request) {
     $Status=$request->query('Status');
     $authority=$request->query('Authority');
-    return view('panel.payments.BackToApp',['Status'=>$Status,'authority'=>$authority]);
+    return view('panel.payments.BackToApp',['Status'=>$Status,'authority'=>     $authority]);
 })->name("BackToApp");
 
 

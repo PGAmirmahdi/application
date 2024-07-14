@@ -1,20 +1,24 @@
-@php use App\Models\User; @endphp
 @extends('panel.layouts.master')
-@section('title', 'ایجاد کیف پول')
+
+@section('title', 'ویرایش کیف پول')
+
 @section('content')
     <div class="card">
         <div class="card-body">
             <div class="card-title d-flex justify-content-between align-items-center">
-                <h6>ایجاد کیف پول</h6>
+                <h6>ویرایش کیف پول</h6>
             </div>
-            <form id="wallet-form" action="{{ route('wallet.store') }}" method="post">
+            <form id="wallet-form" action="{{ route('wallet.update', $wallet->id) }}" method="post">
+                @method('PUT')
                 @csrf
                 <div class="form-row">
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
                         <label for="user_id">نام کاربر<span class="text-danger">*</span></label>
                         <select class="form-control" name="user_id" id="user_id">
-                            @foreach(User::doesntHave('wallet')->get() as $user)
-                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name . ' ' . $user->family }}</option>
+                            @foreach($usersWithoutWallets as $user)
+                                <option value="{{ $user->id }}" {{ $wallet->user_id == $user->id ? 'selected' : '' }}>
+                                    {{ $user->name . ' ' . $user->family }}
+                                </option>
                             @endforeach
                         </select>
                         @error('user_id')
@@ -22,8 +26,8 @@
                         @enderror
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
-                        <label for="balance">موجودی اولیه<span class="text-danger">*</span></label>
-                        <input type="number" name="balance" class="form-control" id="balance" value="{{ old('balance') }}">
+                        <label for="balance">موجودی<span class="text-danger">*</span></label>
+                        <input type="number" name="balance" class="form-control" id="balance" value="{{ old('balance', $wallet->balance) }}">
                         @error('balance')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
@@ -34,7 +38,7 @@
         </div>
     </div>
 
-    {{--Jquery--}}
+    {{-- Jquery --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -52,8 +56,7 @@
                     contentType: false,
                     processData: false,
                     success: function (response) {
-                        console.log("آپلود موفق", 'کیف پول با موفقیت ساخته شد');
-                        alert(response.message);
+                        console.log("آپلود موفق", 'کیف پول با موفقیت ویرایش شد');
 
                         window.location.href = "{{ route('wallet.index') }}";
                     },

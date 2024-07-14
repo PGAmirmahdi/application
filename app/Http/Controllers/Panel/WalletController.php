@@ -65,15 +65,27 @@ class WalletController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Wallet $wallet)
     {
-        //
+        $usersWithoutWallets = User::doesntHave('wallet')->get();
+        return view('panel.wallet.edit', compact('wallet', 'usersWithoutWallets'));
+    }
+    public function update(Request $request, Wallet $wallet)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'balance' => 'required|numeric|min:0',
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+        // Update the wallet with the validated data
+        $wallet->update($validatedData);
+
+        // Display success alert
+        alert()->success('کیف پول با موفقیت ویرایش شد', 'ویرایش کیف پول');
+
+        // Redirect to the wallet index route
+        return redirect()->route('wallet.index');
     }
 
     public function destroy(Wallet $wallet,$id)
