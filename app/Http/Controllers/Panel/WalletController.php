@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\GuideVideos;
 use App\Models\User;
 use App\Models\Wallet;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class WalletController extends Controller
 {
@@ -58,7 +62,7 @@ class WalletController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -70,29 +74,20 @@ class WalletController extends Controller
         $usersWithoutWallets = User::doesntHave('wallet')->get();
         return view('panel.wallet.edit', compact('wallet', 'usersWithoutWallets'));
     }
-    public function update(Request $request, Wallet $wallet)
+
+    public function destroy(Wallet $wallet)
     {
-        // Validate the request data
-        $validatedData = $request->validate([
-            'balance' => 'required|numeric|min:0',
-            'user_id' => 'required|exists:users,id'
-        ]);
+        // Update the users associated with this wallet, setting their wallet_id to null
+        User::where('wallet_id', $wallet->id)->update(['wallet_id' => null]);
 
-        // Update the wallet with the validated data
-        $wallet->update($validatedData);
+        // Delete the wallet
+        $wallet->delete();
 
-        // Display success alert
-        alert()->success('کیف پول با موفقیت ویرایش شد', 'ویرایش کیف پول');
-
-        // Redirect to the wallet index route
-        return redirect()->route('wallet.index');
+        // Return back with success message
+        return back()->with('success', 'کیف پول با موفقیت حذف شد');
     }
 
-    public function destroy(Wallet $wallet,$id)
-    {
-        $wallet::query()->where('id', $id)->delete();
-        return back();
-    }
+
     public function search(Request $request)
     {
         $query = Wallet::query();
@@ -115,7 +110,7 @@ class WalletController extends Controller
 
         $wallets = $query->latest()->paginate(30);
 
-        return view('panel.GuideVideos.index', compact('wallets'));
+        return view('panel.wallet.index', compact('wallets'));
     }
 
 }

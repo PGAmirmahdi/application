@@ -16,7 +16,7 @@ class Update2UsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('wallet_id')->nullable();
 
-            $table->foreign('wallet_id')->references('id')->on('wallets')->onDelete('cascade');
+            $table->foreign('wallet_id')->references('id')->on('wallets');
         });
     }
 

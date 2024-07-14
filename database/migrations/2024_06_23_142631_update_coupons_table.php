@@ -14,7 +14,7 @@ class UpdateCouponsTable extends Migration
     public function up()
     {
         Schema::table('coupons', function (Blueprint $table) {
-            $table->integer('limit');
+//            $table->integer('limit');
         });
     }
 

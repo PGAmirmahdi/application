@@ -38,9 +38,10 @@
                     <tr>
                         <th>#</th>
                         <th>نام صاحب</th>
+                        <th>شماره تلفن</th>
                         <th>موجودی</th>
                         <th>زمان ساخت</th>
-                        <th>ویرایش</th>
+{{--                        <th>ویرایش</th>--}}
                         <th>حذف</th>
                     </tr>
                     </thead>
@@ -55,14 +56,21 @@
                                     کاربر ناشناس
                                 @endif
                             </td>
+                            <td>
+                                @if ($wallet->user->phone)
+                                    {{ $wallet->user->phone}}
+                                @else
+                                    شماره ندارد
+                                @endif
+                            </td>
                             <td>{{ number_format($wallet->balance) . ' ' . 'تومان' }}</td>
                             <td>{{ verta($wallet->created_at)->format('H:i - Y/m/d') }}</td>
-                            <td>
-                                <a class="btn btn-warning btn-floating"
-                                   href="{{ route('wallet.edit', $wallet->id) }}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                            </td>
+{{--                            <td>--}}
+{{--                                <a class="btn btn-warning btn-floating"--}}
+{{--                                   href="{{ route('wallet.edit', $wallet->id) }}">--}}
+{{--                                    <i class="fa fa-edit"></i>--}}
+{{--                                </a>--}}
+{{--                            </td>--}}
                             <td>
                                 <button class="btn btn-danger btn-floating trashRow"
                                         data-url="{{ route('wallet.destroy', $wallet->id) }}"
