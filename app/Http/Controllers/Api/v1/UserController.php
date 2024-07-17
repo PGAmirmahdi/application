@@ -42,7 +42,8 @@ class UserController extends Controller
         $code = (string)random_int(10000, 99999);
         $user->update([
             'phone_code' => $code,
-            'phone_expire' => now()->addMinutes(2)
+            'phone_expire' => now()->addMinutes(2),
+            'wallet_id'=>$wallet->id,
         ]);
         // end send code
 
