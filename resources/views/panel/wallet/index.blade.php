@@ -57,8 +57,8 @@
                                 @endif
                             </td>
                             <td>
-                                @if ($wallet->user->phone)
-                                    {{ $wallet->user->phone}}
+                                @if ($wallet->users->phone)
+                                    {{ $wallet->users->phone}}
                                 @else
                                     شماره ندارد
                                 @endif
