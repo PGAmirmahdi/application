@@ -9,52 +9,64 @@ use App\Models\Province;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function register(Request $request){
+    public function register(Request $request) {
+        // Validate incoming request data
         $registerUserData = $request->validate([
             'name' => 'required',
             'family' => 'required',
             'phone' => 'required|unique:users',
         ]);
 
-        // Create wallet first
-        $wallet = Wallet::create([
-            'balance' => 0,
-        ]);
+        try {
+            // Start a database transaction
+            DB::beginTransaction();
 
-        // Create user and associate wallet_id
-        $user = User::create([
-            'name' => $registerUserData['name'],
-            'family' => $registerUserData['family'],
-            'phone' => $registerUserData['phone'],
-        ]);
-        $user->update([
-            'wallet_id' => $wallet->id,
-        ]);
+            // Create a wallet with initial balance
+            $wallet = new Wallet();
+            $wallet->balance = 0;
+            $wallet->save();
 
-        // Update wallet with user_id
-        $wallet->update([
-            'user_id' => $user->id,
-        ]);
+            // Create a user and associate the wallet_id
+            $user = new User();
+            $user->name = $registerUserData['name'];
+            $user->family = $registerUserData['family'];
+            $user->phone = $registerUserData['phone'];
+            $user->wallet_id = $wallet->id;
+            $user->save();
 
-        // send code
-        $code = (string)random_int(10000, 99999);
-        $user->update([
-            'phone_code' => $code,
-            'phone_expire' => now()->addMinutes(2),
-            'wallet_id'=>$wallet->id,
-        ]);
-        // end send code
+            // Generate and store phone verification code and expiration
+            $code = (string) random_int(10000, 99999);
+            $user->phone_code = $code;
+            $user->phone_expire = now()->addMinutes(2);
+            $user->save();
 
-        sendSMS(201523, $user->phone, [$code]);
+            // Send SMS verification code
+            sendSMS(201523, $user->phone, [$code]);
 
-        return response()->json([
-            'message' => 'user created successfully!',
-        ]);
+            // Commit the transaction
+            DB::commit();
+
+            // Return success response
+            return response()->json([
+                'message' => 'User created successfully!',
+            ]);
+        } catch (\Exception $e) {
+            // Rollback the transaction if an exception occurred
+            DB::rollback();
+
+            // You can log the error or handle it as needed
+            return response()->json([
+                'message' => 'Failed to register user. Please try again later.',
+                'error' => $e->getMessage(),  // Optionally log the error message
+            ], 500);
+        }
     }
+
 
     public function login(Request $request)
     {
