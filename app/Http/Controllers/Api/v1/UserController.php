@@ -30,6 +30,8 @@ class UserController extends Controller
             'name' => $registerUserData['name'],
             'family' => $registerUserData['family'],
             'phone' => $registerUserData['phone'],
+        ]);
+        $user->update([
             'wallet_id' => $wallet->id,
         ]);
 
