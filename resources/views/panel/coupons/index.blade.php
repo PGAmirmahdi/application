@@ -29,7 +29,7 @@
                     @foreach($coupons as $key => $coupon)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $coupon->user->name . " " . $coupon->user->family}}</td>
+                            <td>@if($coupon->user) {{ $coupon->user->name }} @else مختص به کاربری نیست @endif</td>
                             <td>{{ $coupon->title }}</td>
                             <td>{{ $coupon->code }}</td>
                             <td>{{ $coupon->limit }}</td>
