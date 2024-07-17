@@ -14,4 +14,9 @@ class Coupons extends Model
     {
         return $this->belongsTo(Order::class);
     }
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
 }

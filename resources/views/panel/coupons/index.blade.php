@@ -15,6 +15,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
+                        <th>مختص به کاربر</th>
                         <th>عنوان</th>
                         <th>کد</th>
                         <th>محدودیت</th>
@@ -28,6 +29,7 @@
                     @foreach($coupons as $key => $coupon)
                         <tr>
                             <td>{{ ++$key }}</td>
+                            <td>{{ $coupon->user->name . " " . $coupon->user->family}}</td>
                             <td>{{ $coupon->title }}</td>
                             <td>{{ $coupon->code }}</td>
                             <td>{{ $coupon->limit }}</td>
@@ -58,5 +60,3 @@
         </div>
     </div>
 @endsection
-
-
