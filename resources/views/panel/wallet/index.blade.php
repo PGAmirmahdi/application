@@ -50,8 +50,8 @@
                         <tr>
                             <td>{{ ++$key }}</td>
                             <td>
-                                @if ($wallet->user)
-                                    {{ $wallet->user->name . " " .  $wallet->user->family }}
+                                @if ($wallet->users)
+                                    {{ $wallet->users->name . " " .  $wallet->users->family }}
                                 @else
                                     کاربر ناشناس
                                 @endif
