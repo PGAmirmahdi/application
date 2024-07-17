@@ -1,4 +1,7 @@
 @extends('panel.layouts.master')
+@php
+    use App\Models\User;
+@endphp
 @section('title', 'ایجاد کد تخفیف')
 @section('content')
     <div class="card">
@@ -17,6 +20,15 @@
                         @enderror
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
+                        <label for="">مختص به کاربر<span class="text-danger">*</span></label>
+                        <select class="form-control" name="user_id" id="user_id">
+                            <option value="" selected>هیچکدام</option>
+                            @foreach(User::all() as $user)
+                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name . " " . $user->family }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
                         <label for="code">کد<span class="text-danger">*</span></label>
                         <input type="text" name="code" class="form-control" id="code" value="{{ old('code') }}">
                         @error('code')
@@ -24,7 +36,7 @@
                         @enderror
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
-                        <label for="limit">محدودیت<span class="text-danger">*</span></label>
+                        <label for="limit">محدودیت</label>
                         <input type="number" name="limit" class="form-control" id="limit" value="{{ old('limit') }}">
                         @error('limit')
                         <div class="invalid-feedback d-block">{{ $message }}</div>

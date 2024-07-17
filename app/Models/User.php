@@ -68,9 +68,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
-    public function wallet()
+    public function wallets()
     {
-        return $this->hasOne(Wallet::class);
+        return $this->belongsTo(Wallet::class);
     }
 
     public function returns()

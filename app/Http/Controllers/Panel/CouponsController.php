@@ -26,11 +26,18 @@ class CouponsController extends Controller
 
     public function store(StoreCouponsRequest $request)
     {
-        Coupons::create([
+        $data=[
             'title' => $request->title,
             'code' => $request->code,
             'amount_pc' => $request->amount_pc,
-        ]);
+        ];
+        if (isset($request->limit)) {
+            $data['limit'] = $request->limit;
+        }
+        if (isset($request->user_id)) {
+            $data['user_id'] = $request->user_id;
+        }
+        Coupons::create($data);
 
         alert()->success('کد تخفیف مورد نظر با موفقیت ایجاد شد','ایجاد کد تخفیف');
         return redirect()->route('coupons.index');
@@ -49,11 +56,20 @@ class CouponsController extends Controller
 
     public function update(UpdateCouponsRequest $request, Coupons $coupon)
     {
-        $coupon->update([
+        $data = [
             'title' => $request->title,
             'code' => $request->code,
             'amount_pc' => $request->amount_pc,
-        ]);
+        ];
+
+        if (isset($request->limit)) {
+            $data['limit'] = $request->limit;
+        }
+        if (isset($request->user_id)) {
+            $data['user_id'] = $request->user_id;
+        }
+        $coupon->update($data);
+
 
         alert()->success('کد تخفیف مورد نظر با موفقیت ویرایش شد','ویرایش کد تخفیف');
         return redirect()->route('coupons.index');

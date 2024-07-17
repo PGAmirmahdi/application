@@ -13,7 +13,7 @@ class Charging extends Model
         'harvest' => 'واریز',
         'settle' => 'برداشت'
     ];
-    public function order()
+    public function wallets()
     {
         return $this->belongsTo(Wallet::class);
     }

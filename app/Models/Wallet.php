@@ -14,11 +14,11 @@ class Wallet extends Model
         'user_id'
     ];
 
-    public function user()
+    public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    public function wallet()
+    public function chargins()
     {
         return $this->hasmany(Charging::class);
     }

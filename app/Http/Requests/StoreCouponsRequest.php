@@ -28,7 +28,6 @@ class StoreCouponsRequest extends FormRequest
             'code' => 'required|unique:coupons',
             'amount_pc' => 'required',
             'limit' => 'required',
-            'type'=>'required',
             'user_id'=>'nullable'
         ];
     }
