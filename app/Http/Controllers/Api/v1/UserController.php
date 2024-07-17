@@ -39,6 +39,9 @@ class UserController extends Controller
             $user->wallet_id = $wallet->id;
             $user->save();
 
+            $wallet->update([
+                'user_id'=>$user->id
+            ]);
             // Generate and store phone verification code and expiration
             $code = (string) random_int(10000, 99999);
             $user->phone_code = $code;
