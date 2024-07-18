@@ -1,91 +1,97 @@
-@php use Illuminate\Support\Str; @endphp
 @extends('panel.layouts.master')
 @section('title', 'تراکنش ها')
 @section('content')
     <div class="card">
         <div class="card-body">
             <div class="card-title d-flex justify-content-between align-items-center">
-                <h6>ویدئو ها</h6>
+                <h6>تراکنش ها</h6>
                 <div>
-                    <a href="{{ route('GuideVideos.create') }}" class="btn btn-primary">
+                    <a href="{{ route('charging.create') }}" class="btn btn-primary">
                         <i class="fa fa-plus mr-2"></i>
-                        آپلود ویدئو
+                        ایجاد تراکنش
                     </a>
                 </div>
             </div>
-            <form action="{{ route('GuideVideos.search') }}" method="get" id="search_form"></form>
-            <div class="row mb-3">
-                <div class="col-xl-2 xl-lg-2 col-md-3 col-sm-12">
-                    <input type="text" name="product_id" class="form-control" placeholder="نام خانوادگی"
-                           value="{{ request()->product_id ?? null }}" form="search_form">
+            <form action="{{ route('charging.index') }}" method="get" id="search_form">
+                <div class="row mb-3">
+                    <div class="col-xl-2 xl-lg-2 col-md-3 col-sm-12">
+                        <input type="text" name="tracking_code" class="form-control" placeholder="کد پیگیری"
+                               value="{{ request()->tracking_code ?? '' }}">
+                    </div>
+                    <div class="col-xl-2 xl-lg-2 col-md-3 col-sm-12">
+                        <select name="type" class="form-control">
+                            <option value="">انتخاب کنید</option>
+                            <option value="deposit" {{ request()->type == 'deposit' ? 'selected' : '' }}>واریز</option>
+                            <option value="withdrawal" {{ request()->type == 'withdrawal' ? 'selected' : '' }}>برداشت</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-3 xl-lg-3 col-md-4 col-sm-12">
+                        <input type="text" name="user_family" class="form-control" placeholder="نام خانوادگی کاربر"
+                               value="{{ request()->user_family ?? '' }}">
+                    </div>
+                    <div class="col-xl-2 xl-lg-2 col-md-3 col-sm-12">
+                        <button type="submit" class="btn btn-primary">جستجو</button>
+                    </div>
                 </div>
-                <div class="col-xl-3 xl-lg-3 col-md-4 col-sm-12">
-                    <input type="text" name="title" class="form-control" placeholder="عنوان ویدئو"
-                           value="{{ request()->title ?? null }}" form="search_form">
-                </div>
-                <div class="col-xl-2 xl-lg-2 col-md-3 col-sm-12">
-                    <button type="submit" class="btn btn-primary" form="search_form">جستجو</button>
-                </div>
-            </div>
+            </form>
+
             <div class="table-responsive">
                 <table class="table table-striped table-bordered dataTable dtr-inline text-center">
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>ویدئو</th>
-                        <th>نام محصول</th>
-                        <th>موضوع ویدئو</th>
-                        <th>متن ویدئو</th>
-                        <th>آپلود کننده ویدئو</th>
-                        <th>زمان آپلود</th>
-                        <th>ویرایش</th>
-                        <th>حذف</th>
+                        <th>نام کاربر</th>
+                        <th>نوع تراکنش</th>
+                        <th>مقدار تراکنش</th>
+                        <th>کد پیگیری</th>
+                        <th>توضیحات</th>
+                        <th>زمان تراکنش</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($videos as $key => $video)
+                    {{-- اینجا داده‌های تراکنش‌ها قرار می‌گیرند --}}
+                    @foreach ($chargings as $key => $charging)
                         <tr>
-                            <td>{{ ++$key }}</td>
-                            <td>
-                                <a href="{{ $video->main_video }}" target="_blank">
-                                    <video width="40px" controls>
-                                        <source src="{{ $video->main_video }}" type="video/mp4">
-                                        مرورگر شما پشتیبانی نمیکند.
-                                    </video>
-                                </a>
-
-                            </td>
-                            <td>{{ $video->product->title}}</td>
-                            <td>{{ Str::limit($video->title, 60) }}</td>
-                            <td>{{ Str::limit($video->text, 60) }}</td>
-                            <td>{{ $video->user->name . " " .  $video->user->family }}</td>
-                            <td>{{ verta($video->created_at)->format('H:i - Y/m/d') }}</td>
-                            <td>
-                                <a class="btn btn-warning btn-floating"
-                                   href="{{ route('GuideVideos.edit', $video->id) }}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <button class="btn btn-danger btn-floating trashRow"
-                                        data-url="{{ route('GuideVideos.destroy',$video->id) }}"
-                                        data-id="{{ $video->id }}">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </td>
+                            <td>{{ $chargings->firstItem() + $key }}</td>
+                            <td>{{ $charging->user->name . ' ' . $charging->user->family }}</td>
+                            <td>{{ $charging->type == 'deposit' ? 'واریز' : 'برداشت' }}</td>
+                            <td>{{ $charging->amount }}</td>
+                            <td>{{ $charging->tracking_code }}</td>
+                            <td>{{ $charging->description }}</td>
+                            <td>{{ verta($charging->created_at)->format('H:i - Y/m/d') }}</td>
                         </tr>
                     @endforeach
                     </tbody>
-                    <tfoot>
-                    <tr>
-                    </tr>
-                    </tfoot>
                 </table>
             </div>
-            <div class="d-flex justify-content-center">{{ $videos->appends(request()->all())->links() }}</div>
+            <div class="d-flex justify-content-center">{{ $chargings->appends(request()->all())->links() }}</div>
         </div>
     </div>
-@endsection
-@section('scripts')
-    <script src="{{ asset('assets/js/lazysizes.min.js') }}"></script>
+
+    {{-- jQuery --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#search_form').submit(function (event) {
+                event.preventDefault(); // Prevent form submission
+
+                var formData = $(this).serialize(); // Serialize form data
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'GET',
+                    data: formData,
+                    success: function (response) {
+                        // Update the table body with new data
+                        var tableBody = $(response).find('.table tbody');
+                        $('.table tbody').replaceWith(tableBody);
+                    },
+                    error: function (xhr) {
+                        console.error('Error fetching transactions:', xhr);
+                        alert('مشکلی در دریافت اطلاعات وجود دارد');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

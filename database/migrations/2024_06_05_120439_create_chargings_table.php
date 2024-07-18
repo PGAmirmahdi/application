@@ -18,8 +18,9 @@ class CreateChargingsTable extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->text('amount');
+            $table->text('tracking_code');
             $table->text('description')->nullable();
-            $table->enum('type', ['settle', 'harvest']);
+            $table->enum('type', ['deposit', 'withdrawal']);
             $table->unsignedBigInteger('wallet_id');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

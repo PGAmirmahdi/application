@@ -10,11 +10,15 @@ class Charging extends Model
     use HasFactory;
     protected $guarded = [];
     const type = [
-        'harvest' => 'واریز',
-        'settle' => 'برداشت'
+        'deposit' => 'واریز',
+        'withdrawal' => 'برداشت'
     ];
     public function wallets()
     {
         return $this->belongsTo(Wallet::class);
+    }
+    public function users()
+    {
+        return $this->belongsTo(User::class);
     }
 }

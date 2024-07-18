@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        if ($request->role == 'admin'){
+        if ($request->role == 'admin') {
             $request->validate(['password' => 'required']);
         }
 
@@ -35,7 +35,7 @@ class UserController extends Controller
             'password' => $request->password ? bcrypt($request->password) : null,
         ]);
 
-        alert()->success('کاربر مورد نظر با موفقیت ایجاد شد','ایجاد کاربر');
+        alert()->success('کاربر مورد نظر با موفقیت ایجاد شد', 'ایجاد کاربر');
         return redirect()->route('users.index');
     }
 
@@ -51,7 +51,7 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        if ($request->role == 'admin'){
+        if ($request->role == 'admin') {
             $request->validate(['password' => 'required']);
         }
 
@@ -64,11 +64,11 @@ class UserController extends Controller
             'password' => $request->password ? bcrypt($request->password) : $user->password,
         ]);
 
-        if (auth()->id() == $user->id){
-            alert()->success('پروفایل شما با موفقیت ویرایش شد','ویرایش پروفایل');
+        if (auth()->id() == $user->id) {
+            alert()->success('پروفایل شما با موفقیت ویرایش شد', 'ویرایش پروفایل');
             return redirect()->back();
-        }else{
-            alert()->success('کاربر مورد نظر با موفقیت ویرایش شد','ویرایش کاربر');
+        } else {
+            alert()->success('کاربر مورد نظر با موفقیت ویرایش شد', 'ویرایش کاربر');
             return redirect()->route('users.index');
         }
     }
@@ -83,4 +83,5 @@ class UserController extends Controller
     {
         return response()->json(['data' => $user->addresses]);
     }
+
 }

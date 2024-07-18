@@ -3,6 +3,7 @@
 use App\Http\Controllers\Panel\BannerController;
 use App\Http\Controllers\Panel\BugController;
 use App\Http\Controllers\Panel\CategoryController;
+use App\Http\Controllers\Panel\ChargingController;
 use App\Http\Controllers\Panel\CommentController;
 use App\Http\Controllers\Panel\CouponsController;
 use App\Http\Controllers\Panel\DeliveryDayController;
@@ -36,7 +37,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (Auth::check()){
-        return redirect()->to('/panel');
+            return redirect()->to('/panel');
     }
     return view('auth.login');
 });
@@ -107,6 +108,11 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Wallets
     Route::resource('wallet',WalletController::class)->except(['show']);
     Route::get('wallet.search', [WalletController::class, 'search'])->name('wallet.search');
+
+    // Chargings
+    Route::resource('charging',ChargingController::class)->except(['show']);
+    Route::post('getUserBalance/{user_id}', [ChargingController::class, 'getUserBalance'])->name('getUserBalance');
+
 });
 // Back To the application
 Route::get('BackToApp', function (Request $request) {

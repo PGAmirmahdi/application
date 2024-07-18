@@ -116,6 +116,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                    <div class="card border mb-0">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div>
+                                    <div class="icon-block icon-block-sm bg-primary icon-block-floating mr-2">
+                                        <i class="fa fa-movie"></i>
+                                    </div>
+                                </div>
+                                <span class="font-size-13">ویدیو های محصولات</span>
+                                <h2 class="mb-0 ml-auto font-weight-bold text-primary primary-font line-height-30">{{ \App\Models\GuideVideos::count() }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

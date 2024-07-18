@@ -25,7 +25,9 @@
         <p>متاسفانه پرداخت شما ناموفق بود،لطفا از دکمه زیر برای ادامه اقدام کنید</p>
     @endif
     <button type="button"
-            class="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" onclick="GoToSite()">رفتن به سایت</button>
+            class="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+            onclick="GoToSite()">رفتن به سایت
+    </button>
 </div>
 <style>
     @font-face {
@@ -35,38 +37,43 @@
         font-weight: normal;
         font-style: normal;
     }
-    *{
+
+    * {
         font-family: Estedad, Estedad;
         overflow: hidden;
     }
-    i{
+
+    i {
         transform: translateX(100px);
         opacity: 0;
         visibility: hidden;
         transition: .3s;
     }
-    h3{
+
+    h3 {
         transition: .3s;
         transform: translateX(100px);
         opacity: 0;
         visibility: hidden;
-        transition-delay:.1s;
+        transition-delay: .1s;
         font-size: 30px !important;
     }
-    p{
+
+    p {
         transition: .3s;
         font-weight: lighter;
         font-size: 14px;
         transform: translateX(100px);
         opacity: 0;
         visibility: hidden;
-        transition-delay:.2s;
+        transition-delay: .2s;
     }
-    button{
+
+    button {
         transform: translateX(100px);
         opacity: 0;
         visibility: hidden;
-        transition-delay:.3s;
+        transition-delay: .3s;
         width: 50%;
         height: 50px;
         font-size: 22px;
@@ -76,42 +83,48 @@
         align-items: center;
         background-color: #a63aff;
         border-radius: 10px;
-        border:none;
+        border: none;
         box-shadow: 0px 1px 1px 0px #a63aff;
         transition: .2s ease-in-out;
     }
-    i.load{
+
+    i.load {
         visibility: visible;
         opacity: 1;
         transform: translateX(0px);
         transition: .5s;
     }
-    h3.load{
+
+    h3.load {
         visibility: visible;
         opacity: 1;
         transform: translateX(0px);
         transition: .5s;
         transition-delay: .1s;
     }
-    p.load{
+
+    p.load {
         visibility: visible;
         opacity: 1;
         transform: translateX(0px);
         transition: .5s;
         transition-delay: .3s;
     }
-    button.load{
+
+    button.load {
         visibility: visible;
         opacity: 1;
         transform: translateX(0px);
         transition: .5s;
         transition-delay: .5s;
     }
-    button:hover{
+
+    button:hover {
         transition: .2s ease-in-out;
         background-color: #7b00ff;
     }
-    .No1{
+
+    .No1 {
         width: 100%;
         height: 100vh;
         display: flex;
@@ -119,11 +132,14 @@
         justify-content: center;
         align-items: center;
         gap: 10px;
-    }@media only screen and (max-width:765px){
-        p{
+    }
+
+    @media only screen and (max-width: 765px) {
+        p {
             font-size: 12px !important;
         }
-        button{
+
+        button {
             width: 80%;
             height: 40px;
             font-size: 18px;
@@ -133,6 +149,8 @@
 </style>
 {{--Link JS--}}
 <script src="{{asset('assets/js/BackToApp.js')}}"></script>
-<script>setTimeout(() => {  location.href="intent://artintoner.com?Authority={{$authority}}#Intent;scheme=https;package=com.example.artintoner;end"; }, 3000);</script>
+<script>setTimeout(() => {
+        location.href = "intent://artintoner.com?Authority={{$authority}}#Intent;scheme=https;package=com.example.artintoner;end";
+    }, 3000);</script>
 </body>
 </html>
