@@ -57,7 +57,7 @@
                                     {{ $charging->users->name . ' ' . $charging->users->family }}
                             </td>
                             <td>{{ $charging->type == 'deposit' ? 'واریز' : 'برداشت' }}</td>
-                            <td>{{ $charging->amount }}</td>
+                            <td>{{ number_format($charging->amount) . " تومان" }}</td>
                             <td>{{ $charging->tracking_code }}</td>
                             <td>{{ $charging->description }}</td>
                             <td>{{ verta($charging->created_at)->format('H:i - Y/m/d') }}</td>
