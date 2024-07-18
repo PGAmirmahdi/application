@@ -61,7 +61,6 @@
     <script>
         $(document).on('change', 'select[name="user_id"]', function () {
             let user_id = this.value;
-
             $.ajax({
                 url: '/panel/getUserBalance/'+user_id,
                 type: 'post',

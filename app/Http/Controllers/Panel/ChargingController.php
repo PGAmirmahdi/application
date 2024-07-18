@@ -39,7 +39,7 @@ class ChargingController extends Controller
 
         // Fetch the user and their wallet
         $user = User::findOrFail($request->user_id);
-        $wallet = $user->wallet;
+        $wallet = $user->wallets;
 
         // Perform the transaction based on type (deposit or withdrawal)
         $amount = $request->amount;
@@ -63,10 +63,13 @@ class ChargingController extends Controller
             'amount' => $amount,
             'type' => $type,
             'description' => $request->description,
-            'balance' => $wallet->balance,
+            'tracking_code' => (string) random_int(1000000000, 9999999999),
+            'wallet_id'=>$wallet->id
         ]);
 
-        return response()->json(['message' => 'تراکنش با موفقیت ثبت شد'], 200);
+        // Redirect to index page on success
+        return redirect()->route('charging.index')->with('success', 'تراکنش با موفقیت ثبت شد');
+
     }
 
     public function search(Request $request)

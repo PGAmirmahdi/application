@@ -53,7 +53,9 @@
                     @foreach ($chargings as $key => $charging)
                         <tr>
                             <td>{{ $chargings->firstItem() + $key }}</td>
-                            <td>{{ $charging->user->name . ' ' . $charging->user->family }}</td>
+                            <td>
+                                    {{ $charging->users->name . ' ' . $charging->users->family }}
+                            </td>
                             <td>{{ $charging->type == 'deposit' ? 'واریز' : 'برداشت' }}</td>
                             <td>{{ $charging->amount }}</td>
                             <td>{{ $charging->tracking_code }}</td>

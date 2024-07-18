@@ -72,7 +72,7 @@ class User extends Authenticatable
     {
         return $this->hasone(Wallet::class);
     }
-    public function chargings()
+    public function charging()
     {
         return $this->hasmany(Charging::class);
     }
