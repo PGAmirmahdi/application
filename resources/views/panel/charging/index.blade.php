@@ -56,7 +56,13 @@
                             <td>
                                     {{ $charging->users->name . ' ' . $charging->users->family }}
                             </td>
-                            <td>{{ $charging->type == 'deposit' ? 'واریز' : 'برداشت' }}</td>
+                            @if( $charging->type == "deposit")
+                                <td class="text-success">واریز</td>
+                            @elseif($charging->type == "withdrawal")
+                                <td class="text-danger">برداشت</td>
+                                @else
+                                <td>{{ "نامشخص" }}</td>
+                            @endif
                             <td>{{ number_format($charging->amount) . " تومان" }}</td>
                             <td>{{ $charging->tracking_code }}</td>
                             <td>{{ $charging->description }}</td>
