@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\v1\AddressController;
 use App\Http\Controllers\Api\v1\BannerController;
 use App\Http\Controllers\Api\v1\BugController;
 use App\Http\Controllers\Api\v1\CategoryController;
+use App\Http\Controllers\Api\v1\ChargingController;
 use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\DeliveryDayController;
 use App\Http\Controllers\Api\v1\DiscountController;
@@ -110,6 +111,9 @@ Route::prefix('v1')->group(function (){
         // Orders
         Route::get('get-orders', [OrderController::class, 'getOrders']);
         Route::get('get-order', [OrderController::class, 'getOrder']);
+
+        // Charging
+        Route::get('getCharging', [ChargingController::class, 'getCharging']);
 
         // Notifications
         Route::get('get-notifications', [UserController::class, 'getNotifications']);
