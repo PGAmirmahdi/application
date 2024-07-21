@@ -81,7 +81,7 @@ Route::prefix('v1')->group(function (){
     Route::get('getCharging', [ChargingController::class, 'getCharging']);
     Route::post('Charge', [ChargingController::class, 'Charge']);
     Route::post('Charging-verify', [ChargingController::class, 'verify']);
-    Route::get('get-verify-url', [ChargingController::class,'getVerifyUrl']);
+    Route::post('get-verify-url', [ChargingController::class,'getVerifyUrl']);
 
     Route::middleware('auth:sanctum')->group(function (){
 
