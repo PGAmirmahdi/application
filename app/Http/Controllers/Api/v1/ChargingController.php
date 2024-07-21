@@ -199,7 +199,7 @@ class ChargingController extends Controller
             $payment->update(['status' => 'failed']);
 
             if ($payment->charging) {
-                $payment->charging->update(['status' => 'canceled']);
+                $payment->charging->update(['status' => 'failed']);
             }
 
             return response()->json([
@@ -241,7 +241,7 @@ class ChargingController extends Controller
             $payment->update(['status' => 'failed']);
 
             if ($payment->charging) {
-                $payment->charging->update(['status' => 'canceled']);
+                $payment->charging->update(['status' => 'failed']);
             }
 
             return response()->json([
