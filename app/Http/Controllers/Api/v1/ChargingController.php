@@ -272,9 +272,9 @@ class ChargingController extends Controller
 
         // Determine URL based on presence of order_id or wallet_id
         if ($payment->order_id) {
-            $url = '/api/v1/payment-verify';
+            $url = 'api/v1/payment-verify';
         } elseif ($payment->wallet_id) {
-            $url = '/api/v1/Charging-verify';
+            $url = 'api/v1/Charging-verify';
         } else {
             return response()->json([
                 'error' => true,
