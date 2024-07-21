@@ -111,24 +111,27 @@ class ChargingController extends Controller
         } else {
             if (empty($result['errors'])) {
                 if ($result['data']['code'] == 100) {
-                    // Create a payment record
+
+                    // Create a charging record
+                    $charging = Charging::create([
+                        'user_id' => $request->user_id,
+                        'amount' => $request->amount,
+                        'type' => $request->type,
+                        'description' => $request->description,
+                        'tracking_code' => (string)random_int(1000000000, 9999999999),
+                        'wallet_id' => $request->wallet_id,
+                        'status' => 'pending',
+                    ]);
+
+                    // Create a payment record with charging_id
                     Payment::create([
                         'authority' => $result['data']['authority'],
                         'amount' => $data['amount'],
                         'tracking_code' => random_int(100000, 999999),
                         'wallet_id' => $request->wallet_id,
+                        'charging_id' => $charging->id,
                     ]);
 
-                    // Create a charging record
-                    Charging::create([
-                        'user_id' => $request->user_id,
-                        'amount' => $request->amount,
-                        'type' => $request->type,
-                        'description' => $request->description,
-                        'tracking_code' => (string) random_int(1000000000, 9999999999),
-                        'wallet_id' => $request->wallet_id,
-                        'status' => 'pending',
-                    ]);
 
                     return response()->json([
                         'error' => false,
@@ -197,7 +200,7 @@ class ChargingController extends Controller
 
         if ($err) {
             $payment->update(['status' => 'failed']);
-            $payment->charging()->update(['status' => 'failed']);
+            Charging::where('charging_id', $payment->charging_id)->update(['status' => 'failed']);
 
             return response()->json([
                 'error' => true,
@@ -212,7 +215,7 @@ class ChargingController extends Controller
                     'ref_id' => $result['data']['ref_id'],
                     'verify_response' => json_encode($result),
                 ]);
-                $payment->charging()->update(['status' => 'successful']);
+                Charging::where('charging_id', $payment->charging_id)->update(['status' => 'successful']);
 
                 // Update wallet balance
                 $wallet = Wallet::where('wallet_id', $payment->wallet_id)->first();
@@ -233,7 +236,7 @@ class ChargingController extends Controller
             }
         } else {
             $payment->update(['status' => 'failed']);
-            $payment->charging()->update(['status' => 'failed']);
+            Charging::where('charging_id', $payment->charging_id)->update(['status' => 'failed']);
 
             return response()->json([
                 'error' => true,
@@ -242,6 +245,7 @@ class ChargingController extends Controller
             ], 400); // Added status code 400 for bad request
         }
     }
+
 
 
 //    public function verify(Request $request)
