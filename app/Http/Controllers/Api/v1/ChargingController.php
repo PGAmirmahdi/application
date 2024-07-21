@@ -11,18 +11,22 @@ class ChargingController extends Controller
 {
     public function getCharging(Request $request)
     {
-        $validate = Validator::make($request->all(), [
-            'user_id' => 'required|integer', // Added integer validation
+        // Validate the request parameters
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
         ]);
 
-        if ($validate->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'errors' => $validate->errors()->getMessages()
-            ], 400); // Added status code 400 for bad request
+                'errors' => $validator->errors()->getMessages()
+            ], 400);
         }
 
+        // Retrieve user_id from the request
         $user_id = $request->user_id;
+
+        // Query to get charging information along with user details
         $item = Charging::where('chargings.user_id', $user_id)
             ->join('users', 'chargings.user_id', '=', 'users.id')
             ->select([
@@ -36,18 +40,39 @@ class ChargingController extends Controller
                 'users.family as user_family'
             ])
             ->first();
+
         if (!$item) {
             return response()->json([
                 'success' => false,
                 'message' => 'تراکنش یافت نشد',
                 'data' => []
-            ], 404); // Added status code 404 for not found
+            ], 404);
         }
 
         return response()->json([
             'success' => true,
             'message' => 'اطلاعات داده شد',
-            'data' => $item // Removed array wrapping
-        ], 200); // Added status code 200 for success
+            'data' => $item
+        ], 200);
+    }
+
+
+    public function Charge(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'user_id' => 'required|integer', // Added integer validation
+            'wallet_id' => 'required|integer', // Added integer validation
+            'type'=>'string|required'
+        ]);
+        if ($validate->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validate->errors()->getMessages()
+            ], 400); // Added status code 400 for bad request
+        }
+        $user_id = $request->user_id;
+        $wallet_id = $request->wallet_id;
+        $type = $request->type;
+
     }
 }
