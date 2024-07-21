@@ -100,7 +100,7 @@
                 // Get the appropriate URL from the server
                 $.ajax({
                     url: '/api/v1/get-verify-url', // URL for getting the appropriate verification URL
-                    type: 'post',
+                    type: 'get',
                     data: {authority},
                     success: function (res) {
                         if (res.error) {
@@ -112,7 +112,7 @@
                         // Perform the verification request to the correct URL
                         $.ajax({
                             url: res.url, // Use the URL received from the previous response
-                            type: 'post',
+                            type: 'get',
                             data: {authority},
                             success: function (res) {
                                 if (res.error_code == 100 || res.error_code == 101) {
