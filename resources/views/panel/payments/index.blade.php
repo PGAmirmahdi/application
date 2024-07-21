@@ -51,13 +51,8 @@
                     @foreach($payments as $key => $payment)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            @if(isset($payment->order_id))
-                                <td>{{ $payment->order->user->name }}</td>
-                                <td>{{ $payment->order->user->family }}</td>
-                            @elseif(isset($payment->wallet_id))
-                                <td>{{ $payment->wallets->users->name }}</td>
-                                <td>{{ $payment->wallets->users->family }}</td>
-                            @endif
+                                <td>@if(isset($payment->order_id)){{ $payment->order->user->name }}@elseif(isset($payment->wallet_id)){{ $payment->wallets->users->name }}@endif</td>
+                                <td>@if(isset($payment->order_id)){{ $payment->order->user->family }}@elseif(isset($payment->wallet_id)){{ $payment->wallets->users->family }}@endif</td>
                             <td>{{ number_format($payment->amount) }}</td>
                             <td class="status">
                                 @if($payment->status == 'success')
