@@ -2,7 +2,7 @@
 <div class="navigation">
     <div class="navigation-icon-menu" style="overflow-y: auto">
         <ul>
-            <li class="{{ active_sidebar(['panel','users','users/create','users/{user}/edit','wallet','wallet/create','wallet/{wallet}/edit','charging','charging/create','search/wallet']) ? 'active' : '' }}" data-toggle="tooltip" title="داشبورد">
+            <li class="{{ active_sidebar(['panel','users','users/create','users/{user}/edit','wallet','wallet/create','wallet/{wallet}/edit','charging','charging/create','search/wallets']) ? 'active' : '' }}" data-toggle="tooltip" title="داشبورد">
                 <a href="#navigationDashboards" title="داشبوردها">
                     <i class="icon ti-dashboard"></i>
                 </a>
@@ -46,7 +46,7 @@
         </ul>
     </div>
     <div class="navigation-menu-body">
-        <ul id="navigationDashboards" class="{{ active_sidebar(['panel','users','users/create','users/{user}/edit','wallet','wallet/create','wallet/{wallet}/edit','search/wallet','charging','charging/create']) ? 'navigation-active' : '' }}">
+        <ul id="navigationDashboards" class="{{ active_sidebar(['panel','users','users/create','users/{user}/edit','wallet','wallet/create','wallet/{wallet}/edit','search/wallets','charging','charging/create']) ? 'navigation-active' : '' }}">
             <li class="navigation-divider">داشبورد</li>
             <li>
                 <a class="{{ active_sidebar(['panel']) ? 'active' : '' }}" href="{{ route('panel') }}">پنل</a>
@@ -55,7 +55,7 @@
                 <a class="{{ active_sidebar(['users','users/create','users/{user}/edit']) ? 'active' : '' }}" href="{{ route('users.index') }}">کاربران</a>
             </li>
             <li>
-                <a class="{{ active_sidebar(['wallet','wallet/create','search/wallet']) ? 'active' : '' }}" href="{{ route('wallet.index') }}">کیف پول</a>
+                <a class="{{ active_sidebar(['wallet','wallet/create','search/wallets']) ? 'active' : '' }}" href="{{ route('wallet.index') }}">کیف پول</a>
             </li>
             <li>
                 <a class="{{ active_sidebar(['charging','charging/create']) ? 'active' : '' }}" href="{{ route('charging.index') }}">تراکنش های کیف پول</a>
