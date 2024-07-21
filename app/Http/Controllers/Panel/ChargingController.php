@@ -64,7 +64,8 @@ class ChargingController extends Controller
             'type' => $type,
             'description' => $request->description,
             'tracking_code' => (string) random_int(1000000000, 9999999999),
-            'wallet_id'=>$wallet->id
+            'wallet_id'=>$wallet->id,
+            'status'=>'successful'
         ]);
 
         // Redirect to index page on success

@@ -9,6 +9,11 @@ class Charging extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    const STATUS =[
+        'pending' => 'درانتظار پرداخت',
+        'success' => 'موفق',
+        'failed' => 'ناموفق',
+    ];
     const type = [
         'deposit' => 'واریز',
         'withdrawal' => 'برداشت'

@@ -44,8 +44,10 @@
                         <th>نوع تراکنش</th>
                         <th>مقدار تراکنش</th>
                         <th>کد پیگیری</th>
+                        <th>وضعیت تراکنش</th>
                         <th>توضیحات</th>
                         <th>زمان تراکنش</th>
+                        <th>بررسی مجدد وضعیت</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -65,8 +67,26 @@
                             @endif
                             <td>{{ number_format($charging->amount) . " تومان" }}</td>
                             <td>{{ $charging->tracking_code }}</td>
+                            <td class="status">
+                                @if($charging->status == 'successful')
+                                    <span
+                                        class="badge badge-success">{{ \App\Models\Charging::STATUS[$charging->status] }}</span>
+                                @elseif($charging->status == 'failed')
+                                    <span
+                                        class="badge badge-danger">{{ \App\Models\Charging::STATUS[$charging->status] }}</span>
+                                @else
+                                    <span
+                                        class="badge badge-warning">{{ \App\Models\Charging::STATUS[$charging->status] }}</span>
+                                @endif
+                            </td>
                             <td>{{ $charging->description }}</td>
                             <td>{{ verta($charging->created_at)->format('H:i - Y/m/d') }}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-floating btn_check"
+                                        data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(10)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }}>
+                                    <i class="fa fa-refresh"></i>
+                                </button>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

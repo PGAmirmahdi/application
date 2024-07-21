@@ -58,7 +58,7 @@
                 <a class="{{ active_sidebar(['wallet','wallet/create','wallet/{wallet}/edit']) ? 'active' : '' }}" href="{{ route('wallet.index') }}">کیف پول</a>
             </li>
             <li>
-                <a class="{{ active_sidebar(['charging','charging/create']) ? 'active' : '' }}" href="{{ route('charging.index') }}">تراکنش ها</a>
+                <a class="{{ active_sidebar(['charging','charging/create']) ? 'active' : '' }}" href="{{ route('charging.index') }}">تراکنش های کیف پول</a>
             </li>
         </ul>
         <ul id="navigationProducts" class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products','categories','categories/create','categories/{category}/edit','comments','GuideVideos','GuideVideos/create','GuideVideos/{GuideVideo}/edit','coupons','coupons/create','coupons/{coupon}/edit']) ? 'navigation-active' : '' }}">
