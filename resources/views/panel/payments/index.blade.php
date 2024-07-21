@@ -117,7 +117,10 @@
                             success: function (res) {
                                 if (res.error_code == 100 || res.error_code == 101) {
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
-                                } else {
+                                }else if(res.error_code == -51){
+                                    btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
+                                }
+                                else {
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
                                 }
                                 btn_check.removeAttr('disabled');
