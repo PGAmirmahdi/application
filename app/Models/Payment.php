@@ -31,4 +31,8 @@ class Payment extends Model
     {
         return $this->belongsTo(Wallet::class,'wallet_id');
     }
+    public function charging()
+    {
+        return $this->belongsTo(Charging::class,'charging_id');
+    }
 }
