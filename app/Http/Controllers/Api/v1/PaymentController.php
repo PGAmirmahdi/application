@@ -35,7 +35,9 @@ class PaymentController extends Controller
         $user_id = $request->user_id;
         $items = json_decode($request->items, true);
         $address = Address::find($request->address_id);
-        $coupon = Coupon::find($request->coupon_id);
+        if($request->coupon_id){
+            $coupon = Coupons::find($request->coupon_id);
+        }
 
         // create order
         $order = Order::create([
