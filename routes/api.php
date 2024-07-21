@@ -73,17 +73,20 @@ Route::prefix('v1')->group(function (){
     //    Guide Videos
     Route::get('getGuideVideos', [GuideVideosController::class, 'getGuideVideos']);
 
-    //    Wallet
-    Route::get('getWallet', [WalletController::class, 'getWallet']);
-
-    //    Coupone
-    Route::get('getCoupon', [DiscountController::class, 'getCoupon']);
-
     // Payments
     Route::post('pay', [PaymentController::class, 'pay']);
     Route::post('payment-verify', [PaymentController::class, 'verify']);
 
     Route::middleware('auth:sanctum')->group(function (){
+        // Charging
+        Route::get('getCharging', [ChargingController::class, 'getCharging']);
+
+        //    Coupone
+        Route::get('getCoupon', [DiscountController::class, 'getCoupon']);
+
+        //    Wallet
+        Route::get('getWallet', [WalletController::class, 'getWallet']);
+
         // Profile
         Route::get('get-profile', [UserController::class, 'getProfile']);
         Route::put('edit-profile', [UserController::class, 'editProfile']);
@@ -111,9 +114,6 @@ Route::prefix('v1')->group(function (){
         // Orders
         Route::get('get-orders', [OrderController::class, 'getOrders']);
         Route::get('get-order', [OrderController::class, 'getOrder']);
-
-        // Charging
-        Route::get('getCharging', [ChargingController::class, 'getCharging']);
 
         // Notifications
         Route::get('get-notifications', [UserController::class, 'getNotifications']);
