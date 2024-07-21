@@ -128,7 +128,7 @@
                                 btn_check.removeAttr('disabled');
                             },
                             error: function () {
-                                btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">خطا در درخواست</span>`;
+                                btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
                                 btn_check.removeAttr('disabled');
                             }
                         });
