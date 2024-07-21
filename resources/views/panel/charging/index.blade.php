@@ -69,13 +69,13 @@
                             <td class="status">
                                 @if($charging->status == 'successful')
                                     <span
-                                        class="badge badge-success">{{ \App\Models\Charging::STATUS[$charging->status] }}</span>
+                                        class="badge badge-success">{{ \App\Models\Charging::status[$charging->status] }}</span>
                                 @elseif($charging->status == 'failed')
                                     <span
-                                        class="badge badge-danger">{{ \App\Models\Charging::STATUS[$charging->status] }}</span>
+                                        class="badge badge-danger">{{ \App\Models\Charging::status[$charging->status] }}</span>
                                 @else
                                     <span
-                                        class="badge badge-warning">{{ \App\Models\Charging::STATUS[$charging->status] }}</span>
+                                        class="badge badge-warning">{{ \App\Models\Charging::status[$charging->status] }}</span>
                                 @endif
                             </td>
                             <td>{{ $charging->description }}</td>
