@@ -22,4 +22,9 @@ class Wallet extends Model
     {
         return $this->hasmany(Charging::class);
     }
+
+    public function payments()
+    {
+        return $this->hasmany(Payment::class);
+    }
 }

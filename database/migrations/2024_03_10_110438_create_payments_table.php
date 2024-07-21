@@ -15,7 +15,7 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('order_id')->nullable();
             $table->string('authority')->unique();
             $table->unsignedBigInteger('amount');
             $table->enum('status', ['pending', 'success', 'failed'])->default('pending');
