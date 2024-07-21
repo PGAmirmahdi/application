@@ -77,11 +77,11 @@ class ChargingController extends Controller
                 'errors' => $validator->errors()->getMessages(),
             ], 400); // Added status code 400 for bad request
         }
-
+        $TomanToRial=$request->amount * 10;
         // Prepare data for ZarinPal API
         $data = [
             "merchant_id" => env('MERCHANT_ID'),
-            "amount" => $request->amount,
+            "amount" => $TomanToRial,
             "callback_url" => 'https://app.mpsystem.ir/BackToApp',
             "description" => "شارژ کیف پول",
         ];
@@ -173,12 +173,12 @@ class ChargingController extends Controller
                 'message' => 'تراکنشی با این شناسه موجود نیست',
             ], 404); // Added status code 404 for not found
         }
-        $TomanToRial= $payment->amount *10 ;
+
         // Prepare data for ZarinPal API
         $data = [
             "merchant_id" => env('MERCHANT_ID'),
             "authority" => $authority,
-            "amount" => $TomanToRial,
+            "amount" => $payment->amount,
         ];
 
         $jsonData = json_encode($data);
