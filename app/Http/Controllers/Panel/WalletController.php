@@ -93,7 +93,7 @@ class WalletController extends Controller
         $query = Wallet::query();
 
         if ($request->has('user_name')) {
-            $query->whereHas('user', function ($q) use ($request) {
+            $query->whereHas('users', function ($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->user_name . '%');
             });
         }
@@ -103,7 +103,7 @@ class WalletController extends Controller
         }
 
         if ($request->has('user_phone')) {
-            $query->whereHas('user', function ($q) use ($request) {
+            $query->whereHas('users', function ($q) use ($request) {
                 $q->where('phone', 'like', '%' . $request->user_phone . '%');
             });
         }
