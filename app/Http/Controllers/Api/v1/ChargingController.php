@@ -245,6 +245,48 @@ class ChargingController extends Controller
             ], 400); // Added status code 400 for bad request
         }
     }
+    public function getVerifyUrl(Request $request)
+    {
+        // Validation
+        $validator = Validator::make($request->all(), [
+            'authority' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => true,
+                'message' => $validator->errors()->getMessages(),
+            ], 400);
+        }
+
+        // Retrieve authority from request
+        $authority = $request->authority;
+        $payment = Payment::where('authority', $authority)->first();
+
+        if (!$payment) {
+            return response()->json([
+                'error' => true,
+                'message' => 'تراکنشی با این شناسه موجود نیست',
+            ], 404);
+        }
+
+        // Determine URL based on presence of order_id or wallet_id
+        if ($payment->order_id) {
+            $url = '/api/v1/payment-verify';
+        } elseif ($payment->wallet_id) {
+            $url = '/api/v1/Charging-verify';
+        } else {
+            return response()->json([
+                'error' => true,
+                'message' => 'شناسه نامعتبر است',
+            ], 400);
+        }
+
+        return response()->json([
+            'error' => false,
+            'url' => $url,
+        ], 200);
+    }
 
 
 

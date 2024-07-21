@@ -97,20 +97,44 @@
 
                 btn_check.attr('disabled', 'disabled');
 
+                // Get the appropriate URL from the server
                 $.ajax({
-                    url: '/api/v1/payment-verify',
+                    url: '/api/v1/get-verify-url', // URL for getting the appropriate verification URL
                     type: 'post',
                     data: {authority},
                     success: function (res) {
-                        if (res.error_code == 100 || res.error_code == 101) {
-                            btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
-                        } else {
-                            btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
+                        if (res.error) {
+                            alert(res.message);
+                            btn_check.removeAttr('disabled');
+                            return;
                         }
+
+                        // Perform the verification request to the correct URL
+                        $.ajax({
+                            url: res.url, // Use the URL received from the previous response
+                            type: 'post',
+                            data: {authority},
+                            success: function (res) {
+                                if (res.error_code == 100 || res.error_code == 101) {
+                                    btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
+                                } else {
+                                    btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
+                                }
+                                btn_check.removeAttr('disabled');
+                            },
+                            error: function () {
+                                btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">خطا در درخواست</span>`;
+                                btn_check.removeAttr('disabled');
+                            }
+                        });
+                    },
+                    error: function () {
+                        alert('خطا در دریافت URL مناسب');
                         btn_check.removeAttr('disabled');
                     }
-                })
-            })
-        })
+                });
+            });
+        });
     </script>
+
 @endsection
