@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Charging;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -62,7 +63,8 @@ class ChargingController extends Controller
         $validate = Validator::make($request->all(), [
             'user_id' => 'required|integer', // Added integer validation
             'wallet_id' => 'required|integer', // Added integer validation
-            'type'=>'string|required'
+            'type'=>'string|required',
+            'amount'=>'required|integer',
         ]);
         if ($validate->fails()) {
             return response()->json([
@@ -70,9 +72,41 @@ class ChargingController extends Controller
                 'errors' => $validate->errors()->getMessages()
             ], 400); // Added status code 400 for bad request
         }
-        $user_id = $request->user_id;
-        $wallet_id = $request->wallet_id;
+        // Fetch the user and their wallet
+        $user = User::findOrFail($request->user_id);
+        $wallet = $user->wallets;
+
+        // Perform the transaction based on type (deposit or withdrawal)
+        $amount = $request->amount;
         $type = $request->type;
 
+        if ($type === 'deposit') {
+            $wallet->balance += $amount;
+        } elseif ($type === 'withdrawal') {
+            if ($wallet->balance < $amount) {
+                return response()->json(['error' => 'موجودی کافی نیست.'], 422);
+            }
+            $wallet->balance -= $amount;
+        }
+
+        // Save the wallet after the transaction
+        $wallet->save();
+
+        // Create a charging record
+        $item = Charging::create([
+            'user_id' => $user->id,
+            'amount' => $amount,
+            'type' => $type,
+            'description' => $request->description,
+            'tracking_code' => (string) random_int(1000000000, 9999999999),
+            'wallet_id'=>$wallet->id
+        ]);
+
+        // Redirect to index page on success
+        return response()->json([
+            'success' => true,
+            'message' => 'تراکنش موفق',
+            'data' => $item
+        ], 200);
     }
 }

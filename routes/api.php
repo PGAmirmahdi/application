@@ -80,6 +80,7 @@ Route::prefix('v1')->group(function (){
     Route::middleware('auth:sanctum')->group(function (){
         // Charging
         Route::get('getCharging', [ChargingController::class, 'getCharging']);
+        Route::post('Charge', [ChargingController::class, 'Charge']);
 
         //    Coupone
         Route::get('getCoupon', [DiscountController::class, 'getCoupon']);
