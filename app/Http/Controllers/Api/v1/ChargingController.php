@@ -200,7 +200,7 @@ class ChargingController extends Controller
 
         if ($err) {
             $payment->update(['status' => 'failed']);
-            Charging::where('charging_id', $payment->charging_id)->update(['status' => 'failed']);
+            Charging::where('id', $payment->charging_id)->update(['status' => 'failed']);
 
             return response()->json([
                 'error' => true,
@@ -215,7 +215,7 @@ class ChargingController extends Controller
                     'ref_id' => $result['data']['ref_id'],
                     'verify_response' => json_encode($result),
                 ]);
-                Charging::where('charging_id', $payment->charging_id)->update(['status' => 'successful']);
+                Charging::where('id', $payment->charging_id)->update(['status' => 'successful']);
 
                 // Update wallet balance
                 $wallet = Wallet::where('wallet_id', $payment->wallet_id)->first();
@@ -236,7 +236,7 @@ class ChargingController extends Controller
             }
         } else {
             $payment->update(['status' => 'failed']);
-            Charging::where('charging_id', $payment->charging_id)->update(['status' => 'failed']);
+            Charging::where('id', $payment->charging_id)->update(['status' => 'failed']);
 
             return response()->json([
                 'error' => true,
