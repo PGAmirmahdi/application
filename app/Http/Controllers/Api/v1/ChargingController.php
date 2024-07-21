@@ -197,7 +197,10 @@ class ChargingController extends Controller
 
         if ($err) {
             $payment->update(['status' => 'failed']);
-            $payment->charging()->update(['status' => 'canceled']);
+
+            if ($payment->charging) {
+                $payment->charging->update(['status' => 'canceled']);
+            }
 
             return response()->json([
                 'error' => true,
@@ -213,12 +216,16 @@ class ChargingController extends Controller
                     'verify_response' => json_encode($result),
                 ]);
 
-                $payment->charging()->update(['status' => 'successful']);
+                if ($payment->charging) {
+                    $payment->charging->update(['status' => 'successful']);
+                }
 
                 // Update wallet balance
                 $wallet = Wallet::where('wallet_id', $payment->wallet_id)->first();
-                $wallet->balance += $payment->amount;
-                $wallet->save();
+                if ($wallet) {
+                    $wallet->balance += $payment->amount;
+                    $wallet->save();
+                }
 
                 return response()->json([
                     'error' => false,
@@ -232,7 +239,10 @@ class ChargingController extends Controller
             }
         } else {
             $payment->update(['status' => 'failed']);
-            $payment->charging()->update(['status' => 'canceled']);
+
+            if ($payment->charging) {
+                $payment->charging->update(['status' => 'canceled']);
+            }
 
             return response()->json([
                 'error' => true,
@@ -241,6 +251,7 @@ class ChargingController extends Controller
             ], 400); // Added status code 400 for bad request
         }
     }
+
 
 //    public function verify(Request $request)
 //    {
