@@ -65,8 +65,8 @@ class ChargingController extends Controller
     {
         // Validate the request parameters
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer',
-            'wallet_id' => 'required|integer',
+            'user_id' => 'required',
+            'wallet_id' => 'required',
             'address_id' => 'required',
             'type' => 'required|string',
             'amount' => 'required|integer',
