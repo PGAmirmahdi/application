@@ -77,10 +77,12 @@ Route::prefix('v1')->group(function (){
     Route::post('pay', [PaymentController::class, 'pay']);
     Route::post('payment-verify', [PaymentController::class, 'verify']);
 
+    // Charging
+    Route::get('getCharging', [ChargingController::class, 'getCharging']);
+    Route::post('Charge', [ChargingController::class, 'Charge']);
+    Route::post('Charging-verify', [ChargingController::class, 'verify']);
+
     Route::middleware('auth:sanctum')->group(function (){
-        // Charging
-        Route::get('getCharging', [ChargingController::class, 'getCharging']);
-        Route::post('Charge', [ChargingController::class, 'Charge']);
 
         //    Coupone
         Route::get('getCoupon', [DiscountController::class, 'getCoupon']);
