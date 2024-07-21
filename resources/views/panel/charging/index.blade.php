@@ -47,7 +47,6 @@
                         <th>وضعیت تراکنش</th>
                         <th>توضیحات</th>
                         <th>زمان تراکنش</th>
-                        <th>بررسی مجدد وضعیت</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -81,12 +80,6 @@
                             </td>
                             <td>{{ $charging->description }}</td>
                             <td>{{ verta($charging->created_at)->format('H:i - Y/m/d') }}</td>
-                            <td>
-                                <button type="button" class="btn btn-primary btn-floating btn_check"
-                                        data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(10)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }}>
-                                    <i class="fa fa-refresh"></i>
-                                </button>
-                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -121,29 +114,5 @@
                 });
             });
         });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $(document).on('click', '.btn_check', function () {
-                let authority = $(this).data('authority');
-                let btn_check = $(this);
-
-                btn_check.attr('disabled', 'disabled');
-
-                $.ajax({
-                    url: '/api/v1/payment-verify',
-                    type: 'post',
-                    data: {authority},
-                    success: function (res) {
-                        if (res.error_code == 100 || res.error_code == 101) {
-                            btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
-                        } else {
-                            btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
-                        }
-                        btn_check.removeAttr('disabled');
-                    }
-                })
-            })
-        })
     </script>
 @endsection
