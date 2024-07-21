@@ -173,12 +173,12 @@ class ChargingController extends Controller
                 'message' => 'تراکنشی با این شناسه موجود نیست',
             ], 404); // Added status code 404 for not found
         }
-        $TomantoRial=$payment->amount  * 100;
+        $TomanToRial= $payment->amount *10 ;
         // Prepare data for ZarinPal API
         $data = [
             "merchant_id" => env('MERCHANT_ID'),
             "authority" => $authority,
-            "amount" => $TomantoRial,
+            "amount" => $TomanToRial,
         ];
 
         $jsonData = json_encode($data);
