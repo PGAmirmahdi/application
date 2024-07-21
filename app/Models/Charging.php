@@ -26,8 +26,8 @@ class Charging extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    public function payments()
+    public function payment()
     {
-        return $this->hasMany(Payment::class, 'charging_id'); // Assuming charging_id is the foreign key in payments table
+        return $this->hasone(Payment::class); // Assuming charging_id is the foreign key in payments table
     }
 }

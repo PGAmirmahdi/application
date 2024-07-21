@@ -33,6 +33,6 @@ class Payment extends Model
     }
     public function charging()
     {
-        return $this->belongsTo(Charging::class, 'charging_id'); // Assuming charging_id is the foreign key in payments table
+        return $this->belongsTo(Charging::class);
     }
 }
