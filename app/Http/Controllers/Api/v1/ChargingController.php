@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ChargingResource;
 use App\Models\Address;
 use App\Models\Charging;
 use App\Models\Order;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ChargingController extends Controller
 {
-    public function getCharging(Request $request)
+    public function getChargings(Request $request)
     {
         // Validate the request parameters
         $validator = Validator::make($request->all(), [
@@ -286,6 +287,62 @@ class ChargingController extends Controller
             'error' => false,
             'url' => $url,
         ], 200);
+    }
+
+    public function getCharging(Request $request)
+    {
+        // Check for at least one of 'charging_id' or 'authority' in the request
+        if (!isset($request->charging_id) && !isset($request->authority)) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['یکی از پارامتر های charging_id و یا authority الزامی است']
+            ]);
+        }
+
+        // Handle case where 'authority' is provided
+        if ($request->authority) {
+            $payment = Payment::where('authority', $request->authority)->first();
+
+            if (!$payment) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => ['پرداختی با این شناسه موجود نیست']
+                ]);
+            }
+
+            $charging = Charging::where('id', $payment->charging_id)->first();
+
+            if (!$charging) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => ['سفارش مرتبط با این پرداخت یافت نشد']
+                ]);
+            }
+
+            $data = [
+                'charging' => ChargingResource::make($charging),
+            ];
+
+            return response()->json($data);
+        }
+
+        // Handle case where 'charging_id' is provided
+        if ($request->charging_id) {
+            $charging = Charging::find($request->charging_id);
+
+            if (!$charging) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => ['سفارش با این شناسه موجود نیست']
+                ]);
+            }
+
+            $data = [
+                'charging' => ChargingResource::make($charging),
+            ];
+
+            return response()->json($data);
+        }
     }
 
 
