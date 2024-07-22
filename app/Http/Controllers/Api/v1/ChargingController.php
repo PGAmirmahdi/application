@@ -17,7 +17,7 @@ class ChargingController extends Controller
 {
     public function getCharges()
     {
-        return ChargingResource::collection(auth()->user()->charging()->with('user')->latest()->paginate(10));
+        return ChargingResource::collection(auth()->user()->charging()->with('users')->latest()->paginate(10));
     }
     public function getChargings(Request $request)
     {
