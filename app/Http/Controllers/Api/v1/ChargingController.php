@@ -74,7 +74,6 @@ class ChargingController extends Controller
             'wallet_id' => 'required',
             'type' => 'required|string',
             'amount' => 'required|integer',
-            'types'=>'required|boolean'
         ]);
 
         if ($validator->fails()) {
@@ -136,7 +135,7 @@ class ChargingController extends Controller
                         'tracking_code' => random_int(100000, 999999),
                         'wallet_id' => $request->wallet_id,
                         'charging_id' => $charging->id,
-                        'types'=>$request->types
+                        'types'=>true
                     ]);
 
 

@@ -22,7 +22,6 @@ class PaymentController extends Controller
             'user_id' => 'required',
             'address_id' => 'required',
             'items' => 'required|json',
-            'types' => 'required|boolean'
         ]);
 
         if ($validate->fails()){
@@ -48,7 +47,7 @@ class PaymentController extends Controller
             'address' => $address->full_address,
             'postal_code' => $address->postal_code,
             'location' => $address->location,
-            'types'=> $request->types
+            'types'=> false
         ]);
 
         foreach ($items as $item) {
@@ -104,7 +103,7 @@ class PaymentController extends Controller
                         'authority' => $result['data']['authority'],
                         'amount' => $data['amount'],
                         'tracking_code' => random_int(100000, 999999),
-                        'types'=>$request->types
+                        'types'=>false
                     ]);
                     // end create payment
 
