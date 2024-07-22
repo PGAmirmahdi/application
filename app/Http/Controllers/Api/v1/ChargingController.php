@@ -360,7 +360,7 @@ class ChargingController extends Controller
         $validate = Validator::make($request->all(), [
             'user_id' => 'required',
             'wallet_id' => 'required',
-            'type' => 'required|string',
+            'type' => 'required',
             'address_id' => 'required',
             'items' => 'required|json',
         ]);
