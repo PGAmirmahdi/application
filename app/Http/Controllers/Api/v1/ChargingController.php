@@ -356,48 +356,25 @@ class ChargingController extends Controller
 
     public function buy(Request $request)
     {
-        // Validate the request parameters
         $validate = Validator::make($request->all(), [
             'user_id' => 'required',
             'wallet_id' => 'required',
-            'type' => 'required',
+            'type' => 'string|required',
             'address_id' => 'required',
-            'items' => 'required|json',
         ]);
-
         if ($validate->fails()) {
             return response()->json([
                 'success' => false,
                 'errors' => $validate->errors()->getMessages()
             ], 400); // Added status code 400 for bad request
         }
-
         $user_id = $request->user_id;
         $items = json_decode($request->items, true);
         $address = Address::find($request->address_id);
-
         if ($request->coupon_id) {
             $coupon = Coupons::find($request->coupon_id);
         }
-
-        // Fetch the user and their wallet
-        $user = User::findOrFail($request->user_id);
-        $wallet = $user->wallets->find($request->wallet_id);
-
-        // Calculate the total amount
-        $totalAmount = 0;
-        foreach ($items as $item) {
-            $product = Product::find($item['product_id']);
-            $totalAmount += $product->price * $item['count'];
-        }
-        $amount = $totalAmount * 10; // Convert to Rials
-
-        // Check wallet balance for withdrawal
-        if ($request->type === 'withdrawal' && $wallet->balance < $amount) {
-            return response()->json(['error' => 'موجودی کافی نیست.'], 422);
-        }
-
-        // Create order
+        // create order
         $order = Order::create([
             'user_id' => $user_id,
             'province_id' => $address->province_id,
@@ -405,11 +382,12 @@ class ChargingController extends Controller
             'address' => $address->full_address,
             'postal_code' => $address->postal_code,
             'location' => $address->location,
-            'types' => true,
+            'types' => false
         ]);
 
         foreach ($items as $item) {
             $product = Product::find($item['product_id']);
+
             $order->items()->create([
                 'product_id' => $item['product_id'],
                 'count' => $item['count'],
@@ -418,48 +396,70 @@ class ChargingController extends Controller
             ]);
         }
 
+        $amount = ($order->items()->sum('total_price') * 10);
+
+        // Fetch the user and their wallet
+        $user = User::findOrFail($request->user_id);
+        $wallet = $user->wallets;
+
         // Perform the transaction based on type (deposit or withdrawal)
-        if ($request->type === 'withdrawal') {
+        $type = $request->type;
+
+        if ($type === 'withdrawal') {
+            if ($wallet->balance < $amount) {
+                return response()->json(['error' => 'موجودی کافی نیست.'], 422);
+            }
             $wallet->balance -= $amount;
         }
+
         // Save the wallet after the transaction
         $wallet->save();
 
         // Create a charging record
-        $charging = Charging::create([
+        $item = Charging::create([
             'user_id' => $user->id,
             'amount' => $amount,
-            'type' => $request->type,
+            'type' => $type === 'withdrawal' ? true : false, // Save as boolean
             'description' => $request->description,
             'tracking_code' => (string) random_int(1000000000, 9999999999),
             'wallet_id' => $wallet->id,
+            'types' => true
         ]);
 
-        // Send notifications
+        // Create a payment record with the order_id
+        $payment = Payment::create([
+            'authority' => $request->authority,
+            'amount' => $amount,
+            'tracking_code' => (string) random_int(1000000000, 9999999999),
+            'wallet_id' => $wallet->id,
+            'order_id' => $order->id,
+            'types' => true
+        ]);
+
+        // send notification
         $message1 = 'سفارش شما با موفقیت پرداخت و ثبت گردید';
         $message2 = 'یک سفارش با موفقیت پرداخت و ثبت گردید';
         $url = route('orders.index');
+        $customer = $payment->order->user;
         $admins = User::where('role', 'admin')->get();
 
-        Notification::send($user, new SendMessage($message1, $url));
+        Notification::send($customer, new SendMessage($message1, $url));
         Notification::send($admins, new SendMessage($message2, $url));
+        // end send notification
 
-        // Send data to mpsystem
-        $this->sendInvoice($charging);
-
-        // Return success response
+        // Redirect to index page on success
         return response()->json([
             'success' => true,
             'message' => 'تراکنش موفق',
-            'data' => $charging
+            'data' => $item
         ], 200);
     }
 
-    private function sendInvoice($charging)
+    private function sendInvoice($payment)
     {
         $items = [];
 
-        foreach ($charging->order->items as $item) {
+        foreach ($payment->order->items as $item) {
             $items[] = [
                 'acc_code' => $item->product->code,
                 'total' => $item->total_price,
@@ -468,15 +468,15 @@ class ChargingController extends Controller
         }
 
         $jsonData = [
-            'first_name' => $charging->user->name,
-            'last_name' => $charging->user->family,
-            'national_number' => $charging->user->national_code,
-            'province' => $charging->order->province->name,
-            'city' => $charging->order->city,
-            'address_1' => $charging->order->address,
-            'postal_code' => $charging->order->postal_code,
-            'phone' => $charging->user->phone,
-            'national_code' => $charging->user->national_code,
+            'first_name' => $payment->order->user->name,
+            'last_name' => $payment->order->user->family,
+            'national_number' => $payment->order->user->national_code,
+            'province' => $payment->order->province->name,
+            'city' => $payment->order->city,
+            'address_1' => $payment->order->address,
+            'postal_code' => $payment->order->postal_code,
+            'phone' => $payment->order->user->phone,
+            'national_code' => $payment->order->user->national_code,
             'items' => $items,
             'created_in' => 'app'
         ];
@@ -489,12 +489,13 @@ class ChargingController extends Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
-            'Content-Length: ' . strlen($jsonData)
+            'Content-Length' => strlen($jsonData)
         ]);
 
         $result = curl_exec($ch);
         $err = curl_error($ch);
         curl_close($ch);
     }
+
 
 }
