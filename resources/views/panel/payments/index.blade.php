@@ -67,7 +67,7 @@
                                         class="badge badge-warning">{{ \App\Models\Payment::STATUS[$payment->status] }}</span>
                                 @endif
                             </td>
-                            <td>@if($payment->type == false)) مستقیم@elseif($payment->type == true)کیف پول@endif</td>
+                            <td>@if($payment->type == false) مستقیم @elseif($payment->type == true) کیف پول @endif</td>
                             <td>{{ str_replace('A000000000000000000000000000', '', $payment->authority) }}</td>
                             <td>{{ $payment->ref_id ?? '---' }}</td>
                             <td>{{ verta($payment->created_at)->format('H:i - Y/m/d') }}</td>
