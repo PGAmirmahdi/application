@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Validator;
 
 class ChargingController extends Controller
 {
+    public function getCharges()
+    {
+        return ChargingResource::collection(auth()->user()->charging()->with('user')->latest()->paginate(10));
+    }
     public function getChargings(Request $request)
     {
         // Validate the request parameters
