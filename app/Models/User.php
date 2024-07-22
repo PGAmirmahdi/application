@@ -98,4 +98,8 @@ class User extends Authenticatable
     {
         return $this->role == 'Organ';
     }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }
