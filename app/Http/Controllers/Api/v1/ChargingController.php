@@ -276,6 +276,18 @@ class ChargingController extends Controller
             ], 404);
         }
 
+        // Log the payment status for debugging
+        \Log::info('Verifying session for authority: ' . $authority, ['payment' => $payment]);
+
+        // Check if the payment has already failed
+        if ($payment->status === 'failed') {
+            return response()->json([
+                'error' => true,
+                'error_code' => -51,
+                'message' => 'Session is not valid, session is not active paid try.',
+            ], 400);
+        }
+
         // Determine URL based on presence of order_id or wallet_id
         if ($payment->order_id) {
             $url = '/api/v1/payment-verify';
@@ -288,14 +300,12 @@ class ChargingController extends Controller
             ], 400);
         }
 
-        // Log the session status for debugging
-        Log::info('Verifying session for authority: ' . $authority, ['payment' => $payment]);
-
         return response()->json([
             'error' => false,
             'url' => $url,
         ], 200);
     }
+
 
 
 
