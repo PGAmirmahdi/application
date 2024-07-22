@@ -54,7 +54,7 @@
                             <td>{{ ++$key }}</td>
                                 <td>@if($payment->types == false){{ $payment->order->user->name }}@elseif($payment->types == true){{ $payment->wallets->users->name }}@endif</td>
                                 <td>@if($payment->types == false){{ $payment->order->user->family }}@elseif($payment->types == true){{ $payment->wallets->users->family }}@endif</td>
-                            <td>{{ number_format($payment->amount) }}</td>
+                            <td>{{ number_format($payment->amount * 1/10) }}</td>
                             <td class="status">
                                 @if($payment->status == 'success')
                                     <span
