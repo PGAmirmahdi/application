@@ -97,65 +97,61 @@
 
                 btn_check.attr('disabled', 'disabled');
 
-                // Get the appropriate URL from the server
+                // دریافت توکن CSRF
+                let csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+                // دریافت URL مناسب از سرور
                 $.ajax({
-                    url: '/api/v1/get-verify-url', // URL for getting the appropriate verification URL
+                    url: '/api/v1/get-verify-url', // URL برای دریافت URL تایید مناسب
                     type: 'post',
                     data: { authority },
-                    success: function (error,res) {
-                        if (error == false) {
-                            btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
-                        }
-                        else if (res.error_code == 100 || res.error_code == 101) {
-                            btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
-                        }
-                        else if (res.error_code == -51) {
-                            // Handle the session expired case
-                            btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">پرداخت ناموفق</span>`;
-                        }else{
-                            // Handle other error codes or unexpected responses
-                            btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
-                        }
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // شامل توکن CSRF در هدر درخواست
+                    },
+                    success: function (res) {
                         if (res.error) {
                             alert(res.message);
                             btn_check.removeAttr('disabled');
                             return;
                         }
 
-                        // Perform the verification request to the correct URL
+                        // درخواست اعتبارسنجی به URL درست
                         $.ajax({
-                            url: res.url, // Use the URL received from the previous response
+                            url: res.url, // استفاده از URL دریافتی از پاسخ قبلی
                             type: 'post',
                             data: { authority },
-                            success: function (res,error) {
-                                // Handle different error codes and success states
-                                if (error == false) {
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken // شامل توکن CSRF در هدر درخواست
+                            },
+                            success: function (res) {
+                                // بررسی کدهای خطا و وضعیت‌های مختلف
+                                if (!res.error) {
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
-                                    }
-                                else if (res.error_code == 100 || res.error_code == 101) {
+                                } else if (res.error_code === 100 || res.error_code === 101) {
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
-                                } else if (res.error_code == -51) {
-                                    // Handle the session expired case
+                                } else if (res.error_code === -51) {
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">پرداخت ناموفق</span>`;
                                 } else {
-                                    // Handle other error codes or unexpected responses
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
                                 }
                                 btn_check.removeAttr('disabled');
                             },
-                            error: function (res) {
+                            error: function (xhr) {
+                                console.error('Verification request failed:', xhr.responseText);
                                 btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
                                 btn_check.removeAttr('disabled');
                             }
                         });
                     },
-                    error: function () {
+                    error: function (xhr) {
+                        console.error('Error in getting verify URL:', xhr.responseText);
                         alert('خطا در دریافت URL مناسب');
                         btn_check.removeAttr('disabled');
                     }
                 });
             });
         });
+
     </script>
 
 
