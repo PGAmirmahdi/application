@@ -423,6 +423,7 @@ class ChargingController extends Controller
             'description' => $request->description,
             'tracking_code' => (string) random_int(1000000000, 9999999999),
             'wallet_id' => $wallet->id,
+            'status'=>'successful'
         ]);
 
         // Create a payment record with the order_id
@@ -432,9 +433,12 @@ class ChargingController extends Controller
             'tracking_code' => (string) random_int(1000000000, 9999999999),
             'wallet_id' => $wallet->id,
             'order_id' => $order->id,
-            'types' => true
+            'types' => true,
+            'status'=>'success'
         ]);
-
+    // send to mpsystem
+        $this->sendInvoice($payment);
+        // end send to mpsyste
         // send notification
         $message1 = 'سفارش شما با موفقیت پرداخت و ثبت گردید';
         $message2 = 'یک سفارش با موفقیت پرداخت و ثبت گردید';
