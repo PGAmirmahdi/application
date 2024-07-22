@@ -102,8 +102,8 @@
                     url: '/api/v1/get-verify-url', // URL for getting the appropriate verification URL
                     type: 'post',
                     data: { authority },
-                    success: function (res) {
-                        if (res.code == 200) {
+                    success: function (error,res) {
+                        if (error == false) {
                             btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
                         }
                         else if (res.error_code == 100 || res.error_code == 101) {
@@ -127,9 +127,9 @@
                             url: res.url, // Use the URL received from the previous response
                             type: 'post',
                             data: { authority },
-                            success: function (res) {
+                            success: function (res,error) {
                                 // Handle different error codes and success states
-                                if (res.code == 200) {
+                                if (error == false) {
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
                                     }
                                 else if (res.error_code == 100 || res.error_code == 101) {
