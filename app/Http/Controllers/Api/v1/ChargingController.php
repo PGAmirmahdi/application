@@ -423,7 +423,6 @@ class ChargingController extends Controller
             'description' => $request->description,
             'tracking_code' => (string) random_int(1000000000, 9999999999),
             'wallet_id' => $wallet->id,
-            'types' => true
         ]);
 
         // Create a payment record with the order_id
