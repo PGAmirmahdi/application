@@ -125,10 +125,10 @@
                                 }
                                 btn_check.removeAttr('disabled');
                             },
-                            error: function (res) {
+                            error: function (error) {
                                 btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
                                 btn_check.removeAttr('disabled');
-                            if (res.error_code == -51) {
+                            if (error.error_code == -51) {
                                     // Handle the session expired case
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">پرداخت ناموفق</span>`;
                             }
