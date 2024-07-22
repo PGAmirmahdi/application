@@ -41,6 +41,7 @@
                         <th>نام خانوادگی</th>
                         <th>مبلغ (تومان)</th>
                         <th>وضعیت تراکنش</th>
+                        <th>پرداخت</th>
                         <th>شناسه مرجع</th>
                         <th>شماره تراکنش</th>
                         <th>تاریخ ثبت</th>
@@ -66,6 +67,7 @@
                                         class="badge badge-warning">{{ \App\Models\Payment::STATUS[$payment->status] }}</span>
                                 @endif
                             </td>
+                            <td>@if(isset($payment->order_id)) مستقیم@elseif(isset($payment->wallet_id))کیف پول@endif</td>
                             <td>{{ str_replace('A000000000000000000000000000', '', $payment->authority) }}</td>
                             <td>{{ $payment->ref_id ?? '---' }}</td>
                             <td>{{ verta($payment->created_at)->format('H:i - Y/m/d') }}</td>
