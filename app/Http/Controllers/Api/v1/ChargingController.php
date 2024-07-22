@@ -223,7 +223,7 @@ class ChargingController extends Controller
                 Charging::where('id', $payment->charging_id)->update(['status' => 'successful']);
 
                 // Update wallet balance
-                $wallet = Wallet::where('wallet_id', $payment->wallet_id)->first();
+                $wallet = Wallet::where('id', $payment->wallet_id)->first();
                 if ($wallet) {
                     $wallet->balance += $payment->amount;
                     $wallet->save();
@@ -292,6 +292,7 @@ class ChargingController extends Controller
             'url' => $url,
         ], 200);
     }
+
 
     public function getCharging(Request $request)
     {

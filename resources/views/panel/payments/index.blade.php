@@ -97,11 +97,17 @@
 
                 btn_check.attr('disabled', 'disabled');
 
+                // Get the CSRF token
+                let csrfToken = $('meta[name="csrf-token"]').attr('content');
+
                 // Get the appropriate URL from the server
                 $.ajax({
-                    url: '/api/v1/get-verify-url', // URL for getting the appropriate verification URL
+                    url: '/api/v1/get-verify-url',
                     type: 'post',
                     data: { authority },
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
+                    },
                     success: function (res) {
                         if (res.error) {
                             alert(res.message);
@@ -111,29 +117,31 @@
 
                         // Perform the verification request to the correct URL
                         $.ajax({
-                            url: res.url, // Use the URL received from the previous response
+                            url: res.url,
                             type: 'post',
                             data: { authority },
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
+                            },
                             success: function (res) {
-                                // Handle different error codes and success states
                                 if (res.error_code == 100 || res.error_code == 101) {
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
                                 } else if (res.error_code == -51) {
-                                    // Handle the session expired case
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
                                 } else {
-                                    // Handle other error codes or unexpected responses
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
                                 }
                                 btn_check.removeAttr('disabled');
                             },
-                            error: function () {
+                            error: function (xhr) {
+                                console.error('Verification request failed:', xhr.responseText);
                                 btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
                                 btn_check.removeAttr('disabled');
                             }
                         });
                     },
-                    error: function () {
+                    error: function (xhr) {
+                        console.error('Error in getting verify URL:', xhr.responseText);
                         alert('خطا در دریافت URL مناسب');
                         btn_check.removeAttr('disabled');
                     }
