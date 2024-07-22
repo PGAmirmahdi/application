@@ -71,7 +71,7 @@
                             <td>{{ verta($payment->created_at)->format('H:i - Y/m/d') }}</td>
                             <td>
                                 <button type="button" class="btn btn-primary btn-floating btn_check"
-                                        data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(10)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }}>
+                                        data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(5)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }}>
                                     <i class="fa fa-refresh"></i>
                                 </button>
                             </td>
@@ -118,20 +118,18 @@
                                 // Handle different error codes and success states
                                 if (res.error_code == 100 || res.error_code == 101) {
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
-                                }
-                            else {
+                                } else if (res.error_code == -51) {
+                                    // Handle the session expired case
+                                    btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">پرداخت ناموفق</span>`;
+                                } else {
                                     // Handle other error codes or unexpected responses
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
                                 }
                                 btn_check.removeAttr('disabled');
                             },
-                            error: function (error) {
+                            error: function (res) {
                                 btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
                                 btn_check.removeAttr('disabled');
-                            if (error.error_code == -51) {
-                                    // Handle the session expired case
-                                    btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">پرداخت ناموفق</span>`;
-                            }
                             }
                         });
                     },
