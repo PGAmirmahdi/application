@@ -124,10 +124,10 @@
                                 'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
                             },
                             success: function (res) {
-                                if (res.error_code === 100 || res.error_code === 101) {
+                                if (res.error_code == 100 || res.error_code == 101) {
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
-                                } else if (res.error_code === -51) {
-                                    btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">جلسه نامعتبر است، جلسه فعال پرداخت نشده است</span>`;
+                                } else if (res.error_code == -51) {
+                                    btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
                                 } else {
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
                                 }
@@ -148,7 +148,6 @@
                 });
             });
         });
-
     </script>
 
 
