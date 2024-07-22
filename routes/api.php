@@ -80,10 +80,10 @@ Route::prefix('v1')->group(function (){
     // Charging
     Route::get('getChargings', [ChargingController::class, 'getChargings']);
     Route::post('Charge', [ChargingController::class, 'Charge']);
-    Route::post('Charging-verify', [ChargingController::class, 'verify']);
+    Route::post('Charging-verify', [ChargingController::class, 'verify'])->middleware('auth:sanctum');
     Route::post('get-verify-url', [ChargingController::class,'getVerifyUrl']);
     Route::get('getCharging', [ChargingController::class, 'getCharging']);
-    Route::get('getCharges', [ChargingController::class, 'getCharges'])->middleware('auth:sanctum');;
+    Route::get('getCharges', [ChargingController::class, 'getCharges'])->middleware('auth:sanctum');
 
     Route::middleware('auth:sanctum')->group(function (){
 
