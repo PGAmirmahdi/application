@@ -382,7 +382,7 @@ class ChargingController extends Controller
             'address' => $address->full_address,
             'postal_code' => $address->postal_code,
             'location' => $address->location,
-            'types' => false
+            'types' => true
         ]);
 
         foreach ($items as $item) {
