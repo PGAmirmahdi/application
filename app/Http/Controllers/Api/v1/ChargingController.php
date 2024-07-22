@@ -11,6 +11,7 @@ use App\Models\Payment;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class ChargingController extends Controller
@@ -287,11 +288,15 @@ class ChargingController extends Controller
             ], 400);
         }
 
+        // Log the session status for debugging
+        Log::info('Verifying session for authority: ' . $authority, ['payment' => $payment]);
+
         return response()->json([
             'error' => false,
             'url' => $url,
         ], 200);
     }
+
 
 
     public function getCharging(Request $request)
