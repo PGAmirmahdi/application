@@ -103,7 +103,7 @@
                     type: 'post',
                     data: { authority },
                     success: function (res) {
-                        if (res.error_code == 100 || res.error_code == 101 || res.error_code == 200) {
+                        if (res.error_code == 100 || res.error_code == 101 || res.code == 200) {
                             btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
                         }else{
                             // Handle other error codes or unexpected responses
