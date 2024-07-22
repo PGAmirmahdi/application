@@ -52,8 +52,8 @@
                     @foreach($payments as $key => $payment)
                         <tr>
                             <td>{{ ++$key }}</td>
-                                <td>@if(isset($payment->order_id)){{ $payment->order->user->name }}@elseif(isset($payment->wallet_id)){{ $payment->wallets->users->name }}@endif</td>
-                                <td>@if(isset($payment->order_id)){{ $payment->order->user->family }}@elseif(isset($payment->wallet_id)){{ $payment->wallets->users->family }}@endif</td>
+                                <td>@if($payment->type == false){{ $payment->order->user->name }}@elseif($payment->type == true){{ $payment->wallets->users->name }}@endif</td>
+                                <td>@if($payment->type == false){{ $payment->order->user->family }}@elseif($payment->type == true){{ $payment->wallets->users->family }}@endif</td>
                             <td>{{ number_format($payment->amount) }}</td>
                             <td class="status">
                                 @if($payment->status == 'success')
@@ -67,7 +67,7 @@
                                         class="badge badge-warning">{{ \App\Models\Payment::STATUS[$payment->status] }}</span>
                                 @endif
                             </td>
-                            <td>@if(isset($payment->order_id)) مستقیم@elseif(isset($payment->wallet_id))کیف پول@endif</td>
+                            <td>@if($payment->type == false)) مستقیم@elseif($payment->type == true)کیف پول@endif</td>
                             <td>{{ str_replace('A000000000000000000000000000', '', $payment->authority) }}</td>
                             <td>{{ $payment->ref_id ?? '---' }}</td>
                             <td>{{ verta($payment->created_at)->format('H:i - Y/m/d') }}</td>
