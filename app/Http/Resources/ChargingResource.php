@@ -22,7 +22,7 @@ class ChargingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'charging_id' => $this->charging_id,
+            'charging_id' => $this->id,
             'amount' => $this->amount,
             'pay-status' => $this->status,
             'created_at' => $this->created_at,
