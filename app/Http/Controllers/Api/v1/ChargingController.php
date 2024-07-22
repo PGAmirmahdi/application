@@ -158,33 +158,33 @@ class ChargingController extends Controller
     public function verify(Request $request)
     {
         // Validation
-        $validator = Validator::make($request->all(), [
+        $validate = validator()->make($request->all(),[
             'authority' => 'required',
         ]);
 
-        if ($validator->fails()) {
+        if ($validate->fails()){
             return response()->json([
                 'error' => true,
-                'message' => $validator->errors()->getMessages(),
-            ], 400); // Added status code 400 for bad request
+                'message' => $validate->errors()->getMessages()
+            ]);
         }
 
         // Retrieve authority from request
-        $authority = $request->authority;
-        $payment = Payment::where('authority', $authority)->first();
+        $Authority = $request->authority;
+        $payment = Payment::where('authority', $Authority)->first();
 
-        if (!$payment) {
+        if (!$payment){
             return response()->json([
                 'error' => true,
-                'message' => 'تراکنشی با این شناسه موجود نیست',
-            ], 404); // Added status code 404 for not found
+                'message' => 'تراکنشی با این شناسه موجود نیست'
+            ]);
         }
 
         // Prepare data for ZarinPal API
         $data = [
             "merchant_id" => env('MERCHANT_ID'),
-            "authority" => $authority,
-            "amount" => $payment->amount,
+            "authority" => $Authority,
+            "amount" => $payment->amount
         ];
 
         $jsonData = json_encode($data);
@@ -211,7 +211,7 @@ class ChargingController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => $err,
-            ], 500); // Added status code 500 for server error
+            ]); // Added status code 500 for server error
         }
 
         if (isset($result['data']['code'])) {
@@ -233,12 +233,12 @@ class ChargingController extends Controller
                 return response()->json([
                     'error' => false,
                     'message' => 'Transaction success. RefID: ' . $result['data']['ref_id'],
-                ], 200); // Added status code 200 for success
+                ]); // Added status code 200 for success
             } elseif ($result['data']['code'] == 101) {
                 return response()->json([
                     'error' => false,
                     'message' => 'تراکنش با شناسه مورد نظر قبلا پرداخت موفق شده است',
-                ], 200); // Added status code 200 for success
+                ]); // Added status code 200 for success
             }
         } else {
             $payment->update(['status' => 'failed']);
@@ -248,36 +248,36 @@ class ChargingController extends Controller
                 'error' => true,
                 'error_code' => $result['errors']['code'],
                 'message' => $result['errors']['message'],
-            ], 400); // Added status code 400 for bad request
+            ]); // Added status code 400 for bad request
         }
     }
     public function getVerifyUrl(Request $request)
     {
         // Validation
-        $validator = Validator::make($request->all(), [
+        $validate = validator()->make($request->all(),[
             'authority' => 'required',
         ]);
 
-        if ($validator->fails()) {
+        if ($validate->fails()){
             return response()->json([
                 'error' => true,
-                'message' => $validator->errors()->getMessages(),
-            ], 400);
+                'message' => $validate->errors()->getMessages()
+            ]);
         }
 
         // Retrieve authority from request
-        $authority = $request->authority;
-        $payment = Payment::where('authority', $authority)->first();
+        $Authority = $request->authority;
+        $payment = Payment::where('authority', $Authority)->first();
 
-        if (!$payment) {
+        if (!$payment){
             return response()->json([
                 'error' => true,
-                'message' => 'تراکنشی با این شناسه موجود نیست',
-            ], 404);
+                'message' => 'تراکنشی با این شناسه موجود نیست'
+            ]);
         }
 
         // Log the payment status for debugging
-        \Log::info('Verifying session for authority: ' . $authority, ['payment' => $payment]);
+        Log::info('Verifying session for authority: ' . $Authority, ['payment' => $payment]);
 
         // Check if the payment has already failed
         if ($payment->status === 'failed') {
@@ -289,21 +289,21 @@ class ChargingController extends Controller
         }
 
         // Determine URL based on presence of order_id or wallet_id
-        if ($payment->order_id) {
+        if (isset($payment->order_id)) {
             $url = '/api/v1/payment-verify';
-        } elseif ($payment->wallet_id) {
+        } elseif (isset($payment->wallet_id)) {
             $url = '/api/v1/Charging-verify';
         } else {
             return response()->json([
                 'error' => true,
                 'message' => 'شناسه نامعتبر است',
-            ], 400);
+            ]);
         }
 
         return response()->json([
             'error' => false,
             'url' => $url,
-        ], 200);
+        ]);
     }
 
 
