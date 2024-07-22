@@ -225,7 +225,7 @@ class ChargingController extends Controller
                 // Update wallet balance
                 $wallet = Wallet::where('id', $payment->wallet_id)->first();
                 if ($wallet) {
-                    $wallet->balance += $payment->amount;
+                    $wallet->balance += $payment->amount * (1/10);
                     $wallet->save();
                 }
 
