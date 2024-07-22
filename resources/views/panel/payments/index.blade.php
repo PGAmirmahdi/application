@@ -103,8 +103,15 @@
                     type: 'post',
                     data: { authority },
                     success: function (res) {
-                        if (res.error_code == 100 || res.error_code == 101 || res.code == 200) {
+                        if (res.code == 200) {
                             btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
+                        }
+                        else if (res.error_code == 100 || res.error_code == 101) {
+                            btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
+                        }
+                        else if (res.error_code == -51) {
+                            // Handle the session expired case
+                            btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">پرداخت ناموفق</span>`;
                         }else{
                             // Handle other error codes or unexpected responses
                             btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-danger">ناموفق</span>`;
@@ -122,7 +129,10 @@
                             data: { authority },
                             success: function (res) {
                                 // Handle different error codes and success states
-                                if (res.error_code == 100 || res.error_code == 101) {
+                                if (res.code == 200) {
+                                    btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
+                                    }
+                                else if (res.error_code == 100 || res.error_code == 101) {
                                     btn_check.parent().siblings('.status')[0].innerHTML = `<span class="badge badge-success">موفق</span>`;
                                 } else if (res.error_code == -51) {
                                     // Handle the session expired case
