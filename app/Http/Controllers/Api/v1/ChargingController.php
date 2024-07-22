@@ -165,7 +165,7 @@ class ChargingController extends Controller
             return response()->json([
                 'error' => true,
                 'message' => $validator->errors()->getMessages(),
-            ], 400); // Added status code 400 for bad request
+            ]); // Added status code 400 for bad request
         }
 
         // Retrieve authority from request
