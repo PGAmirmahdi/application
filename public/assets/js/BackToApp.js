@@ -7,4 +7,5 @@ function load(){
     body.getElementsByTagName('h3')[0].classList.add('load')
     body.getElementsByTagName('button')[0].classList.add('load')
     body.getElementsByTagName('p')[0].classList.add('load')
+    body.getElementsByTagName('p')[1].classList.add('load')
 }
