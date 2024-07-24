@@ -85,17 +85,20 @@
                             <td>{{ verta($payment->created_at)->format('H:i - Y/m/d') }}</td>
                             <td>
                                 @if($payment->status === 'success')
-                                    <button type="button" class="btn btn-primary btn-floating btn_check"
-                                            disabled>
+                                    <button type="button" class="btn btn-primary btn-floating btn_check" disabled>
                                         <i class="fa fa-refresh"></i>
                                     </button>
                                 @else
+                                    @php
+                                        $isDisabled = verta($payment->created_at)->addMinutes(5)->formatDatetime() >= verta()->formatDatetime();
+                                    @endphp
                                     <button type="button" class="btn btn-primary btn-floating btn_check"
-                                            data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(5)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }}>
+                                            data-authority="{{ $payment->authority }}" {{ $isDisabled ? 'disabled' : '' }}>
                                         <i class="fa fa-refresh"></i>
                                     </button>
                                 @endif
                             </td>
+
                         </tr>
                     @endforeach
                     </tbody>
