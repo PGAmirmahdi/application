@@ -14,18 +14,12 @@
                 <div class="form-row">
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
                         <label for="user_id">نام کاربر<span class="text-danger">*</span></label>
-                        <select class="form-control" name="user_id" id="user_id">
-                                <option value="{{ old('user_id', $wallet->users->name . ' ' . $wallet->users->family) }}">
-                                    {{ $wallet->users->name . ' ' . $wallet->users->family }}
-                                </option>
-                        </select>
-                        @error('user_id')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
+                        <input type="text" class="form-control" name="user_id" id="user_id" value="{{ $wallet->user->name . ' ' . $wallet->user->family }}" readonly>
                     </div>
+
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
-                        <label for="balance">موجودی<span class="text-danger">*</span></label>
-                        <input type="number" name="balance" class="form-control" id="balance" value="{{ old('balance', $wallet->balance) }}">
+                        <label for="balance">موجودی کیف پول<span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" name="balance" id="balance" value="{{ old('balance', $wallet->balance) }}">
                         @error('balance')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
