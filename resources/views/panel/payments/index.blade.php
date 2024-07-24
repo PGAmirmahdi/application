@@ -85,8 +85,8 @@
                             <td>{{ verta($payment->created_at)->format('H:i - Y/m/d') }}</td>
                             <td>
                                 @if($payment->status === 'success')
-                                    <button type="button" class="btn btn-primary btn-floating btn_check" disabled>
-                                        <i class="fa fa-refresh"></i>
+                                    <button type="button" class="btn btn-primary btn-floating btn_check disabled" disabled>
+                                        <i class="fa fa-refresh" disabled></i>
                                     </button>
                                 @else
                                     @php
