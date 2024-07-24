@@ -72,10 +72,17 @@
                             <td>{{ $payment->ref_id ?? '---' }}</td>
                             <td>{{ verta($payment->created_at)->format('H:i - Y/m/d') }}</td>
                             <td>
-                                <button type="button" class="btn btn-primary btn-floating btn_check"
-                                        data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(5)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }}>
-                                    <i class="fa fa-refresh"></i>
-                                </button>
+                                @if($payment->status == 'success')
+                                    <button type="button" class="btn btn-primary btn-floating btn_check"
+                                            data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(5)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }} disabled>
+                                        <i class="fa fa-refresh"></i>
+                                    </button>
+                                    @else
+                                    <button type="button" class="btn btn-primary btn-floating btn_check"
+                                            data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(5)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }}>
+                                        <i class="fa fa-refresh"></i>
+                                    </button>
+                                    @endif
                             </td>
                         </tr>
                     @endforeach

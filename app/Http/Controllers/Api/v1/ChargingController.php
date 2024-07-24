@@ -23,6 +23,7 @@ class ChargingController extends Controller
     {
         return ChargingResource::collection(auth()->user()->charging()->with('users')->latest()->paginate(10));
     }
+
     public function getChargings(Request $request)
     {
         // Validate the request parameters
@@ -86,7 +87,7 @@ class ChargingController extends Controller
                 'errors' => $validator->errors()->getMessages(),
             ], 400); // Added status code 400 for bad request
         }
-        $TomanToRial=$request->amount * 10;
+        $TomanToRial = $request->amount * 10;
         // Prepare data for ZarinPal API
         $data = [
             "merchant_id" => env('MERCHANT_ID'),
@@ -139,7 +140,7 @@ class ChargingController extends Controller
                         'tracking_code' => random_int(100000, 999999),
                         'wallet_id' => $request->wallet_id,
                         'charging_id' => $charging->id,
-                        'types'=>true
+                        'types' => true
                     ]);
 
 
@@ -230,7 +231,7 @@ class ChargingController extends Controller
                 // Update wallet balance
                 $wallet = Wallet::where('id', $payment->wallet_id)->first();
                 if ($wallet) {
-                    $wallet->balance += $payment->amount * (1/10);
+                    $wallet->balance += $payment->amount * (1 / 10);
                     $wallet->save();
                 }
 
@@ -255,6 +256,7 @@ class ChargingController extends Controller
             ], 400); // Added status code 400 for bad request
         }
     }
+
     public function getVerifyUrl(Request $request)
     {
         // Validation
@@ -436,7 +438,7 @@ class ChargingController extends Controller
             'amount' => $totalAmount,
             'type' => 'withdrawal',
             'description' => $request->description,
-            'tracking_code' => (string) random_int(1000000000, 9999999999),
+            'tracking_code' => (string)random_int(1000000000, 9999999999),
             'wallet_id' => $wallet->id,
             'status' => 'successful'
         ]);
@@ -445,7 +447,7 @@ class ChargingController extends Controller
         $payment = Payment::create([
             'authority' => $request->authority,
             'amount' => $totalAmount,
-            'tracking_code' => (string) random_int(1000000000, 9999999999),
+            'tracking_code' => (string)random_int(1000000000, 9999999999),
             'wallet_id' => $wallet->id,
             'order_id' => $order->id,
             'types' => true,
