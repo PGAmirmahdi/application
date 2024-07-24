@@ -54,7 +54,7 @@
                             <td>{{ ++$key }}</td>
                                 <td>@if($payment->types == false){{ $payment->order->user->name }}@elseif($payment->types == true){{ $payment->wallets->users->name }}@endif</td>
                                 <td>@if($payment->types == false){{ $payment->order->user->family }}@elseif($payment->types == true){{ $payment->wallets->users->family }}@endif</td>
-                            <td>{{ number_format($payment->amount * 1/10) }}</td>
+                            <td>@if($payment->types == false){{ number_format($payment->amount * 1/10) }}@else {{ number_format($payment->amount) }}  @endif</td>
                             <td class="status">
                                 @if($payment->status == 'success')
                                     <span
@@ -74,12 +74,13 @@
                             <td>
                                 @if($payment->status == 'success')
                                     <button type="button" class="btn btn-primary btn-floating btn_check"
-                                            data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(5)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }} disabled>
-                                        <i class="fa fa-refresh" disabled></i>
+                                            data-authority="{{ $payment->authority }}"
+                                        {{ verta($payment->created_at)->addMinutes(5)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }}>
+                                        <i class="fa fa-refresh"></i>
                                     </button>
-                                    @else
+                                @else
                                     <button type="button" class="btn btn-primary btn-floating btn_check"
-                                            data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(5)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }}>
+                                            data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(10)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }}>
                                         <i class="fa fa-refresh"></i>
                                     </button>
                                     @endif
