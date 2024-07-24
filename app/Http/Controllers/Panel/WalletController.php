@@ -90,7 +90,7 @@ class WalletController extends Controller
         $wallet->save();
 
         // Return a successful response
-        return redirect()->route('panel/wallet');
+        return view('panel.wallet.index');
     }
 
     public function destroy(Wallet $wallet)
