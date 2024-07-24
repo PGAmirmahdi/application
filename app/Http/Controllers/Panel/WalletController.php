@@ -90,11 +90,7 @@ class WalletController extends Controller
         $wallet->save();
 
         // Return a successful response
-        return response()->json([
-            'success' => true,
-            'message' => 'Wallet balance updated successfully',
-            'wallet' => $wallet
-        ], 200);
+        return redirect()->route('panel.wallet');
     }
 
     public function destroy(Wallet $wallet)
