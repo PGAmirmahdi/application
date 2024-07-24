@@ -1,11 +1,13 @@
-function GoToSite(){
-    location.href="https://artintoner.com"
+function goToSite() {
+    location.href = "https://artintoner.com";
 }
-function load(){
-    const body=document.getElementsByTagName('body')[0]
-    body.getElementsByTagName('i')[0].classList.add('load')
-    body.getElementsByTagName('h3')[0].classList.add('load')
-    body.getElementsByTagName('button')[0].classList.add('load')
-    body.getElementsByTagName('p')[0].classList.add('load')
-    body.getElementsByTagName('p')[1].classList.add('load')
+
+function load() {
+    const body = document.body;
+    const elementsToLoad = body.querySelectorAll('i, h3, button, p');
+
+    elementsToLoad.forEach(element => {
+        element.classList.add('load');
+    });
 }
+
