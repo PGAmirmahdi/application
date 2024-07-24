@@ -74,6 +74,28 @@ class WalletController extends Controller
         $usersWithoutWallets = User::doesntHave('wallet')->get();
         return view('panel.wallet.edit', compact('wallet', 'usersWithoutWallets'));
     }
+    public function update(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'balance' => 'required|numeric', // Ensure balance is a number
+            'user_id' => 'required|exists:users,id' // Ensure user_id exists in users table
+        ]);
+
+        // Find the wallet associated with the user
+        $wallet = Wallet::where('user_id', $request->user_id)->firstOrFail();
+
+        // Update the wallet balance
+        $wallet->balance = $request->balance;
+        $wallet->save();
+
+        // Return a successful response
+        return response()->json([
+            'success' => true,
+            'message' => 'Wallet balance updated successfully',
+            'wallet' => $wallet
+        ], 200);
+    }
 
     public function destroy(Wallet $wallet)
     {

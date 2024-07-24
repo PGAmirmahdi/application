@@ -15,11 +15,9 @@
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
                         <label for="user_id">نام کاربر<span class="text-danger">*</span></label>
                         <select class="form-control" name="user_id" id="user_id">
-                            @foreach($usersWithoutWallets as $user)
-                                <option value="{{ $user->id }}" {{ $wallet->user_id == $user->id ? 'selected' : '' }}>
-                                    {{ $user->name . ' ' . $user->family }}
+                                <option value="{{ old('user_id', $wallet->users->name . ' ' . $wallet->users->family) }}">
+                                    {{ $wallet->users->name . ' ' . $wallet->users->family }}
                                 </option>
-                            @endforeach
                         </select>
                         @error('user_id')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
