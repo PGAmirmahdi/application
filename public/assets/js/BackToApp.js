@@ -1,4 +1,4 @@
-function goToSite() {
+function GoToSite() {
     location.href = "https://artintoner.com";
 }
 

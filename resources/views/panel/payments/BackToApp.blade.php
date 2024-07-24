@@ -22,7 +22,7 @@
         @if (isset($authority))
             <p>پرداخت مستقیم</p>
         @else
-            <p>پرداخت از طریق کیف پول</p>
+            <p>پرداخت از طریق کیف پول   </p>
         @endif
     @else
         <i style="color: #de0a0f;font-size: 125px" class="material-icons">error</i>
