@@ -382,6 +382,8 @@ class ChargingController extends Controller
             'address' => $address->full_address,
             'postal_code' => $address->postal_code,
             'location' => $address->location,
+            'status'=>'processing',
+            'coupon_id' => $request->coupon_id,
             'types' => true
         ]);
 
@@ -434,7 +436,8 @@ class ChargingController extends Controller
             'wallet_id' => $wallet->id,
             'order_id' => $order->id,
             'types' => true,
-            'status'=>'success'
+            'status'=>'success',
+            'charging_id'=>$item->id
         ]);
         // send to mpsystem
         $this->sendInvoice($payment);
