@@ -71,7 +71,7 @@ class WalletController extends Controller
 
     public function edit(Wallet $wallet)
     {
-        $usersWithoutWallets = User::doesntHave('wallet')->get();
+        $usersWithoutWallets = User::doesntHave('wallets')->get();
         return view('panel.wallet.edit', compact('wallet', 'usersWithoutWallets'));
     }
     public function update(Request $request)
