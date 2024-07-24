@@ -28,11 +28,6 @@
             class="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
             onclick="GoToSite()">رفتن به سایت
     </button>
-        @if (isset($authority))
-            <p>پرداخت مستقیم</p>
-        @else
-            <p>پرداخت از طریق کیف پول   </p>
-        @endif
 </div>
 <style>
     @font-face {
@@ -156,11 +151,7 @@
 <script src="{{asset('assets/js/BackToApp.js')}}"></script>
 <script>
     setTimeout(() => {
-        @if (isset($authority))
             location.href = "intent://artintoner.com?Authority={{ $authority }}#Intent;scheme=https;package=com.example.artintoner;end";
-        @else
-            location.href = "intent://artintoner.com#Intent;scheme=https;package=com.example.artintoner;end";
-        @endif
     }, 3000);
 </script>
 </body>
