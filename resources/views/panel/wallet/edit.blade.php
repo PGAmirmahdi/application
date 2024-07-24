@@ -15,7 +15,7 @@
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
                         <label for="user_display">نام کاربر<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="user_display" value="{{ $wallet->users->name . ' ' . $wallet->users->family }}" readonly>
-                        <input type="hidden" name="user_id" id="user_id" value="{{ $wallet->user->id }}">
+                        <input type="hidden" name="user_id" id="user_id" value="{{ $wallet->users->id }}">
                     </div>
 
 
