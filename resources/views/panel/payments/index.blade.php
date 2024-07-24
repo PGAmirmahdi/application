@@ -52,16 +52,8 @@
                     @foreach($payments as $key => $payment)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>@if($payment->types == false)
-                                    {{ $payment->order->user->name }}
-                                @elseif($payment->types == true)
-                                    {{ $payment->wallets->users->name }}
-                                @endif</td>
-                            <td>@if($payment->types == false)
-                                    {{ $payment->order->user->family }}
-                                @elseif($payment->types == true)
-                                    {{ $payment->wallets->users->family }}
-                                @endif</td>
+                                <td>@if($payment->types == false){{ $payment->order->user->name }}@elseif($payment->types == true){{ $payment->wallets->users->name }}@endif</td>
+                                <td>@if($payment->types == false){{ $payment->order->user->family }}@elseif($payment->types == true){{ $payment->wallets->users->family }}@endif</td>
                             <td>{{ number_format($payment->amount * 1/10) }}</td>
                             <td class="status">
                                 @if($payment->status == 'success')
@@ -75,30 +67,23 @@
                                         class="badge badge-warning">{{ \App\Models\Payment::STATUS[$payment->status] }}</span>
                                 @endif
                             </td>
-                            <td>@if($payment->types == false)
-                                    مستقیم
-                                @elseif($payment->types == true)
-                                    کیف پول
-                                @endif</td>
+                            <td>@if($payment->types == false) مستقیم @elseif($payment->types == true) کیف پول @endif</td>
                             <td>{{ str_replace('A000000000000000000000000000', '', $payment->authority) }}</td>
                             <td>{{ $payment->ref_id ?? '---' }}</td>
                             <td>{{ verta($payment->created_at)->format('H:i - Y/m/d') }}</td>
                             <td>
-                                @if($payment->status === 'success')
-                                    <button type="button" class="btn btn-primary btn-floating btn_check disabled" disabled>
+                                @if($payment->status == 'success')
+                                    <button type="button" class="btn btn-primary btn-floating btn_check"
+                                            data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(5)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }} disabled>
                                         <i class="fa fa-refresh" disabled></i>
                                     </button>
-                                @else
-                                    @php
-                                        $isDisabled = verta($payment->created_at)->addMinutes(5)->formatDatetime() >= verta()->formatDatetime();
-                                    @endphp
+                                    @else
                                     <button type="button" class="btn btn-primary btn-floating btn_check"
-                                            data-authority="{{ $payment->authority }}" {{ $isDisabled ? 'disabled' : '' }}>
+                                            data-authority="{{ $payment->authority }}" {{ verta($payment->created_at)->addMinutes(5)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }}>
                                         <i class="fa fa-refresh"></i>
                                     </button>
-                                @endif
+                                    @endif
                             </td>
-
                         </tr>
                     @endforeach
                     </tbody>
@@ -128,7 +113,7 @@
                 $.ajax({
                     url: '/api/v1/get-verify-url', // URL برای دریافت URL تایید مناسب
                     type: 'post',
-                    data: {authority},
+                    data: { authority },
                     headers: {
                         'X-CSRF-TOKEN': csrfToken // شامل توکن CSRF در هدر درخواست
                     },
@@ -143,7 +128,7 @@
                         $.ajax({
                             url: res.url, // استفاده از URL دریافتی از پاسخ قبلی
                             type: 'post',
-                            data: {authority},
+                            data: { authority },
                             headers: {
                                 'X-CSRF-TOKEN': csrfToken // شامل توکن CSRF در هدر درخواست
                             },
@@ -177,5 +162,6 @@
         });
 
     </script>
+
 
 @endsection
