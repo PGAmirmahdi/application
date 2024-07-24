@@ -431,7 +431,7 @@ class ChargingController extends Controller
         $charging = Charging::create([
             'user_id' => $user->id,
             'amount' => $totalAmount,
-            'type' => $type === 'withdrawal',
+            'type' => 'withdrawal',
             'description' => $request->description,
             'tracking_code' => (string) random_int(1000000000, 9999999999),
             'wallet_id' => $wallet->id,
