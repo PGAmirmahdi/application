@@ -394,7 +394,10 @@ class ChargingController extends Controller
         // Check wallet balance before creating the order
         $type = $request->type;
         if ($type === 'withdrawal' && $wallet->balance < $totalAmount) {
-            return response()->json(['error' => 'موجودی کافی نیست.'], 422);
+            return response()->json([
+                'success' => false,
+                'message' => 'موجودی کافی نیست'
+            ], 422);
         }
 
         // Create order
