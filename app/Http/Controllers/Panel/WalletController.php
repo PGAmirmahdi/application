@@ -90,7 +90,8 @@ class WalletController extends Controller
         $wallet->save();
 
         // Return a successful response
-        return view('panel.wallet.index');
+        $wallets = Wallet::latest()->paginate(30);
+        return view('panel.wallet.index',compact('wallets'));
     }
 
     public function destroy(Wallet $wallet)
