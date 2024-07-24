@@ -19,7 +19,7 @@
         <i style="color: #3aff55;font-size: 125px" class="material-icons">check_circle</i>
         <h3>پرداخت موفق</h3>
         <p>پرداخت شما با موفقیت ثبت شد،لطفا برای ادامه از دکمه زیر اقدام کنید</p>
-        @if ($authority)
+        @if (isset($authority))
             <p>پرداخت مستقیم</p>
         @else
             <p>پرداخت از طریق اپ</p>
@@ -28,7 +28,7 @@
         <i style="color: #de0a0f;font-size: 125px" class="material-icons">error</i>
         <h3>پرداخت ناموفق</h3>
         <p>متاسفانه پرداخت شما ناموفق بود،لطفا از دکمه زیر برای ادامه اقدام کنید</p>
-        @if ($authority)
+        @if (isset($authority))
             <p>پرداخت مستقیم</p>
         @else
             <p>پرداخت از طریق اپ</p>
@@ -161,7 +161,7 @@
 <script src="{{asset('assets/js/BackToApp.js')}}"></script>
 <script>
     setTimeout(() => {
-        @if ($authority)
+        @if (isset($authority))
             location.href = "intent://artintoner.com?Authority={{ $authority }}#Intent;scheme=https;package=com.example.artintoner;end";
         @else
             location.href = "intent://artintoner.com#Intent;scheme=https;package=com.example.artintoner;end";
