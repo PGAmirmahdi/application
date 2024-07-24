@@ -19,25 +19,20 @@
         <i style="color: #3aff55;font-size: 125px" class="material-icons">check_circle</i>
         <h3>پرداخت موفق</h3>
         <p>پرداخت شما با موفقیت ثبت شد،لطفا برای ادامه از دکمه زیر اقدام کنید</p>
-        @if (isset($authority))
-            <p>پرداخت مستقیم</p>
-        @else
-            <p>پرداخت از طریق کیف پول   </p>
-        @endif
     @else
         <i style="color: #de0a0f;font-size: 125px" class="material-icons">error</i>
         <h3>پرداخت ناموفق</h3>
         <p>متاسفانه پرداخت شما ناموفق بود،لطفا از دکمه زیر برای ادامه اقدام کنید</p>
-        @if (isset($authority))
-            <p>پرداخت مستقیم</p>
-        @else
-            <p>پرداخت از طریق کیف پول</p>
-        @endif
     @endif
     <button type="button"
             class="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
             onclick="GoToSite()">رفتن به سایت
     </button>
+        @if (isset($authority))
+            <p>پرداخت مستقیم</p>
+        @else
+            <p>پرداخت از طریق کیف پول   </p>
+        @endif
 </div>
 <style>
     @font-face {
