@@ -75,7 +75,7 @@
                                 @if($payment->status == 'success')
                                     <button type="button" class="btn btn-primary btn-floating btn_check"
                                             data-authority="{{ $payment->authority }}"
-                                        {{ verta($payment->created_at)->addMinutes(5)->formatDatetime() < verta()->formatDatetime() ? '' : 'disabled' }}>
+                                            disabled>
                                         <i class="fa fa-refresh"></i>
                                     </button>
                                 @else
