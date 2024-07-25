@@ -109,15 +109,14 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     Route::resource('wallet',WalletController::class)->except(['show']);
     Route::get('wallet.search', [WalletController::class, 'search'])->name('wallet.search');
 
-    // PWA
-    Route::get('PWA', function (){
-        return view('panel.app');
-    });
-
     // Chargings
     Route::resource('charging',ChargingController::class)->except(['show']);
     Route::post('getUserBalance/{user_id}', [ChargingController::class, 'getUserBalance'])->name('getUserBalance');
 
+});
+// PWA
+Route::get('PWA', function (){
+    return view('panel.app');
 });
 // Back To the application
 Route::get('BackToApp', function (Request $request) {
