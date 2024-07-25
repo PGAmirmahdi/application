@@ -8,7 +8,6 @@
         "php": "^7.3|^8.0",
         "ext-curl": "*",
         "ext-json": "*",
-        "barryvdh/laravel-cors": "^3.0",
         "enyo/dropzone": "^5.9",
         "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.0.1",
