@@ -8,10 +8,12 @@
 
     # تنظیمات CORS
     <IfModule mod_headers.c>
-        Header always set Access-Control-Allow-Origin "https://mandegarpars.com"
-        Header always set Access-Control-Allow-Credentials "true"
-        Header always set Access-Control-Allow-Headers "Authorization, Accept, Content-Type, Origin"
-        Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        # تنظیم هدر CORS فقط اگر هدر قبلاً تنظیم نشده باشد
+        Header always set Access-Control-Allow-Origin "https://mandegarpars.com" env=!CORS_SET
+        Header always set Access-Control-Allow-Credentials "true" env=!CORS_SET
+        Header always set Access-Control-Allow-Headers "Authorization, Accept, Content-Type, Origin" env=!CORS_SET
+        Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS" env=!CORS_SET
+        SetEnv CORS_SET 1
     </IfModule>
 
     # پاسخ به درخواست‌های OPTIONS با کد 200
