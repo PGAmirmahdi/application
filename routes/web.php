@@ -115,7 +115,7 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
 
 });
 // PWA
-Route::get('PWA', function (){
+Route::get('pwa', function (){
     return view('panel.app');
 });
 // Back To the application
