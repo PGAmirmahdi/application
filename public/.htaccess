@@ -9,7 +9,7 @@
     # تنظیمات CORS
     <IfModule mod_headers.c>
         # تنظیم هدر CORS فقط اگر هدر قبلاً تنظیم نشده باشد
-        Header always set Access-Control-Allow-Origin "https://mandegarpars.com" env=!CORS_SET
+        Header always set Access-Control-Allow-Origin "https://mandegarpars.com/pwa" env=!CORS_SET
         Header always set Access-Control-Allow-Credentials "true" env=!CORS_SET
         Header always set Access-Control-Allow-Headers "Authorization, Accept, Content-Type, Origin" env=!CORS_SET
         Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS" env=!CORS_SET
