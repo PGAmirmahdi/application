@@ -24,13 +24,13 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="artintoner">
-    <link rel="apple-touch-icon" href="{{asset('icons/Icon-192.png')}}">
+    <link rel="apple-touch-icon" href="{{asset('pwa/icons/Icon-192.png')}}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{asset('favicon.png')}}"/>
+    <link rel="icon" type="image/png" href="{{asset('pwa/favicon.png')}}"/>
 
     <title>artintoner</title>
-    <link rel="manifest" href="{{asset('manifest.json')}}">
+    <link rel="manifest" href="{{asset('pwa/manifest.json')}}">
 
 
 
@@ -41,7 +41,7 @@
         const serviceWorkerVersion = "1378728875";
     </script>
     <!-- This script adds the flutter initialization JS code -->
-    <script src="{{asset('flutter.js')}}" defer></script>
+    <script src="{{asset('pwa/flutter.js')}}" defer></script>
 </head>
 <body>
 <script>
