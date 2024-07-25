@@ -6,7 +6,7 @@
         <a href="/">
             <img class="large-logo" src="/assets/media/image/logo.png" alt="image">
             <img class="small-logo" src="/assets/media/image/logo-sm.png" alt="image">
-{{--            <img class="dark-logo" src="assets/media/image/logo-dark.png" alt="image">--}}
+{{--            <img class="dark-logo" src="assetss/media/image/logo-dark.png" alt="image">--}}
         </a>
     </div>
     <!-- end::header logo -->
@@ -54,7 +54,7 @@
 {{--                        <i class="ti-bell" data-toggle="tooltip" data-placement="bottom" data-original-title="اعلانات"></i>--}}
 {{--                    </a>--}}
 {{--                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">--}}
-{{--                        <div class="p-4 text-center" data-backround-image="/assets/media/image/image1.png">--}}
+{{--                        <div class="p-4 text-center" data-backround-image="/assetss/media/image/image1.png">--}}
 {{--                            <h6 class="m-b-0">اعلان ها</h6>--}}
 {{--                            <small class="font-size-13 opacity-7"><span id="notif_count">{{ auth()->user()->unreadNotifications->count() }}</span> اعلان خوانده نشده</small>--}}
 {{--                        </div>--}}

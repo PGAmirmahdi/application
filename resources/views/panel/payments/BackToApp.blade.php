@@ -32,7 +32,7 @@
 <style>
     @font-face {
         font-family: 'Estedad';
-        src: url("{{asset('assets/fonts/Estedad-Black.woff2')}}") format("woff2"), url("{{asset('assets/fonts/Estedad-Black.ttf')}}") format("truetype"), url("{{asset('assets/fonts/Estedad-Black.woff')}}") format("woff");
+        src: url("{{asset('assetss/fonts/Estedad-Black.woff2')}}") format("woff2"), url("{{asset('assetss/fonts/Estedad-Black.ttf')}}") format("truetype"), url("{{asset('assetss/fonts/Estedad-Black.woff')}}") format("woff");
     ;
         font-weight: normal;
         font-style: normal;
@@ -148,7 +148,7 @@
 
 </style>
 {{--Link JS--}}
-<script src="{{asset('assets/js/BackToApp.js')}}"></script>
+<script src="{{asset('assetss/js/BackToApp.js')}}"></script>
 <script>
     setTimeout(() => {
             location.href = "intent://artintoner.com?Authority={{ $authority }}#Intent;scheme=https;package=com.example.artintoner;end";
