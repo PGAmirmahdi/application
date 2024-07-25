@@ -72,23 +72,23 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-4 my-2">
-                            <img src="{{ asset('assetss/media/image/order/register.png') }}">
+                            <img src="{{ asset('assets/media/image/order/register.png') }}">
                             <small class="d-block">ثبت سفارش</small>
                         </div>
                         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-4 my-2">
-                            <img class="{{ in_array($order->status, ['processing','exit','sending','delivered']) ? '' : 'inactive' }}" src="{{ asset('assetss/media/image/order/processing.png') }}">
+                            <img class="{{ in_array($order->status, ['processing','exit','sending','delivered']) ? '' : 'inactive' }}" src="{{ asset('assets/media/image/order/processing.png') }}">
                             <small class="d-block">آماده سازی سفارش</small>
                         </div>
                         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-4 my-2">
-                            <img class="{{ in_array($order->status, ['exit','sending','delivered']) ? '' : 'inactive' }}" src="{{ asset('assetss/media/image/order/out.png') }}">
+                            <img class="{{ in_array($order->status, ['exit','sending','delivered']) ? '' : 'inactive' }}" src="{{ asset('assets/media/image/order/out.png') }}">
                             <small class="d-block">خروج از انبار</small>
                         </div>
                         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-4 my-2">
-                            <img class="{{ in_array($order->status, ['sending','delivered']) ? '' : 'inactive' }} flip-x" src="{{ asset('assetss/media/image/order/sending.png') }}">
+                            <img class="{{ in_array($order->status, ['sending','delivered']) ? '' : 'inactive' }} flip-x" src="{{ asset('assets/media/image/order/sending.png') }}">
                             <small class="d-block">درحال ارسال</small>
                         </div>
                         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-4 my-2">
-                            <img class="{{ in_array($order->status, ['delivered']) ? '' : 'inactive' }} flip-x" src="{{ asset('assetss/media/image/order/delivered.png') }}">
+                            <img class="{{ in_array($order->status, ['delivered']) ? '' : 'inactive' }} flip-x" src="{{ asset('assets/media/image/order/delivered.png') }}">
                             <small class="d-block">تحویل به مشتری</small>
                         </div>
                     </div>

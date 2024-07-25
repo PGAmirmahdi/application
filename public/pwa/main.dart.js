@@ -10813,7 +10813,7 @@ j.toString
 A.e(j).toString
 j=s.d
 if(j==null){j=self.window.devicePixelRatio
-if(j===0)j=1}j=A.hB("assetss/images/phone-vector.png",e,B.iG,k.b,n.p(0,j).a)
+if(j===0)j=1}j=A.hB("assets/images/phone-vector.png",e,B.iG,k.b,n.p(0,j).a)
 n=$.d().xr
 n=$.c.j$.z.h(0,n)
 n.toString
@@ -39823,9 +39823,9 @@ s=1
 break
 case 1:return A.t(q,r)}})
 return A.u($async$b70,r)},
-bwT(a,b){var s="./assetss/packages/"
+bwT(a,b){var s="./assets/packages/"
 if(B.c.bx(a,"./"))return s+b+"/"+B.c.np(a,"./","")
-if(B.c.bx(a,"assetss/"))return s+b+"/"+a
+if(B.c.bx(a,"assets/"))return s+b+"/"+a
 else return a},
 bwv(a){var s,r,q,p,o,n=A.b([],t.mo),m=self,l=m.document.head
 for(s=t.Ds,r=0;r<1;++r){q=a[r]
@@ -47945,7 +47945,7 @@ switch(a){case"flutter/skia":s=B.bV.kS(b)
 switch(s.a){case"Skia.setResourceCacheMaxBytes":if($.al() instanceof A.Ga){r=A.d_(s.b)
 $.akM.bR().d.V_(r)}d.hP(a0,B.aN.dm([A.b([!0],t.HZ)]))
 break}return
-case"flutter/assetss":d.yJ(B.an.eI(0,A.e9(b.buffer,0,c)),a0)
+case"flutter/assets":d.yJ(B.an.eI(0,A.e9(b.buffer,0,c)),a0)
 return
 case"flutter/platform":s=B.bV.kS(b)
 switch(s.a){case"SystemNavigator.pop":q=t.e8
@@ -60698,7 +60698,7 @@ r=s==null?null:s.content
 s=r==null
 if(!s)self.window.console.warn("The `assetBase` meta tag is now deprecated.\nUse engineInitializer.initializeEngine(config) instead.\nSee: https://docs.flutter.dev/development/platform-integration/web/initialization")
 q=this.b=s?"":r
-s=q}return A.SQ(B.nB,s+"assetss/"+a,B.an,!1)}}
+s=q}return A.SQ(B.nB,s+"assets/"+a,B.an,!1)}}
 A.b0C.prototype={
 $1(a){return this.acM(a)},
 $0(){return this.$1(null)},
@@ -61391,7 +61391,7 @@ g.toString
 A.e(g).toString
 g=p.d
 if(g==null){g=self.window.devicePixelRatio
-if(g===0)g=1}g=A.hB("assetss/images/card.png",b,b,h.p(0,g).b*0.05,b)
+if(g===0)g=1}g=A.hB("assets/images/card.png",b,b,h.p(0,g).b*0.05,b)
 h=$.d().xr
 h=$.c.j$.z.h(0,h)
 h.toString
@@ -61443,7 +61443,7 @@ d.toString
 A.e(d).toString
 d=p.d
 if(d==null){d=self.window.devicePixelRatio
-if(d===0)d=1}d=A.hB("assetss/images/wallet.png",b,b,f.p(0,d).b*0.05,b)
+if(d===0)d=1}d=A.hB("assets/images/wallet.png",b,b,f.p(0,d).b*0.05,b)
 f=$.d().xr
 f=$.c.j$.z.h(0,f)
 f.toString
@@ -62082,7 +62082,7 @@ A.e(p).toString
 p=r.d
 if(p==null){p=self.window.devicePixelRatio
 if(p===0)p=1}p=A.O(m,s.p(0,p).b*0.02,m)
-s=A.hu(A.aR(20),A.hB("assetss/images/about_us.webp",m,m,m,m),B.az)
+s=A.hu(A.aR(20),A.hB("assets/images/about_us.webp",m,m,m,m),B.az)
 o=$.d().xr
 o=$.c.j$.z.h(0,o)
 o.toString
@@ -62643,7 +62643,7 @@ A.e(m).toString
 m=$.av()
 s=m.d
 if(s==null){s=self.window.devicePixelRatio
-if(s===0)s=1}s=A.hB("assetss/images/empty1.png",q,q,n.p(0,s).b*0.08,q)
+if(s===0)s=1}s=A.hB("assets/images/empty1.png",q,q,n.p(0,s).b*0.08,q)
 n=$.d().xr
 n=$.c.j$.z.h(0,n)
 n.toString
@@ -63283,7 +63283,7 @@ A.e(r).toString
 r=$.av()
 q=r.d
 if(q==null){q=self.window.devicePixelRatio
-if(q===0)q=1}q=A.hB("assetss/images/empty1.png",h,h,s.p(0,q).b*0.08,h)
+if(q===0)q=1}q=A.hB("assets/images/empty1.png",h,h,s.p(0,q).b*0.08,h)
 s=$.d().xr
 s=$.c.j$.z.h(0,s)
 s.toString
@@ -63810,7 +63810,7 @@ A.e(s).toString
 s=$.av()
 r=s.d
 if(r==null){r=self.window.devicePixelRatio
-if(r===0)r=1}r=A.hB("assetss/images/empty1.png",p,p,m.p(0,r).b*0.08,p)
+if(r===0)r=1}r=A.hB("assets/images/empty1.png",p,p,m.p(0,r).b*0.08,p)
 m=$.d().xr
 m=$.c.j$.z.h(0,m)
 m.toString
@@ -64568,7 +64568,7 @@ j.toString
 A.e(j).toString
 j=r.d
 if(j==null){j=self.window.devicePixelRatio
-if(j===0)j=1}j=A.hB("assetss/images/logo.png",B.ae,a5,n.p(0,j).b*0.1,a5)
+if(j===0)j=1}j=A.hB("assets/images/logo.png",B.ae,a5,n.p(0,j).b*0.1,a5)
 n=$.d().xr
 n=$.c.j$.z.h(0,n)
 n.toString
@@ -64767,7 +64767,7 @@ A.e(o).toString
 o=$.av()
 n=o.d
 if(n==null){n=self.window.devicePixelRatio
-if(n===0)n=1}n=A.hB("assetss/images/empty1.png",r,r,p.p(0,n).b*0.08,r)
+if(n===0)n=1}n=A.hB("assets/images/empty1.png",r,r,p.p(0,n).b*0.08,r)
 p=$.d().xr
 p=$.c.j$.z.h(0,p)
 p.toString
@@ -65592,7 +65592,7 @@ A.e(m).toString
 m=$.av()
 s=m.d
 if(s==null){s=self.window.devicePixelRatio
-if(s===0)s=1}s=A.hB("assetss/images/empty1.png",q,q,n.p(0,s).b*0.08,q)
+if(s===0)s=1}s=A.hB("assets/images/empty1.png",q,q,n.p(0,s).b*0.08,q)
 n=$.d().xr
 n=$.c.j$.z.h(0,n)
 n.toString
@@ -65827,7 +65827,7 @@ l.toString
 A.e(l).toString
 l=r.d
 if(l==null){l=self.window.devicePixelRatio
-if(l===0)l=1}l=A.hB("assetss/images/logo.png",e,e,s.p(0,l).b*0.1,e)
+if(l===0)l=1}l=A.hB("assets/images/logo.png",e,e,s.p(0,l).b*0.1,e)
 s=$.d().xr
 s=$.c.j$.z.h(0,s)
 s.toString
@@ -65942,7 +65942,7 @@ A.e(m).toString
 m=$.av()
 s=m.d
 if(s==null){s=self.window.devicePixelRatio
-if(s===0)s=1}s=A.hB("assetss/images/empty1.png",q,q,n.p(0,s).b*0.08,q)
+if(s===0)s=1}s=A.hB("assets/images/empty1.png",q,q,n.p(0,s).b*0.08,q)
 n=$.d().xr
 n=$.c.j$.z.h(0,n)
 n.toString
@@ -67458,7 +67458,7 @@ j.toString
 A.e(j).toString
 j=r.d
 if(j==null){j=self.window.devicePixelRatio
-if(j===0)j=1}j=A.hB("assetss/images/logo.png",a2,a2,p.p(0,j).b*0.1,a2)
+if(j===0)j=1}j=A.hB("assets/images/logo.png",a2,a2,p.p(0,j).b*0.1,a2)
 p=$.d().xr
 p=$.c.j$.z.h(0,p)
 p.toString
@@ -67679,7 +67679,7 @@ l.toString
 A.e(l).toString
 l=r.d
 if(l==null){l=self.window.devicePixelRatio
-if(l===0)l=1}l=A.hB("assetss/images/logo.png",a2,a2,s.p(0,l).b*0.1,a2)
+if(l===0)l=1}l=A.hB("assets/images/logo.png",a2,a2,s.p(0,l).b*0.1,a2)
 s=$.d().xr
 s=$.c.j$.z.h(0,s)
 s.toString
@@ -68174,7 +68174,7 @@ A.e(m).toString
 m=$.av()
 l=m.d
 if(l==null){l=self.window.devicePixelRatio
-if(l===0)l=1}l=A.hB("assetss/images/empty1.png",p,p,n.p(0,l).b*0.08,p)
+if(l===0)l=1}l=A.hB("assets/images/empty1.png",p,p,n.p(0,l).b*0.08,p)
 n=$.d().xr
 n=$.c.j$.z.h(0,n)
 n.toString
@@ -68603,7 +68603,7 @@ A.e(r).toString
 r=$.av()
 q=r.d
 if(q==null){q=self.window.devicePixelRatio
-if(q===0)q=1}q=A.bC(A.hB("assetss/images/header_logo.png",n,n,s.p(0,q).b*0.15,n),n,n)
+if(q===0)q=1}q=A.bC(A.hB("assets/images/header_logo.png",n,n,s.p(0,q).b*0.15,n),n,n)
 s=$.d().xr
 s=$.c.j$.z.h(0,s)
 s.toString
@@ -69912,7 +69912,7 @@ A.e(l).toString
 l=$.av()
 k=l.d
 if(k==null){k=self.window.devicePixelRatio
-if(k===0)k=1}k=A.hB("assetss/images/empty1.png",o,o,m.p(0,k).b*0.08,o)
+if(k===0)k=1}k=A.hB("assets/images/empty1.png",o,o,m.p(0,k).b*0.08,o)
 m=$.d().xr
 m=$.c.j$.z.h(0,m)
 m.toString
@@ -70189,7 +70189,7 @@ A.e(m).toString
 m=$.av()
 s=m.d
 if(s==null){s=self.window.devicePixelRatio
-if(s===0)s=1}s=A.hB("assetss/images/empty1.png",q,q,n.p(0,s).b*0.08,q)
+if(s===0)s=1}s=A.hB("assets/images/empty1.png",q,q,n.p(0,s).b*0.08,q)
 n=$.d().xr
 n=$.c.j$.z.h(0,n)
 n.toString
@@ -70488,7 +70488,7 @@ A.e(j).toString
 j=r.d
 if(j==null){j=self.window.devicePixelRatio
 if(j===0)j=1}i=t.p
-j=A.aU(A.b([B.ai8,p,B.ahV,o,m,k,A.hB("assetss/images/wallet.png",b,b,l.p(0,j).b*0.07,b)],i),B.j,B.cJ,B.k)
+j=A.aU(A.b([B.ai8,p,B.ahV,o,m,k,A.hB("assets/images/wallet.png",b,b,l.p(0,j).b*0.07,b)],i),B.j,B.cJ,B.k)
 l=$.d().xr
 l=$.c.j$.z.h(0,l)
 l.toString
@@ -100808,7 +100808,7 @@ $S:29}
 A.aAN.prototype={
 ne(a,b){var s,r=B.bs.dd(A.afp(null,A.SQ(B.nB,b,B.an,!1),null).e),q=$.eO.th$
 q===$&&A.a()
-s=q.Kk(0,"flutter/assetss",A.b3L(r)).aj(new A.aAO(b),t.V4)
+s=q.Kk(0,"flutter/assets",A.b3L(r)).aj(new A.aAO(b),t.V4)
 return s},
 I_(a){return this.aP9(a)},
 aP9(a){var s=0,r=A.v(t.SG),q,p=this,o,n
@@ -129228,7 +129228,7 @@ s=n==null?4:5
 break
 case 4:n=p.b.ue("")
 s=6
-return A.x(p.v6(A.cP(n,"assetss/",""),o),$async$mp)
+return A.x(p.v6(A.cP(n,"assets/",""),o),$async$mp)
 case 6:n=d
 case 5:s=n==null?7:9
 break
@@ -136617,7 +136617,7 @@ p=new A.aLL(A.G(t.S,t.Ad))
 o.t(0,p,q)
 A.li(p,q,!0)
 $.btr=p
-$.btw.b=A.b70("wakelock_plus","assetss/no_sleep.js")
+$.btw.b=A.b70("wakelock_plus","assets/no_sleep.js")
 p=$.b7K()
 q=new A.aM7()
 o.t(0,q,p)
@@ -144907,7 +144907,7 @@ $.cC=A.b([],t.H7)
 $.cp=""
 $.e5=null
 $.bm0=function(){var s=t.N
-return A.b([A.M(["image","assetss/images/guarantee.svg","title","\u0636\u0645\u0627\u0646\u062a \u0627\u0635\u0627\u0644\u062a \u06a9\u0627\u0644\u0627"],s,s),A.M(["image","assetss/images/customer-service.svg","title","\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc \u0633\u0631\u06cc\u0639 \u0648 \u062f\u0642\u06cc\u0642"],s,s),A.M(["image","assetss/images/ime.svg","title","\u062a\u062d\u0648\u06cc\u0644 \u0641\u0648\u0631\u06cc \u0633\u0641\u0627\u0631\u0634\u0627\u062a"],s,s),A.M(["image","assetss/images/return.svg","title","\u0636\u0645\u0627\u0646\u062a \u0628\u0627\u0632\u06af\u0634\u062a \u06a9\u0627\u0644\u0627"],s,s)],A.ar("B<aV<m,m>>"))}()
+return A.b([A.M(["image","assets/images/guarantee.svg","title","\u0636\u0645\u0627\u0646\u062a \u0627\u0635\u0627\u0644\u062a \u06a9\u0627\u0644\u0627"],s,s),A.M(["image","assets/images/customer-service.svg","title","\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc \u0633\u0631\u06cc\u0639 \u0648 \u062f\u0642\u06cc\u0642"],s,s),A.M(["image","assets/images/ime.svg","title","\u062a\u062d\u0648\u06cc\u0644 \u0641\u0648\u0631\u06cc \u0633\u0641\u0627\u0631\u0634\u0627\u062a"],s,s),A.M(["image","assets/images/return.svg","title","\u0636\u0645\u0627\u0646\u062a \u0628\u0627\u0632\u06af\u0634\u062a \u06a9\u0627\u0644\u0627"],s,s)],A.ar("B<aV<m,m>>"))}()
 $.Ud=A.bT("messages")
 $.bok=null
 $.boJ=A.bxM()

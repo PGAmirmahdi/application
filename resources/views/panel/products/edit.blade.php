@@ -132,7 +132,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('/assetss/js/number2word.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/js/number2word.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
             // add property

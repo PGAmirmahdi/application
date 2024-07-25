@@ -77,5 +77,5 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('assetss/js/lazysizes.min.js') }}"></script>
+    <script src="{{ asset('assets/js/lazysizes.min.js') }}"></script>
 @endsection
