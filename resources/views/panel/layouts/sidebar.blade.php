@@ -97,7 +97,7 @@
         <ul id="navigationTickets" class="{{ active_sidebar(['tickets','tickets/create','tickets/{ticket}/edit','search/tickets','bugs']) ? 'navigation-active' : '' }}">
             <li class="navigation-divider">پشتیبانی</li>
             <li>
-                <a class="{{ active_sidebar(['tickets','tickets/create','tickets/{ticket}/edit','search/tickets']) ? 'active' : '' }}" href="{{ route('tickets.index') }}">تیکت ها</a>
+                    <a class="{{ active_sidebar(['tickets','tickets/create','tickets/{ticket}/edit','search/tickets']) ? 'active' : '' }}" href="{{ route('tickets.index') }}">تیکت ها</a>
             </li>
             <li>
                 <a class="{{ active_sidebar(['bugs']) ? 'active' : '' }}" href="{{ route('bugs.index') }}">گزارشات خرابی</a>
