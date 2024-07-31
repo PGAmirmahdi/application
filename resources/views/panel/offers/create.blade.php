@@ -8,7 +8,7 @@
             <div class="card-title d-flex justify-content-between align-items-center">
                 <h6>ایجاد آفر</h6>
             </div>
-            <form action="{{ route('offers.store') }}" method="post">
+            <form action="{{ route('offers.store') }}" method="post" id="offer-form">
                 @csrf
                 <div class="form-row">
                     <div class="col-xl-3 col-lg-3 col-md-3 mb-3">
@@ -68,10 +68,35 @@
             document.getElementById('difference').value = priceBefore - priceAfter;
         }
 
-        document.getElementById('price_before').addEventListener('input', calculateDifference);
-        document.getElementById('price_after').addEventListener('input', calculateDifference);
+        $(document).ready(function() {
+            $('#price_before').on('input', calculateDifference);
+            $('#price_after').on('input', calculateDifference);
 
-        // Initial calculation
-        calculateDifference();
+            // Initial calculation
+            calculateDifference();
+
+            // Fetch product price on product selection change
+            $('#product_id').on('change', function() {
+                var productId = $(this).val();
+                if (productId) {
+                    $.ajax({
+                        url: '{{ route("products.price", ["id" => ""]) }}/' + productId,
+                        type: 'GET',
+                        success: function(response) {
+                            if (response.success) {
+                                $('#price_before').val(response.price);
+                                calculateDifference();
+                            } else {
+                                alert('مشکلی در دریافت قیمت محصول وجود دارد.');
+                            }
+                        },
+                        error: function(xhr) {
+                            console.log("Error", xhr);
+                            alert('مشکلی در دریافت قیمت محصول وجود دارد.');
+                        }
+                    });
+                }
+            });
+        });
     </script>
 @endsection
