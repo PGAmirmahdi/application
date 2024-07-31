@@ -65,14 +65,16 @@
     <script type="text/javascript">
         function calculateDifference() {
             var priceBefore = parseFloat(document.getElementById('price_before').value) || 0;
-            var priceAfter = parseFloat(document.getElementById('price_after').value) || 0;
+            var percentage = parseFloat(document.getElementById('percentage').value) || 0;
+            var priceAfter = priceBefore - (priceBefore * (percentage / 100));
             var difference = priceBefore - priceAfter;
-            document.getElementById('difference').value = difference;
+            document.getElementById('price_after').value = priceAfter.toFixed(2);
+            document.getElementById('difference').value = difference.toFixed(2);
         }
 
         $(document).ready(function() {
             $('#price_before').on('input', calculateDifference);
-            $('#price_after').on('input', calculateDifference);
+            $('#percentage').on('input', calculateDifference);
 
             // Initial calculation
             calculateDifference();
