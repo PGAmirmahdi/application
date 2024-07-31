@@ -7,7 +7,7 @@
                     <i class="icon ti-dashboard"></i>
                 </a>
             </li>
-            <li class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products','categories','categories/create','categories/{category}/edit','comments','coupons','coupons/create','coupons/{coupon}/edit','offers','offers/create','offers/{offer}/edit']) ? 'active' : '' }}" data-toggle="tooltip" title="محصولات">
+            <li class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products','categories','categories/create','categories/{category}/edit','comments','coupons','coupons/create','coupons/{coupon}/edit','offers','offers/create','offers/{offer}/edit']) ? 'active' : '' }}" data-toggle="tooltip" title="آفر ها">
                 <a href="#navigationProducts" title="محصولات">
                     <i class="icon ti-list"></i>
                 </a>
