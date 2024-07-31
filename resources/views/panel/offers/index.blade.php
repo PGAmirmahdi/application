@@ -55,6 +55,8 @@
                         <th>مقدار آف</th>
                         <th>توضیحات</th>
                         <th>تاریخ ایجاد</th>
+                        <th>ویرایش</th>
+                        <th>حذف</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -86,6 +88,18 @@
                             <td>{{ number_format($offer->price_before - $offer->price_after) . " تومان" }}</td>
                             <td>{{ $offer->description }}</td>
                             <td>{{ verta($offer->created_at)->format('H:i - Y/m/d') }}</td>
+                            <td>
+                                <a class="btn btn-warning btn-floating" href="{{ route('offers.edit', $offer->id) }}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-floating trashRow"
+                                        data-url="{{ route('offers.destroy',$offer->id) }}"
+                                        data-id="{{ $offer->id }}">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
