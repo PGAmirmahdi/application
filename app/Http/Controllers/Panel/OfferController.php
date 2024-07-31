@@ -55,6 +55,7 @@ class OfferController extends Controller
     {
         // ابتدا یک پیشنهاد جدید ایجاد کنید
         $offer = Offer::create([
+            'product_id'=>$request->product_id,
             'percentage' => $request->percentage,
             'price_before' => $request->price_before,
             'description' => $request->description,
