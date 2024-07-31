@@ -24,7 +24,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class,'category_id');
     }
 
     public function comments()
@@ -33,7 +33,7 @@ class Product extends Model
     }
     public function offers()
     {
-        return $this->hasone(Offer::class);
+        return $this->hasmany(Offer::class,'offer_id');
     }
     public function order_items()
     {
