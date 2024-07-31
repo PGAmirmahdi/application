@@ -12,6 +12,6 @@ class Offer extends Model
 
     public function products()
     {
-        return $this->belongsto(Product::class,'offer_id');
+        return $this->belongsto(Product::class,'product_id');
     }
 }
