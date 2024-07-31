@@ -8,6 +8,7 @@ use App\Http\Controllers\Panel\CommentController;
 use App\Http\Controllers\Panel\CouponsController;
 use App\Http\Controllers\Panel\DeliveryDayController;
 use App\Http\Controllers\Panel\GuideVideosController;
+use App\Http\Controllers\Panel\OfferController;
 use App\Http\Controllers\Panel\OrderController;
 use App\Http\Controllers\Panel\PaymentController;
 use App\Http\Controllers\Panel\ProductController;
@@ -112,6 +113,9 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     // Chargings
     Route::resource('charging',ChargingController::class)->except(['show']);
     Route::post('getUserBalance/{user_id}', [ChargingController::class, 'getUserBalance'])->name('getUserBalance');
+
+    // Offer
+    Route::resource('offers',OfferController::class)->except(['show']);
 
 });
 // PWA

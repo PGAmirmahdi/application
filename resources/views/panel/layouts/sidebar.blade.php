@@ -7,7 +7,7 @@
                     <i class="icon ti-dashboard"></i>
                 </a>
             </li>
-            <li class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products','categories','categories/create','categories/{category}/edit','comments','coupons','coupons/create','coupons/{coupon}/edit']) ? 'active' : '' }}" data-toggle="tooltip" title="محصولات">
+            <li class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products','categories','categories/create','categories/{category}/edit','comments','coupons','coupons/create','coupons/{coupon}/edit','offers','offers/create','offers/{offer}/edit']) ? 'active' : '' }}" data-toggle="tooltip" title="محصولات">
                 <a href="#navigationProducts" title="محصولات">
                     <i class="icon ti-list"></i>
                 </a>
@@ -61,7 +61,7 @@
                 <a class="{{ active_sidebar(['charging','charging/create']) ? 'active' : '' }}" href="{{ route('charging.index') }}">تراکنش های کیف پول</a>
             </li>
         </ul>
-        <ul id="navigationProducts" class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products','categories','categories/create','categories/{category}/edit','comments','GuideVideos','GuideVideos/create','GuideVideos/{GuideVideo}/edit','coupons','coupons/create','coupons/{coupon}/edit']) ? 'navigation-active' : '' }}">
+        <ul id="navigationProducts" class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products','categories','categories/create','categories/{category}/edit','comments','GuideVideos','GuideVideos/create','GuideVideos/{GuideVideo}/edit','coupons','coupons/create','coupons/{coupon}/edit','offers','offers/create','offers/{offer}/edit']) ? 'navigation-active' : '' }}">
             <li class="navigation-divider">محصولات</li>
             <li>
                 <a class="{{ active_sidebar(['products','products/create','products/{product}/edit','search/products']) ? 'active' : '' }}" href="{{ route('products.index') }}">محصولات</a>
@@ -77,6 +77,9 @@
             </li>
             <li>
                 <a class="{{ active_sidebar(['coupons','coupons/create','coupons/{coupon}/edit']) ? 'active' : '' }}" href="{{ route('coupons.index') }}">کد تخفیف</a>
+            </li>
+            <li>
+                <a class="{{ active_sidebar(['offers','offers/create','offers/{offer}/edit']) ? 'active' : '' }}" href="{{ route('offers.index') }}">آفر ها</a>
             </li>
         </ul>
         <ul id="navigationOrders" class="{{ active_sidebar(['orders','orders/{order}','search/orders','payments','payments/{payment}','search/payments','delivery-days','returns','returns/{return}']) ? 'navigation-active' : '' }}">
