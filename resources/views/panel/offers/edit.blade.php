@@ -81,8 +81,9 @@
             $('#product_id').on('change', function() {
                 var productId = $(this).val();
                 if (productId) {
+                    var url = '{{ route("products.price", ":id") }}'.replace(':id', productId);
                     $.ajax({
-                        url: '{{ route("products.price", ["id" => ""]) }}/' + productId,
+                        url: url,
                         type: 'GET',
                         success: function(response) {
                             if (response.success) {

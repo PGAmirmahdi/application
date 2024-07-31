@@ -65,7 +65,8 @@
         function calculateDifference() {
             var priceBefore = parseFloat(document.getElementById('price_before').value) || 0;
             var priceAfter = parseFloat(document.getElementById('price_after').value) || 0;
-            document.getElementById('difference').value = priceBefore - priceAfter;
+            var difference = priceBefore - priceAfter;
+            document.getElementById('difference').value = difference;
         }
 
         $(document).ready(function() {
@@ -79,8 +80,9 @@
             $('#product_id').on('change', function() {
                 var productId = $(this).val();
                 if (productId) {
+                    var url = '{{ route("products.price", ":id") }}'.replace(':id', productId);
                     $.ajax({
-                        url: '{{ route("products.price", ["id" => ""]) }}/' + productId,
+                        url: url,
                         type: 'GET',
                         success: function(response) {
                             if (response.success) {
