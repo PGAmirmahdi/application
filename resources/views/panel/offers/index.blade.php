@@ -59,7 +59,7 @@
                     {{-- اینجا داده‌های تراکنش‌ها قرار می‌گیرند --}}
                     @foreach ($offers as $key => $offer)
                         <tr>
-                            <td>{{ $chargings->firstItem() + $key }}</td>
+                            <td>{{ $offers->firstItem() + $key }}</td>
                             <td>
                                 {{ $offer->products->title }}
                             </td>
