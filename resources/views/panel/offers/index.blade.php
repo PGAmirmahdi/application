@@ -63,15 +63,21 @@
                             <td>
                                 {{ $offer->products->title }}
                             </td>
+                            <td>
                             @if( $offer->products->code )
                                 {{ $offer->products->code }}
                             @endif
+                            </td>
+                            <td>
                             @if( $offer->products->sku )
                                 {{ $offer->products->sku }}
                             @endif
+                            </td>
+                            <td>
                             @if( $offer->products->category->name )
                                 {{ $offer->products->category->name }}
                             @endif
+                            </td>
                             <td>{{ $offer->percentage }}</td>
                             <td>{{ number_format($offer->price_before) . " تومان" }}</td>
                             <td>{{ number_format($offer->price_after) . " تومان" }}</td>
