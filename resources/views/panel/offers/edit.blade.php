@@ -82,7 +82,7 @@
                 var productId = $(this).val();
                 if (productId) {
                     $.ajax({
-                        url: '{{ route("panel.products.price", ["id" => ""]) }}/' + productId,
+                        url: '{{ route("products.price", ["id" => ""]) }}/' + productId,
                         type: 'GET',
                         success: function(response) {
                             if (response.success) {
