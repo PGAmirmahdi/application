@@ -33,7 +33,7 @@ class Product extends Model
     }
     public function offers()
     {
-        return $this->hasmany(Offer::class,'offer_id');
+        return $this->hasMany(Offer::class,'offer_id');
     }
     public function order_items()
     {
