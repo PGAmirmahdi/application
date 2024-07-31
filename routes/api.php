@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\v1\DeliveryDayController;
 use App\Http\Controllers\Api\v1\DiscountController;
 use App\Http\Controllers\Api\v1\FavoriteController;
 use App\Http\Controllers\Api\v1\GuideVideosController;
+use App\Http\Controllers\Api\v1\OfferPriceController;
 use App\Http\Controllers\Api\v1\OrderController;
 use App\Http\Controllers\Api\v1\PaymentController;
 use App\Http\Controllers\Api\v1\ProductController;

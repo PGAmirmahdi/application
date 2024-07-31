@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\OfferPriceController;
 use App\Http\Controllers\Panel\BannerController;
 use App\Http\Controllers\Panel\BugController;
 use App\Http\Controllers\Panel\CategoryController;
@@ -116,6 +117,8 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
 
     // Offer
     Route::resource('offers',OfferController::class)->except(['show']);
+    Route::get('products/{id}/price', [OfferPriceController::class, 'getPrice'])->name('products.price');
+
 
 });
 // PWA
