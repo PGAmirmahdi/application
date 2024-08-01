@@ -20,7 +20,7 @@ class PaymentController extends Controller
     public function pay(Request $request)
     {
         // validation
-        $validate = Validator::make($request->all(),[
+        $validate = validator()->make($request->all(),[
             'user_id' => 'required',
             'address_id' => 'required',
             'items' => 'required|json',
@@ -37,8 +37,7 @@ class PaymentController extends Controller
         $user_id = $request->user_id;
         $items = json_decode($request->items, true);
         $address = Address::find($request->address_id);
-
-        if ($request->coupon_id) {
+        if($request->coupon_id){
             $coupon = Coupons::find($request->coupon_id);
         }
 
@@ -55,16 +54,8 @@ class PaymentController extends Controller
 
         foreach ($items as $item) {
             $product = Product::find($item['product_id']);
+            $offer = Offer::where('product_id', $product->id)->first();
 
-            if (!$product) {
-                return response()->json([
-                    'error' => true,
-                    'message' => 'محصول با شناسه ' . $item['product_id'] . ' یافت نشد.'
-                ]);
-            }
-
-            // Check if there's an offer
-            $offer = Offer::where('product_id', $item['product_id'])->first();
             $price = $offer ? $offer->price_after : $product->price;
 
             $order->items()->create([
@@ -135,7 +126,6 @@ class PaymentController extends Controller
             }
         }
     }
-
 
     public function verify(Request $request)
     {

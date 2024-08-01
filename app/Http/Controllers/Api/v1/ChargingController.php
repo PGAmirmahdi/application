@@ -399,7 +399,7 @@ class ChargingController extends Controller
         // Calculate the total amount
         $totalAmount = 0;
         foreach ($items as $item) {
-            $product = Product::find($item['product_id']);
+            $product = Product::find($item['id']);
             $totalAmount += ($product->price * $item['count']);
         }
 
