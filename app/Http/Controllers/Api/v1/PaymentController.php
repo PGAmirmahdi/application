@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Coupons;
+use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
@@ -48,17 +49,20 @@ class PaymentController extends Controller
             'address' => $address->full_address,
             'postal_code' => $address->postal_code,
             'location' => $address->location,
-            'types'=> false
+            'types' => false
         ]);
 
         foreach ($items as $item) {
             $product = Product::find($item['product_id']);
+            $offer = Offer::where('product_id', $product->id)->first();
+
+            $price = $offer ? $offer->price_after : $product->price;
 
             $order->items()->create([
                 'product_id' => $item['product_id'],
                 'count' => $item['count'],
-                'price' => $product->price,
-                'total_price' => ($product->price * $item['count']),
+                'price' => $price,
+                'total_price' => ($price * $item['count']),
             ]);
         }
         // end create order
@@ -104,7 +108,7 @@ class PaymentController extends Controller
                         'authority' => $result['data']['authority'],
                         'amount' => $data['amount'],
                         'tracking_code' => random_int(100000, 999999),
-                        'types'=>false
+                        'types' => false
                     ]);
                     // end create payment
 
