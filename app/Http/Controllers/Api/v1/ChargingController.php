@@ -537,11 +537,5 @@ class ChargingController extends Controller
         $err = curl_error($ch);
         curl_close($ch);
         $result = json_decode($result, true);
-
-        if ($err) {
-            Log::error('Error in sending invoice to mpsystem: ' . $err);
-        } else {
-            Log::info('Successfully sent invoice to mpsystem', ['result' => $result]);
-        }
     }
 }
