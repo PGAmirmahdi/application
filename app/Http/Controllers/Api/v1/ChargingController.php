@@ -8,6 +8,7 @@ use App\Models\Address;
 use App\Models\Charging;
 use App\Models\Coupons;
 use App\Models\Log;
+use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
