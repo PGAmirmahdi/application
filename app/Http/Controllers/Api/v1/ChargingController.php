@@ -407,7 +407,12 @@ class ChargingController extends Controller
                     'message' => 'محصول با این شناسه یافت نشد: ' . $item['product_id']
                 ], 404); // Return a 404 error if product not found
             }
-            $totalAmount += ($product->price * $item['count']);
+
+            // Check for offer
+            $offer = Offer::where('product_id', $product->id)->first();
+            $price = $offer ? $offer->price_after : $product->price;
+
+            $totalAmount += ($price * $item['count']);
         }
 
         // Check wallet balance before creating the order
@@ -438,11 +443,16 @@ class ChargingController extends Controller
             if (!$product) {
                 continue; // Skip the item if product not found
             }
+
+            // Check for offer
+            $offer = Offer::where('product_id', $product->id)->first();
+            $price = $offer ? $offer->price_after : $product->price;
+
             $order->items()->create([
                 'product_id' => $item['product_id'],
                 'count' => $item['count'],
-                'price' => $product->price,
-                'total_price' => ($product->price * $item['count']),
+                'price' => $price,
+                'total_price' => ($price * $item['count']),
             ]);
         }
 
@@ -495,6 +505,7 @@ class ChargingController extends Controller
             'data' => $charging
         ], 200);
     }
+
 
     private function sendInvoice($payment)
     {
