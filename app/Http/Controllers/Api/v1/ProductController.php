@@ -35,7 +35,22 @@ class ProductController extends Controller
             ]);
         }
 
-        return Product::where('title', 'like', '%' . $request->title . '%')->latest()->paginate(10);
+        $query = Product::leftJoin('offers', 'products.id', '=', 'offers.product_id')
+            ->select('products.*',
+                DB::raw('COALESCE(offers.price_after, products.price) as effective_price'),
+                'offers.description as offer_description',
+                'offers.percentage as offer_percentage',
+                'offers.price_before as offer_price_before',
+                'offers.price_after as offer_price_after')
+            ->where('products.title', 'like', '%' . $request->title . '%')
+            ->latest();
+
+        $products = $query->paginate(10);
+
+        return response()->json([
+            'success' => true,
+            'data' => $products
+        ]);
     }
 
     public function filter(Request $request)
@@ -55,7 +70,12 @@ class ProductController extends Controller
 
         // ساخت یک کوئری پایه برای محصولات
         $query = Product::leftJoin('offers', 'products.id', '=', 'offers.product_id')
-            ->select('products.*', DB::raw('COALESCE(offers.price_after, products.price) as effective_price'));
+            ->select('products.*',
+                DB::raw('COALESCE(offers.price_after, products.price) as effective_price'),
+                'offers.description as description',
+                'offers.percentage as percentage',
+                'offers.price_before as price_before',
+                'offers.price_after as price_after');
 
         if ($category_id) {
             $query->where('products.category_id', $category_id);

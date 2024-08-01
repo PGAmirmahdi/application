@@ -42,7 +42,7 @@ class CategoryController extends Controller
     public function getProducts(Request $request)
     {
         $validate = validator()->make($request->all(),[
-            'category_id' => 'required',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         if ($validate->fails()){
@@ -52,7 +52,10 @@ class CategoryController extends Controller
             ]);
         }
 
-        $category = Category::find($request->category_id);
+        $category_id = $request->category_id;
+
+        // بررسی وجود دسته‌بندی
+        $category = Category::find($category_id);
         if (!$category){
             return response()->json([
                 'success' => false,
@@ -60,6 +63,26 @@ class CategoryController extends Controller
             ]);
         }
 
-        return Product::where('category_id', $category->id)->latest()->paginate(10);
+        // ساخت کوئری برای دریافت محصولات همراه با اطلاعات آفر
+        $query = Product::leftJoin('offers', 'products.id', '=', 'offers.product_id')
+            ->select(
+                'products.*',
+                DB::raw('COALESCE(offers.price_after, products.price) as effective_price'),
+                'offers.description as offer_description',
+                'offers.percentage as offer_percentage',
+                'offers.price_before as offer_price_before',
+                'offers.price_after as offer_price_after'
+            )
+            ->where('products.category_id', $category_id)
+            ->latest();
+
+        // اجرای کوئری و برگرداندن نتایج
+        $products = $query->paginate(10);
+
+        return response()->json([
+            'success' => true,
+            'data' => $products
+        ]);
     }
+
 }
