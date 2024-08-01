@@ -111,7 +111,9 @@ class ProductController extends Controller
                     'errors' => ['یکی از 4 مقدار cheapest, expensive, favorites و یا bestselling الزامی است']
                 ]);
         }
-        $products = $query;
+
+        // اجرای کوئری و برگرداندن نتایج
+        $products = $query->paginate(10);
 
         return response()->json([
             'success' => true,
