@@ -33,11 +33,13 @@ class OfferPriceController extends Controller
             ]);
         }
         $product_id= $request->product_id;
-        $item = Offer::where('offers.id', $product_id)
+        $item = Offer::where('offers.product_id', $product_id)
             ->join('products', 'offers.product_id', '=', 'products.id')
             ->select([
                 'offers.product_id as product_id',
                 'products.title as product_title',
+                'products.code as product_code',
+                'products.sku as product_sku',
                 'offers.description as description',
                 'offers.percentage as percentage',
                 'offers.price_before as price_before',
@@ -48,16 +50,15 @@ class OfferPriceController extends Controller
         if (!$item) {
             return response()->json([
                 'success' => false,
-                'data' => [
-
-                ]
-            ]);
+                'message' => 'هیچ اطلاعاتی یافت نشد',
+                'data' => []
+            ], 404); // استفاده از کد وضعیت HTTP مناسب
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'اطلاعات داده شد',
-            'data' => [$item]
+            'message' => 'اطلاعات با موفقیت دریافت شد',
+            'data' => $item
         ]);
     }
 }

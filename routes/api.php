@@ -87,6 +87,9 @@ Route::prefix('v1')->group(function (){
     Route::get('getCharges', [ChargingController::class, 'getCharges'])->middleware('auth:sanctum');
     Route::post('buy', [ChargingController::class,'buy']);
 
+    //Offer
+    Route::get('getOffer', [OfferPriceController::class, 'getOffer']);
+
     Route::middleware('auth:sanctum')->group(function (){
 
         //    Coupone
