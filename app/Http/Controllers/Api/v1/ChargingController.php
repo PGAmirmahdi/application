@@ -374,6 +374,7 @@ class ChargingController extends Controller
             'wallet_id' => 'required',
             'type' => 'string|required',
             'address_id' => 'required',
+            'items' => 'required|json', // Add validation for items
         ]);
         if ($validate->fails()) {
             return response()->json([
@@ -399,7 +400,13 @@ class ChargingController extends Controller
         // Calculate the total amount
         $totalAmount = 0;
         foreach ($items as $item) {
-            $product = Product::find($item['id']);
+            $product = Product::find($item['product_id']);
+            if (!$product) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'محصول با این شناسه یافت نشد: ' . $item['product_id']
+                ], 404); // Return a 404 error if product not found
+            }
             $totalAmount += ($product->price * $item['count']);
         }
 
@@ -428,6 +435,9 @@ class ChargingController extends Controller
         // Add items to the order
         foreach ($items as $item) {
             $product = Product::find($item['product_id']);
+            if (!$product) {
+                continue; // Skip the item if product not found
+            }
             $order->items()->create([
                 'product_id' => $item['product_id'],
                 'count' => $item['count'],
