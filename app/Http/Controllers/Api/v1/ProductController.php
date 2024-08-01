@@ -113,7 +113,7 @@ class ProductController extends Controller
         }
 
         // اجرای کوئری و برگرداندن نتایج
-        $products = $query->paginate(10);
+        $products = $query->orderByDesc('products.id')->paginate(10);
 
         return response()->json([
             'success' => true,
