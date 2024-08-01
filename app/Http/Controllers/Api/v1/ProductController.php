@@ -40,11 +40,11 @@ class ProductController extends Controller
 
     public function filter(Request $request)
     {
-        $validate = validator()->make($request->all(),[
+        $validate = validator()->make($request->all(), [
             'sortBy' => 'required',
         ]);
 
-        if ($validate->fails()){
+        if ($validate->fails()) {
             return response()->json([
                 'success' => false,
                 'errors' => $validate->errors()->getMessages()
@@ -53,55 +53,52 @@ class ProductController extends Controller
 
         $category_id = $request->category_id;
 
-        switch ($request->sortBy)
-        {
+        // ساخت یک کوئری پایه برای محصولات
+        $query = Product::leftJoin('offers', 'products.id', '=', 'offers.product_id')
+            ->select('products.*', DB::raw('COALESCE(offers.price_after, products.price) as effective_price'));
+
+        if ($category_id) {
+            $query->where('products.category_id', $category_id);
+        }
+
+        switch ($request->sortBy) {
             case 'cheapest':
-                if ($category_id){
-                    return Product::where('category_id', $category_id)->orderBy('price')->paginate(10);
-                }
+                $query->orderBy('effective_price');
+                break;
 
-                return Product::orderBy('price')->paginate(10);
             case 'favorites':
-                if ($category_id){
-                    return Product::where('category_id', $category_id)->orderByDesc('favorites')->paginate(10);
-                }
+                $query->orderByDesc('products.favorites');
+                break;
 
-                return Product::orderByDesc('favorites')->paginate(10);
             case 'expensive':
-                if ($category_id){
-                    return Product::where('category_id', $category_id)->orderByDesc('price')->paginate(10);
-                }
+                $query->orderByDesc('effective_price');
+                break;
 
-                return Product::orderByDesc('price')->paginate(10);
             case 'bestselling':
-                $orders_id = Payment::where('status','success')->pluck('order_id');
-
+                $orders_id = Payment::where('status', 'success')->pluck('order_id');
                 $orders = OrderItem::whereIn('order_id', $orders_id)
                     ->select('product_id', DB::raw('COUNT(*) as count'))
                     ->groupBy('product_id');
 
-                if ($category_id){
-                    $products = Product::where('category_id', $category_id)->joinSub($orders, 'orders', function ($join) {
-                        $join->on('products.id', '=', 'orders.product_id');
-                    })
-                        ->orderByDesc('count')
-                        ->paginate(10);
-
-                    return $products;
-                }
-
-                $products = Product::joinSub($orders, 'orders', function ($join) {
+                $query = $query->joinSub($orders, 'orders', function ($join) {
                     $join->on('products.id', '=', 'orders.product_id');
-                })
-                    ->orderByDesc('count')
-                    ->paginate(10);
+                })->orderByDesc('count');
+                break;
 
-                return $products;
             default:
                 return response()->json([
                     'success' => false,
                     'errors' => ['یکی از 4 مقدار cheapest, expensive, favorites و یا bestselling الزامی است']
                 ]);
         }
+
+        // اجرای کوئری و برگرداندن نتایج
+        $products = $query->paginate(10);
+
+        return response()->json([
+            'success' => true,
+            'data' => $products
+        ]);
     }
+
 }
