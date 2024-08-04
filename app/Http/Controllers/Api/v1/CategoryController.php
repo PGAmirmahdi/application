@@ -69,10 +69,9 @@ class CategoryController extends Controller
             ->select(
                 'products.*',
                 DB::raw('COALESCE(offers.price_after, products.price) as effective_price'),
-                'offers.description as offer_description',
-                'offers.percentage as offer_percentage',
-                'offers.price_before as offer_price_before',
-                'offers.price_after as offer_price_after'
+                'offers.percentage as percentage',
+                'offers.price_before as price_before',
+                'offers.price_after as price_after'
             )
             ->where('products.category_id', $category_id)
             ->latest();

@@ -72,7 +72,7 @@ class ProductController extends Controller
         $query = Product::leftJoin('offers', 'products.id', '=', 'offers.product_id')
             ->select('products.*',
                 DB::raw('COALESCE(offers.price_after, products.price) as effective_price'),
-                'offers.description as description',
+                'products.description as description',
                 'offers.percentage as percentage',
                 'offers.price_before as price_before',
                 'offers.price_after as price_after');
