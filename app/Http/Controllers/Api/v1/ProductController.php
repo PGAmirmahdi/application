@@ -64,7 +64,7 @@ class ProductController extends Controller
                 return $product;
             });
 
-            return view('panel.ProMP.index', compact('products'));
+            return view('panel.ProMP.index', ['products' => $products]);
 
         } catch(\PDOException $e) {
             return response()->json(["message" => "Connection failed: " . $e->getMessage()], 500);
