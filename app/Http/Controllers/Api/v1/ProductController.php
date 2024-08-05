@@ -215,10 +215,61 @@ class ProductController extends Controller
         // اجرای کوئری و برگرداندن نتایج
         $products = $query->orderByDesc('products.id')->paginate(10);
 
-        return response()->json([
-            'success' => true,
-            'data' => $products
-        ]);
+        if ($products->isEmpty()) {
+            return response()->json([
+                'success' => true,
+                'data' => []
+            ]);
+        }
+
+        // Database connection details
+        $servername = "mpsystem.ir";
+        $username = "admin_mandegarpars";
+        $password = "^Ocj3z44GQA+";
+        $dbname = "admin_mandegarpars";
+
+        try {
+            // Connect to the external database
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // Convert product codes to a string for the SQL query
+            $productCodes = $products->pluck('code')->toArray();
+            $productCodes = implode("','", $productCodes);
+
+            // SQL query to get matching inventories
+            $sql = "SELECT inventories.id, inventories.warehouse_id, inventories.title, inventories.code, inventories.type, inventories.current_count
+                    FROM inventories
+                    WHERE inventories.code IN ('{$productCodes}')";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $inventories = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $conn = null;
+
+            // Map inventories to products
+            $products->getCollection()->transform(function($product) use ($inventories) {
+                foreach ($inventories as $inventory) {
+                    if ($product->code == $inventory->code) {
+                        $product->inventory = $inventory;
+                        break;
+                    }
+                }
+                return $product;
+            });
+
+            return response()->json([
+                'success' => true,
+                'data' => $products
+            ]);
+
+        } catch (\PDOException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => "Connection failed: " . $e->getMessage()
+            ]);
+        }
     }
 
 }
