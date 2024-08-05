@@ -13,6 +13,7 @@ use App\Http\Controllers\Panel\OfferController;
 use App\Http\Controllers\Panel\OrderController;
 use App\Http\Controllers\Panel\PaymentController;
 use App\Http\Controllers\Panel\ProductController;
+use App\Http\Controllers\Panel\ProMPController;
 use App\Http\Controllers\Panel\ReturnController;
 use App\Http\Controllers\Panel\TicketController;
 use App\Http\Controllers\Panel\UpdateController;
@@ -119,7 +120,8 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
     Route::resource('offers',OfferController::class)->except(['show']);
     Route::get('products/{id}/price', [OfferPriceController::class, 'getPrice'])->name('products.price');
 
-
+    //Invetories from MPSystem
+    Route::get('ProMP', [ProMPController::class, 'index'])->name('ProMP.index');
 });
 // PWA
 Route::get('pwa', function (){
