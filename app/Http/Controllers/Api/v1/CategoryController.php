@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDO;
 
 class CategoryController extends Controller
 {
@@ -42,11 +43,11 @@ class CategoryController extends Controller
 
     public function getProducts(Request $request)
     {
-        $validate = validator()->make($request->all(),[
+        $validate = validator()->make($request->all(), [
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        if ($validate->fails()){
+        if ($validate->fails()) {
             return response()->json([
                 'success' => false,
                 'errors' => $validate->errors()->getMessages()
@@ -57,7 +58,7 @@ class CategoryController extends Controller
 
         // بررسی وجود دسته‌بندی
         $category = Category::find($category_id);
-        if (!$category){
+        if (!$category) {
             return response()->json([
                 'success' => false,
                 'errors' => ['دسته بندی مورد نظر پیدا نشد']
@@ -79,10 +80,61 @@ class CategoryController extends Controller
         // اجرای کوئری و برگرداندن نتایج
         $products = $query->paginate(10);
 
-        return response()->json([
-            'success' => true,
-            'data' => $products
-        ]);
+        if ($products->isEmpty()) {
+            return response()->json([
+                'success' => true,
+                'data' => []
+            ]);
+        }
+
+        // اطلاعات مربوط به اتصال به دیتابیس خارجی
+        $servername = "mpsystem.ir";
+        $username = "admin_mandegarpars";
+        $password = "^Ocj3z44GQA+";
+        $dbname = "admin_mandegarpars";
+
+        try {
+            // اتصال به دیتابیس خارجی
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // تبدیل کدهای محصولات به رشته برای استفاده در کوئری SQL
+            $productCodes = $products->pluck('code')->toArray();
+            $productCodes = implode("','", $productCodes);
+
+            // کوئری SQL برای دریافت موجودی‌ها
+            $sql = "SELECT inventories.id, inventories.warehouse_id, inventories.title, inventories.code, inventories.type, inventories.current_count
+                    FROM inventories
+                    WHERE inventories.code IN ('{$productCodes}')";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $inventories = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $conn = null;
+
+            // ترکیب اطلاعات موجودی‌ها با محصولات
+            $products->getCollection()->transform(function($product) use ($inventories) {
+                foreach ($inventories as $inventory) {
+                    if ($product->code == $inventory->code) {
+                        $product->inventory = $inventory;
+                        break;
+                    }
+                }
+                return $product;
+            });
+
+            return response()->json([
+                'success' => true,
+                'data' => $products
+            ]);
+
+        } catch (\PDOException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => "Connection failed: " . $e->getMessage()
+            ]);
+        }
     }
 
 }
