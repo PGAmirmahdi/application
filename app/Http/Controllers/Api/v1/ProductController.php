@@ -15,11 +15,48 @@ class ProductController extends Controller
     public function getProducts()
     {
         // log the user
-        if (!Log::where(['activity_name' => 'visit', 'ip' => \request()->ip()])->exists()){
+        if (!Log::where(['activity_name' => 'visit', 'ip' => request()->ip()])->exists()){
             activity_log('visit', __METHOD__);
         }
 
-        return Product::latest()->paginate(10);
+        // دیتابیس اطلاعات
+        $servername = "mpsystem.ir";
+        $username = "admin_mandegarpars";
+        $password = "^Ocj3z44GQA+";
+        $dbname = "admin_mandegarpars";
+
+        // اتصال به دیتابیس
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // دریافت محصولات از جدول products
+            $products = Product::all()->pluck('code')->toArray();
+
+            if(empty($products)) {
+                return response()->json(["message" => "No products found."], 404);
+            }
+
+            // تبدیل آرایه محصولات به رشته برای استفاده در SQL
+            $productCodes = implode("','", $products);
+
+            // ساخت عبارت SQL برای دریافت محصولات مطابق با کدها
+            $sql = "SELECT inventories.id, inventories.warehouse_id, inventories.title, inventories.code, inventories.type, inventories.current_count
+                FROM inventories
+                WHERE inventories.code IN ('{$productCodes}')";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $inventories = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $conn = null;
+
+            // برگرداندن داده‌ها به عنوان API JSON
+            return response()->json($inventories);
+
+        } catch(\PDOException $e) {
+            return response()->json(["message" => "Connection failed: " . $e->getMessage()], 500);
+        }
     }
 
     public function search(Request $request)
