@@ -9,17 +9,66 @@ use App\Models\Payment;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDO;
 
 class ProductController extends Controller
 {
     public function getProducts()
     {
         // log the user
-        if (!Log::where(['activity_name' => 'visit', 'ip' => \request()->ip()])->exists()){
+        if (!Log::where(['activity_name' => 'visit', 'ip' => request()->ip()])->exists()){
             activity_log('visit', __METHOD__);
         }
 
-        return Product::latest()->paginate(10);
+        // دیتابیس اطلاعات
+        $servername = "mpsystem.ir";
+        $username = "admin_mandegarpars";
+        $password = "^Ocj3z44GQA+";
+        $dbname = "admin_mandegarpars";
+
+        // اتصال به دیتابیس
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // دریافت محصولات از جدول products
+            $products = Product::all();
+
+            if($products->isEmpty()) {
+                return response()->json(["message" => "No products found."], 404);
+            }
+
+            // تبدیل آرایه محصولات به رشته برای استفاده در SQL
+            $productCodes = $products->pluck('code')->toArray();
+            $productCodes = implode("','", $productCodes);
+
+            // ساخت عبارت SQL برای دریافت محصولات مطابق با کدها
+            $sql = "SELECT inventories.id, inventories.warehouse_id, inventories.title, inventories.code, inventories.type, inventories.current_count
+                FROM inventories
+                WHERE inventories.code IN ('{$productCodes}')";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $inventories = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $conn = null;
+
+            // ترکیب اطلاعات محصولات و موجودی‌ها
+            $products = $products->map(function($product) use ($inventories) {
+                foreach ($inventories as $inventory) {
+                    if ($product->code == $inventory->code) {
+                        $product->inventory = $inventory;
+                        break;
+                    }
+                }
+                return $product;
+            });
+
+            return view('panel.ProMP.index', compact('products'));
+
+        } catch(\PDOException $e) {
+            return response()->json(["message" => "Connection failed: " . $e->getMessage()], 500);
+        }
     }
 
     public function search(Request $request)
