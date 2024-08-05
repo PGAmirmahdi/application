@@ -9,7 +9,7 @@ use PDO;
 
 class ProMPController extends Controller
 {
-    public function products()
+    public function index()
     {
         $servername = "mpsystem.ir";
         $username = "admin_mandegarpars";
