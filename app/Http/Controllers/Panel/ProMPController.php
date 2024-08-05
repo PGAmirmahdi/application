@@ -13,8 +13,8 @@ class ProMPController extends Controller
     {
         $servername = "mpsystem.ir";
         $username = "admin_mandegarpars";
-        $password = "admin_mandegarpars";
-        $dbname = "^Ocj3z44GQA+";
+        $password = "^Ocj3z44GQA+";
+        $dbname = "admin_mandegarpars";
 
         // اتصال به دیتابیس
         try {
