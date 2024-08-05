@@ -15,37 +15,37 @@ class ProductController extends Controller
 {
     public function getProducts()
     {
-        // log the user
-        if (!Log::where(['activity_name' => 'visit', 'ip' => request()->ip()])->exists()){
+        // Log the user visit
+        if (!Log::where(['activity_name' => 'visit', 'ip' => request()->ip()])->exists()) {
             activity_log('visit', __METHOD__);
         }
 
-        // دیتابیس اطلاعات
+        // Database connection details
         $servername = "mpsystem.ir";
         $username = "admin_mandegarpars";
         $password = "^Ocj3z44GQA+";
         $dbname = "admin_mandegarpars";
 
-        // اتصال به دیتابیس
         try {
+            // Connect to the external database
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            // دریافت محصولات از جدول products
+            // Get all products from the local database
             $products = Product::all();
 
-            if($products->isEmpty()) {
+            if ($products->isEmpty()) {
                 return response()->json(["message" => "No products found."], 404);
             }
 
-            // تبدیل آرایه محصولات به رشته برای استفاده در SQL
+            // Convert product codes to a string for the SQL query
             $productCodes = $products->pluck('code')->toArray();
             $productCodes = implode("','", $productCodes);
 
-            // ساخت عبارت SQL برای دریافت محصولات مطابق با کدها
+            // SQL query to get matching inventories
             $sql = "SELECT inventories.id, inventories.warehouse_id, inventories.title, inventories.code, inventories.type, inventories.current_count
-                FROM inventories
-                WHERE inventories.code IN ('{$productCodes}')";
+                    FROM inventories
+                    WHERE inventories.code IN ('{$productCodes}')";
 
             $stmt = $conn->prepare($sql);
             $stmt->execute();
@@ -53,7 +53,7 @@ class ProductController extends Controller
             $inventories = $stmt->fetchAll(PDO::FETCH_OBJ);
             $conn = null;
 
-            // ترکیب اطلاعات محصولات و موجودی‌ها
+            // Merge product and inventory data
             $products = $products->map(function($product) use ($inventories) {
                 foreach ($inventories as $inventory) {
                     if ($product->code == $inventory->code) {
@@ -64,9 +64,9 @@ class ProductController extends Controller
                 return $product;
             });
 
-            return view('panel.ProMP.index', ['products' => $products]);
+            return response()->json($products);
 
-        } catch(\PDOException $e) {
+        } catch (\PDOException $e) {
             return response()->json(["message" => "Connection failed: " . $e->getMessage()], 500);
         }
     }
