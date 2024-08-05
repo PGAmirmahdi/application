@@ -33,8 +33,8 @@ class ProMPController extends Controller
 
             // ساخت عبارت SQL برای دریافت محصولات مطابق با کدها
             $sql = "SELECT inventories.id, inventories.warehouse_id, inventories.title, inventories.code, inventories.type, inventories.current_count
-                FROM inventories
-                WHERE inventories.code IN ('{$productCodes}')";
+            FROM inventories
+            WHERE inventories.code IN ('{$productCodes}')";
 
             $stmt = $conn->prepare($sql);
             $stmt->execute();

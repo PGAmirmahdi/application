@@ -17,12 +17,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($products as $key => $product)
+                    @foreach($inventories as $key => $inventory)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $product->title }}</td>
-                            <td>{{ $product->code }}</td>
-                            <td>{{ number_format($product->current_count).' واحد' }}</td>
+                            <td>{{ $inventory->title }}</td>
+                            <td>{{ $inventory->code }}</td>
+                            <td>{{ number_format($inventory->current_count) }} واحد</td>
                         </tr>
                     @endforeach
                     </tbody>
