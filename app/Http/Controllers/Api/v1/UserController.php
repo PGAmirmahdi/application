@@ -49,7 +49,7 @@ class UserController extends Controller
             $user->save();
 
             // Send SMS verification code
-            sendSMS(240154, $user->phone, [$code , $user->name . ' ' .  $user->family]);
+            sendSMS(240154, $user->phone, [$user->name . ' ' .  $user->family,$code]);
 
             // Commit the transaction
             DB::commit();
