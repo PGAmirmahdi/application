@@ -76,6 +76,7 @@ class UserController extends Controller
         $validate = validator()->make($request->all(),[
             'phone' => 'required',
             'code' => 'required',
+
         ]);
 
         if ($validate->fails()){
