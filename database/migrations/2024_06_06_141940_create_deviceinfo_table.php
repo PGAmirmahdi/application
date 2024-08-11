@@ -16,7 +16,10 @@ class CreateDeviceinfoTable extends Migration
         Schema::create('deviceinfo', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-
+            $table->string('platform')->nullable();
+            $table->string('browser')->nullable();
+            $table->string('device')->nullable();
+            $table->string('ip')->nullable();
         });
     }
 
