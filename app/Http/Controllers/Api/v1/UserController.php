@@ -167,7 +167,7 @@ class UserController extends Controller
                 'phone_code' => $code,
                 'phone_expire' => now()->addMinutes(2)
             ]);
-            sendSMS(240154, $user->phone, [$code, $user->name . ' ' .  $user->family]);
+            sendSMS(240154, $user->phone, [$user->name . ' ' .  $user->family,$code]);
         }
 
         return response()->json([
