@@ -49,7 +49,7 @@ class UserController extends Controller
             $user->save();
 
             // Send SMS verification code
-            sendSMS(201523, $user->phone, [$code]);
+            sendSMS(240154, $user->phone, [$code , $user->name . ' ' .  $user->family]);
 
             // Commit the transaction
             DB::commit();
@@ -168,7 +168,7 @@ class UserController extends Controller
                 'phone_expire' => now()->addMinutes(2)
             ]);
 
-            sendSMS(201523, $user->phone, [$code]);
+            sendSMS(240154, $user->phone, [$code, $user->name . ' ' .  $user->family]);
         }
 
         return response()->json([
@@ -298,7 +298,7 @@ class UserController extends Controller
             ]);
 
             if ($result->code == 1){
-                sendSMS(214381, $user->phone, [$user->fullName()]);
+                sendSMS(240161, $user->phone, [$user->fullName()]);
                 break;
             }
         }
