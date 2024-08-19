@@ -25,7 +25,7 @@ class GuideVideosController extends Controller
 
         $product_id = $request->product_id;
 
-        $item = GuideVideos::where('guide_videos.id', $product_id)
+        $item = GuideVideos::where('guide_videos.product_id', $product_id)
             ->join('products', 'guide_videos.product_id', '=', 'products.id')
             ->select([
                 'guide_videos.title as guide_title',

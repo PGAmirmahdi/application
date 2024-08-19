@@ -91,11 +91,6 @@ class GuideVideosController extends Controller
             'user_id' => Auth::id(),
             'main_video' => $main_video,
         ];
-        if ($request->hasFile('main_video')) {
-            $item2['name'] = $main_video_file->getClientOriginalName();
-            $item2['size'] = $main_video_file->getSize();
-            $item2['type'] = $main_video_file->getClientOriginalExtension();
-        }
 
         $videos->where('id', $id)->update($item2);
 
