@@ -10,7 +10,7 @@ class DeviceInfo extends Model
     use HasFactory;
 
     protected $guarded = [];
-
+    protected $table = 'deviceinfo';
     protected $fillable = [
         'From',
         'Browser_Name',
