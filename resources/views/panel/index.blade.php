@@ -138,7 +138,7 @@
                 <div class="card-title d-flex justify-content-between align-items-center">
                     <h6>اطلاعات دستگاه‌ها</h6>
                 </div>
-                <form action="{{ route('deviceinfo.search') }}" method="get" id="search_form"></form>
+                <form action="{{ route('panel.search') }}" method="get" id="search_form"></form>
                 <div class="row mb-3">
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12">
                         <input type="text" name="from" class="form-control" placeholder="نوع درخواست (Web یا App)"
