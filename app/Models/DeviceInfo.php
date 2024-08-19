@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class DeviceInfo extends Model
 {
     use HasFactory;
+
+    protected $table = 'deviceinfo';
+
+    protected $fillable = [
+        'From',
+        'Browser_Name',
+        'User_Agent',
+        'Platform',
+        'App_Version',
+        'Brand',
+        'Model',
+        'Android_Version',
+        'Manufactor',
+    ];
 }

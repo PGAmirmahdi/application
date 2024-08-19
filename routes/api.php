@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\ChargingController;
 use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\DeliveryDayController;
+use App\Http\Controllers\Api\v1\DeviceStatusContrller;
 use App\Http\Controllers\Api\v1\DiscountController;
 use App\Http\Controllers\Api\v1\FavoriteController;
 use App\Http\Controllers\Api\v1\GuideVideosController;
@@ -87,6 +88,7 @@ Route::prefix('v1')->group(function (){
     Route::get('getCharges', [ChargingController::class, 'getCharges'])->middleware('auth:sanctum');
     Route::post('buy', [ChargingController::class,'buy']);
 
+    Route::post('deviceinfo', [DeviceStatusContrller::class,'deviceinfo']);
     //Offer
     Route::get('getOffer', [OfferPriceController::class, 'getOffer']);
 

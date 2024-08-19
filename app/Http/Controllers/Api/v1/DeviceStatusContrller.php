@@ -3,24 +3,33 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\DeviceInfo;
 use Illuminate\Http\Request;
 
 class DeviceStatusContrller extends Controller
 {
     public function deviceinfo(Request $request)
     {
-        $validate = validator()->make($request->all(),[
-            'From' => 'required',
-            'Browser_Name' => 'nullable',
-            'User_Agent'=>
+        $from = $request->From;
 
-        ]);
+        $data = [
+            'From' => $from,
+        ];
 
-        if ($validate->fails()){
-            return response()->json([
-                'success' => false,
-                'errors' => $validate->errors()->getMessages()
-            ]);
+        if ($from == 'Web') {
+            $data['Browser_Name'] = $request->Browser_Name;
+            $data['User_Agent'] = $request->User_Agent;
+            $data['Platform'] = $request->Platform;
+            $data['App_Version'] = $request->App_Version;
+        } else {
+            $data['Brand'] = $request->Brand;
+            $data['Model'] = $request->Model;
+            $data['Android_Version'] = $request->Android_Version;
+            $data['Manufactor'] = $request->Manufactor;
         }
+
+        DeviceInfo::create($data);
+
+        return response()->json(['message' => 'Data stored successfully']);
     }
 }
