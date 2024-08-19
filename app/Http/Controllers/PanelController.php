@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DeviceInfo;
 use App\Models\Invoice;
 use App\Models\Role;
 use App\Models\User;
@@ -14,7 +15,10 @@ class PanelController extends Controller
 {
     public function index()
     {
-        return view('panel.index');
+        // دریافت تمام اطلاعات دستگاه‌ها
+        $infos = DeviceInfo::paginate(10);
+
+        return view('panel.index',compact('infos'));
     }
 
     public function readNotification($notification = null)
@@ -64,5 +68,18 @@ class PanelController extends Controller
             'success' => true,
             'message' => 'token saved successfully.',
         ]);
+    }
+    public function search(Request $request)
+    {
+        $query = DeviceInfo::query();
+
+        // جستجو براساس نوع درخواست
+        if ($request->filled('from')) {
+            $query->where('From', $request->from);
+        }
+
+        $infos = $query->paginate(10);
+
+        return view('panel.deviceinfo.index', compact('infos'));
     }
 }

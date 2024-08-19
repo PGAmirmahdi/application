@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\OfferPriceController;
+use App\Http\Controllers\DeviceInfoController;
 use App\Http\Controllers\Panel\BannerController;
 use App\Http\Controllers\Panel\BugController;
 use App\Http\Controllers\Panel\CategoryController;
@@ -122,6 +123,9 @@ Route::middleware(['auth','admin'])->prefix('/panel')->group(function (){
 
     //Invetories from MPSystem
     Route::get('ProMP', [ProMPController::class, 'index'])->name('ProMP.index');
+
+    //Device Logs
+    Route::get('panel/search', [PanelController::class, 'search'])->name('panel.search');
 });
 // PWA
 Route::get('pwa', function (){

@@ -133,6 +133,70 @@
                 </div>
             </div>
         </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex justify-content-between align-items-center">
+                    <h6>اطلاعات دستگاه‌ها</h6>
+                </div>
+                <form action="{{ route('deviceinfo.search') }}" method="get" id="search_form"></form>
+                <div class="row mb-3">
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12">
+                        <input type="text" name="from" class="form-control" placeholder="نوع درخواست (Web یا App)"
+                               value="{{ request()->from ?? null }}" form="search_form">
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12">
+                        <button type="submit" class="btn btn-primary" form="search_form">جستجو</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered dataTable dtr-inline text-center">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>نوع درخواست</th>
+                            @if($infos->first()->From === 'web')
+                                <th>نام مرورگر</th>
+                                <th>User Agent</th>
+                                <th>پلتفرم</th>
+                                <th>نسخه اپلیکیشن</th>
+                            @else
+                                <th>برند</th>
+                                <th>مدل</th>
+                                <th>نسخه اندروید</th>
+                                <th>تولید کننده</th>
+                            @endif
+                            <th>زمان ثبت</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($infos as $key => $info)
+                            <tr>
+                                <td>{{ ++$key }}</td>
+                                <td>{{ $info->From }}</td>
+                                @if($info->From === 'Web')
+                                    <td>{{ $info->Browser_Name }}</td>
+                                    <td>{{ Str::limit($info->User_Agent, 60) }}</td>
+                                    <td>{{ $info->Platform }}</td>
+                                    <td>{{ $info->App_Version }}</td>
+                                @else
+                                    <td>{{ $info->Brand }}</td>
+                                    <td>{{ $info->Model }}</td>
+                                    <td>{{ $info->Android_Version }}</td>
+                                    <td>{{ $info->Manufactor }}</td>
+                                @endif
+                                <td>{{ verta($info->created_at)->format('H:i - Y/m/d') }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center">{{ $infos->appends(request()->all())->links() }}</div>
+            </div>
+        </div>
     </div>
 @endsection
 
