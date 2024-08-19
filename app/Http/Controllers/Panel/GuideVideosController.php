@@ -50,9 +50,9 @@ class GuideVideosController extends Controller
             'text' => $request->text,
             'product_id' => $request->product_id,
             'user_id' => Auth::id(),
-            'name' => $main_video_file->getClientOriginalName(),
-            'size' => $main_video_file->getSize(),
-            'type' => $main_video_file->getClientOriginalExtension(),
+//            'name' => $main_video_file->getClientOriginalName(),
+//            'size' => $main_video_file->getSize(),
+//            'type' => $main_video_file->getClientOriginalExtension(),
             'main_video'=> $main_video,
         ]);
 
