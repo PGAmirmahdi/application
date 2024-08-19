@@ -13,7 +13,7 @@ class CreateDeviceinfoTable extends Migration
      */
     public function up()
     {
-        Schema::create('requests', function (Blueprint $table) {
+        Schema::create('deviceinfo', function (Blueprint $table) {
             $table->id();
             $table->string('From');
             $table->string('Browser_Name')->nullable();
