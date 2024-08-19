@@ -173,7 +173,7 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $info->From }}</td>
-                                @if($info->From === 'Web')
+                                @if($info->From === 'web')
                                     <td>{{ $info->Browser_Name }}</td>
                                     <td>{{ Str::limit($info->User_Agent, 60) }}</td>
                                     <td>{{ $info->Platform }}</td>
