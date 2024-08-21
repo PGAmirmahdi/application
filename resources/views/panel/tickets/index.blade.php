@@ -27,7 +27,7 @@
                     @foreach($tickets as $key => $ticket)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $ticket->sender_id->fullName() }}</td>
+                            <td>{{ $ticket->sender->fullName() }}</td>
                             <td>{{ $ticket->title }}</td>
                             <td>{{ $ticket->code }}</td>
                             <td>
