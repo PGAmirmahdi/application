@@ -66,7 +66,7 @@ class ProductController extends Controller
                     'title' => null,
                     'code' => null,
                     'type' => null,
-                    'current_count' => null
+                    'current_count' => 0
                 ]; // تنظیم مقادیر به null در صورت نبودن موجودی
                 return $product;
             });
@@ -148,7 +148,7 @@ class ProductController extends Controller
                     'title' => null,
                     'code' => null,
                     'type' => null,
-                    'current_count' => null
+                    'current_count' => 0
                 ]; // تنظیم مقادیر به null در صورت نبودن موجودی
                 return $product;
             });
@@ -274,7 +274,7 @@ class ProductController extends Controller
                     'title' => null,
                     'code' => null,
                     'type' => null,
-                    'current_count' => null
+                    'current_count' => 0
                 ]; // تنظیم مقادیر به null در صورت نبودن موجودی
                 return $product;
             });
