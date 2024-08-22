@@ -120,7 +120,7 @@ class CategoryController extends Controller
             }
 
             // ترکیب اطلاعات موجودی‌ها با محصولات
-            $products->getCollection()->transform(function($product) use ($inventoryMap) {
+            $products->transform(function($product) use ($inventoryMap) {
                 $product->inventory = $inventoryMap[$product->code] ?? (object)[
                     'id' => null,
                     'warehouse_id' => null,
