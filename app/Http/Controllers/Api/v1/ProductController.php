@@ -53,14 +53,21 @@ class ProductController extends Controller
             $inventories = $stmt->fetchAll(PDO::FETCH_OBJ);
             $conn = null;
 
-            // Merge product and inventory data
-            $products = $products->map(function($product) use ($inventories) {
-                foreach ($inventories as $inventory) {
-                    if ($product->code == $inventory->code) {
-                        $product->inventory = $inventory;
-                        break;
-                    }
-                }
+            $inventoryMap = [];
+            foreach ($inventories as $inventory) {
+                $inventoryMap[$inventory->code] = $inventory;
+            }
+
+            // ترکیب اطلاعات موجودی‌ها با محصولات
+            $products->getCollection()->transform(function($product) use ($inventoryMap) {
+                $product->inventory = $inventoryMap[$product->code] ?? (object)[
+                    'id' => null,
+                    'warehouse_id' => null,
+                    'title' => null,
+                    'code' => null,
+                    'type' => null,
+                    'current_count' => null
+                ]; // تنظیم مقادیر به null در صورت نبودن موجودی
                 return $product;
             });
 
@@ -128,15 +135,21 @@ class ProductController extends Controller
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $inventories = $stmt->fetchAll(PDO::FETCH_OBJ);
             $conn = null;
+            $inventoryMap = [];
+            foreach ($inventories as $inventory) {
+                $inventoryMap[$inventory->code] = $inventory;
+            }
 
-            // Map inventories to products
-            $products->getCollection()->transform(function($product) use ($inventories) {
-                foreach ($inventories as $inventory) {
-                    if ($product->code == $inventory->code) {
-                        $product->inventory = $inventory;
-                        break;
-                    }
-                }
+            // ترکیب اطلاعات موجودی‌ها با محصولات
+            $products->getCollection()->transform(function($product) use ($inventoryMap) {
+                $product->inventory = $inventoryMap[$product->code] ?? (object)[
+                    'id' => null,
+                    'warehouse_id' => null,
+                    'title' => null,
+                    'code' => null,
+                    'type' => null,
+                    'current_count' => null
+                ]; // تنظیم مقادیر به null در صورت نبودن موجودی
                 return $product;
             });
 
@@ -248,14 +261,21 @@ class ProductController extends Controller
             $inventories = $stmt->fetchAll(PDO::FETCH_OBJ);
             $conn = null;
 
-            // Map inventories to products
-            $products->getCollection()->transform(function($product) use ($inventories) {
-                foreach ($inventories as $inventory) {
-                    if ($product->code == $inventory->code) {
-                        $product->inventory = $inventory;
-                        break;
-                    }
-                }
+            $inventoryMap = [];
+            foreach ($inventories as $inventory) {
+                $inventoryMap[$inventory->code] = $inventory;
+            }
+
+            // ترکیب اطلاعات موجودی‌ها با محصولات
+            $products->getCollection()->transform(function($product) use ($inventoryMap) {
+                $product->inventory = $inventoryMap[$product->code] ?? (object)[
+                    'id' => null,
+                    'warehouse_id' => null,
+                    'title' => null,
+                    'code' => null,
+                    'type' => null,
+                    'current_count' => null
+                ]; // تنظیم مقادیر به null در صورت نبودن موجودی
                 return $product;
             });
 

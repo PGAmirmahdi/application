@@ -104,8 +104,8 @@ class CategoryController extends Controller
 
             // کوئری SQL برای دریافت موجودی‌ها
             $sql = "SELECT inventories.id, inventories.warehouse_id, inventories.title, inventories.code, inventories.type, inventories.current_count
-                    FROM inventories
-                    WHERE inventories.code IN ('{$productCodes}')";
+                FROM inventories
+                WHERE inventories.code IN ('{$productCodes}')";
 
             $stmt = $conn->prepare($sql);
             $stmt->execute();
@@ -113,14 +113,22 @@ class CategoryController extends Controller
             $inventories = $stmt->fetchAll(PDO::FETCH_OBJ);
             $conn = null;
 
+            // تبدیل موجودی‌ها به یک دیکشنری بر اساس کد محصولات
+            $inventoryMap = [];
+            foreach ($inventories as $inventory) {
+                $inventoryMap[$inventory->code] = $inventory;
+            }
+
             // ترکیب اطلاعات موجودی‌ها با محصولات
-            $products->getCollection()->transform(function($product) use ($inventories) {
-                foreach ($inventories as $inventory) {
-                    if ($product->code == $inventory->code) {
-                        $product->inventory = $inventory;
-                        break;
-                    }
-                }
+            $products->getCollection()->transform(function($product) use ($inventoryMap) {
+                $product->inventory = $inventoryMap[$product->code] ?? (object)[
+                    'id' => null,
+                    'warehouse_id' => null,
+                    'title' => null,
+                    'code' => null,
+                    'type' => null,
+                    'current_count' => null
+                ]; // تنظیم مقادیر به null در صورت نبودن موجودی
                 return $product;
             });
 
