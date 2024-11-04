@@ -263,7 +263,7 @@ class UserController extends Controller
                 'username' => env('INAX_USER'),
                 'password' => env('INAX_PASS'),
                 'operator' => $operator,
-                'amount' => $operator == 'MTN' ? 20500 : 5000,
+                'amount' => $operator == 'MTN' ? 5500 : 5000,
                 'mobile' => $user->phone,
                 'order_id' => $order_id,
                 'charge_type' => 'normal',
