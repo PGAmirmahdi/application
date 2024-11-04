@@ -141,10 +141,11 @@
                 var formData = new FormData(this);
                 var textContent = $('#text').val();
                 formData.set('text', textContent);
-
+                formData.append('_token', '{{ csrf_token() }}');
                 modal.css('display', 'flex');
 
                 $.ajax({
+
                     url: form.attr('action'),
                     type: 'POST',
                     data: formData,
