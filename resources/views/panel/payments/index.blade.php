@@ -52,8 +52,8 @@
                     @foreach($payments as $key => $payment)
                         <tr>
                             <td>{{ ++$key }}</td>
-                                <td>@if($payment->types == false){{ $payment->order->user->name }}@elseif($payment->types == true){{ $payment->wallets->users->name }}@endif</td>
-                                <td>@if($payment->types == false){{ $payment->order->user->family }}@elseif($payment->types == true){{ $payment->wallets->users->family }}@endif</td>
+                                <td>@if($payment->types == false){{ $payment->order->user->name }}@elseif($payment->types == true){{ $payment->wallets->users->name }} @else نامشخص @endif</td>
+                                <td>@if($payment->types == false){{ $payment->order->user->family }}@elseif($payment->types == true){{ $payment->wallets->users->family }}@else  نامشخص  @endif</td>
                             <td>@if($payment->types == false){{ number_format($payment->amount * 1/10) }}@else {{ number_format($payment->amount) }}  @endif</td>
                             <td class="status">
                                 @if($payment->status == 'success')
