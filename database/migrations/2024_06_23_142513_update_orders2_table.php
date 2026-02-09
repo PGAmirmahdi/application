@@ -14,7 +14,7 @@ class UpdateOrders2Table extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->unsignedInteger('coupon_id')->comment('کد تخفیف')->after('discount');
+            $table->unsignedBigInteger('coupon_id')->comment('کد تخفیف')->after('discount');
 
             $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('cascade');
         });
